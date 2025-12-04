@@ -1,0 +1,8 @@
+prefix=/home/dodo/ROS/WS/evee_ws/devel
+
+Name: ekf_localization_node_pkg
+Description: Description of ekf_localization_node_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

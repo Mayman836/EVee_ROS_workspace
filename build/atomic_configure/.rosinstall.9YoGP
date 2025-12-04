@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/dodo/ROS/WS/evee_ws/devel/setup.sh

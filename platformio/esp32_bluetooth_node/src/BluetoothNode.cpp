@@ -1,17 +1,15 @@
 #include <ros.h>
 #include <custom_msgs/Waypoint.h>
+#include <std_msgs/Bool.h>
 #include <BluetoothNode.h>
 
 extern ros::NodeHandle nh;
 
-extern ros::Publisher wp_pub;
+extern std_msgs::Bool drive_msg;
 
 extern custom_msgs::Waypoint wp_msg;
 
-WaypointList wp_list[MAX_WAYPOINTS];
-
-int wp_index = 0;
-int wp_count = 0;
+extern ros::Publisher wp_pub;
 
 bool drive = false;
 bool waypointBufferIsReady = false;
@@ -66,7 +64,6 @@ void decodeWaypoints() {
   int len = waypointBuffer.size();
 
   for(int i = 0; i < len; i += 8) {
-    if(wp_count >= MAX_WAYPOINTS) break;
 
     int32_t latE7 = data[i] | (data[i+1] << 8) | (data[i+2] << 16) | (data[i+3] << 24);
 
@@ -76,11 +73,13 @@ void decodeWaypoints() {
 
     float lng = lngE7/1e7;
 
-    wp_list[wp_count].lat = lat;
+    wp_msg.lat = lat;
 
-    wp_list[wp_count].lng = lng;
+    wp_msg.lng = lng;
 
-    wp_count++;
+    wp_pub.publish(&wp_msg);
+
+    delay(5);
 
     nh.spinOnce();
   }

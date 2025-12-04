@@ -8,18 +8,6 @@
 #define SERVICE_UUID "e4013106-3f4c-4604-ba59-4679b7096414"
 #define WRITE_CHAR_UUID "bb65fda4-7723-497f-a10b-6b0c72896d65"
 
-#define MAX_WAYPOINTS 20
-
-struct WaypointList {
-  float lat;
-  float lng;
-};
-
-extern WaypointList wp_list[MAX_WAYPOINTS];
-
-extern int wp_index;
-extern int wp_count;
-
 extern bool drive;
 extern bool waypointBufferIsReady;
 

@@ -6,9 +6,9 @@
 
 ros::NodeHandle nh;
 
-custom_msgs::Waypoint wp_msg;
-
 std_msgs::Bool drive_msg;
+
+custom_msgs::Waypoint wp_msg;
 
 ros::Publisher wp_pub("/navigation/goal", &wp_msg);
 
@@ -31,9 +31,7 @@ void setup() {
 void loop() {
   if (!waypointBuffer.empty() && waypointBufferIsReady) {
     decodeWaypoints();
-
     waypointBuffer = "";
-
     waypointBufferIsReady = false;
   }
 
