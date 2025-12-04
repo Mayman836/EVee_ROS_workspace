@@ -1,14 +1,18 @@
 #include <Arduino.h>
 #include <ros.h>
 #include <custom_msgs/Waypoint.h>
-#include <BluetoothFunc.h>
-#include <BluetoothConfig.h>
+#include <std_msgs/Bool.h>
+#include <BluetoothNode.h>
 
 ros::NodeHandle nh;
 
 custom_msgs::Waypoint wp_msg;
 
-ros::Publisher pub("/navigation/goal", &wp_msg);
+std_msgs::Bool drive_msg;
+
+ros::Publisher wp_pub("/navigation/goal", &wp_msg);
+
+ros::Publisher drive_pub("/navigation/drive", &drive_msg);
 
 void setup() {
   Serial.begin(115200);
@@ -19,7 +23,9 @@ void setup() {
 
   nh.initNode();
 
-  nh.advertise(pub);
+  nh.advertise(wp_pub);
+
+  nh.advertise(drive_pub);
 }
 
 void loop() {
@@ -30,6 +36,10 @@ void loop() {
 
     waypointBufferIsReady = false;
   }
+
+  drive_msg.data = drive;
+
+  drive_pub.publish(&drive_msg);
 
   delay(5);
 
