@@ -37,8 +37,13 @@ int main(int argc, char **argv)
 
     if(!frame.empty()) {
       sensor_msgs::ImagePtr img_msg;
+
+      std_msgs::Header header;
+
+      header.stamp = ros::Time::now();
+      header.frame_id = "camera_link";
       
-      img_msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", frame).toImageMsg();
+      img_msg = cv_bridge::CvImage(header, "bgr8", frame).toImageMsg();
 
       img_pub.publish(img_msg);
     } else {
