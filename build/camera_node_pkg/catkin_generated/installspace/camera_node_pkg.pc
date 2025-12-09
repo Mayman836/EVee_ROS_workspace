@@ -1,0 +1,8 @@
+prefix=/home/dodo/ROS/WS/evee_ws/install
+
+Name: camera_node_pkg
+Description: Description of camera_node_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: cv_bridge image_transport roscpp sensor_msgs std_msgs

@@ -1,2 +1,2 @@
-custom_msgs:ekf_localization_node_pkg:yolo_node_pkg
+camera_node_pkg:custom_msgs:ekf_localization_node_pkg:yolo_node_pkg
 -DCATKIN_DEVEL_PREFIX=/home/dodo/ROS/WS/evee_ws/devel -DCMAKE_INSTALL_PREFIX=/home/dodo/ROS/WS/evee_ws/install -G Unix Makefiles

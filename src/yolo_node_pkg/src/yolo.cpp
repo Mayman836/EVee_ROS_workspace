@@ -8,7 +8,9 @@ ros::Publisher yolo_pub;
 ros::Subscriber img_sub;
 
 void yoloCallBack(const sensor_msgs::Image::ConstPtr& img_msg) {
-  cv::Mat img = cv_bridge::toCvCopy(img_msg, "bgr8")->image;
+  cv_bridge::CvImagePtr cv_ptr;
+  cv_ptr = cv_bridge::toCvCopy(img_msg, "bgr8");
+  cv::Mat img = cv_ptr->image;
 
   vision_msgs::Detection2DArray yolo_msg;
 
@@ -19,15 +21,7 @@ void yoloCallBack(const sensor_msgs::Image::ConstPtr& img_msg) {
 
   det.header = yolo_msg.header;
 
-  // det.bbox.center.x = 100;
-  // det.bbox.center.y = 120;
-  // det.bbox.size_x = 80;
-  // det.bbox.size_y = 60;
-
   vision_msgs::ObjectHypothesisWithPose hyp;
-  
-  // hyp.id = 0;
-  // hyp.score = 0.95;
 
   det.results.push_back(hyp);
   yolo_msg.detections.push_back(det);

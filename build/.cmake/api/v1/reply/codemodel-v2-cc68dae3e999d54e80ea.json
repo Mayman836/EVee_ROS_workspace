@@ -11,7 +11,8 @@
 						1,
 						4,
 						5,
-						6
+						6,
+						7
 					],
 					"hasInstallRule" : true,
 					"minimumCMakeVersion" : 
@@ -22,11 +23,11 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						7,
-						19,
+						8,
 						20,
-						46,
-						57
+						21,
+						47,
+						58
 					]
 				},
 				{
@@ -58,8 +59,8 @@
 					"source" : "/usr/src/googletest/googlemock",
 					"targetIndexes" : 
 					[
-						27,
-						28
+						28,
+						29
 					]
 				},
 				{
@@ -73,8 +74,8 @@
 					"source" : "/usr/src/googletest/googletest",
 					"targetIndexes" : 
 					[
-						29,
-						30
+						30,
+						31
 					]
 				},
 				{
@@ -91,7 +92,6 @@
 					[
 						0,
 						1,
-						8,
 						9,
 						10,
 						11,
@@ -102,11 +102,12 @@
 						16,
 						17,
 						18,
-						52,
+						19,
 						53,
 						54,
 						55,
-						56
+						56,
+						57
 					]
 				},
 				{
@@ -126,13 +127,12 @@
 						4,
 						5,
 						6,
-						21,
 						22,
 						23,
 						24,
 						25,
 						26,
-						31,
+						27,
 						32,
 						33,
 						34,
@@ -147,11 +147,27 @@
 						43,
 						44,
 						45,
-						47,
+						46,
 						48,
 						49,
 						50,
-						51
+						51,
+						52
+					]
+				},
+				{
+					"build" : "camera_node_pkg",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.2"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 6,
+					"source" : "camera_node_pkg",
+					"targetIndexes" : 
+					[
+						7
 					]
 				},
 				{
@@ -162,16 +178,16 @@
 						"string" : "3.0.2"
 					},
 					"parentIndex" : 0,
-					"projectIndex" : 6,
+					"projectIndex" : 7,
 					"source" : "yolo_node_pkg",
 					"targetIndexes" : 
 					[
-						58,
 						59,
 						60,
 						61,
 						62,
-						63
+						63,
+						64
 					]
 				}
 			],
@@ -184,7 +200,8 @@
 						1,
 						4,
 						5,
-						6
+						6,
+						7
 					],
 					"directoryIndexes" : 
 					[
@@ -193,11 +210,11 @@
 					"name" : "Project",
 					"targetIndexes" : 
 					[
-						7,
-						19,
+						8,
 						20,
-						46,
-						57
+						21,
+						47,
+						58
 					]
 				},
 				{
@@ -225,8 +242,8 @@
 					"parentIndex" : 1,
 					"targetIndexes" : 
 					[
-						27,
-						28
+						28,
+						29
 					]
 				},
 				{
@@ -238,8 +255,8 @@
 					"parentIndex" : 2,
 					"targetIndexes" : 
 					[
-						29,
-						30
+						30,
+						31
 					]
 				},
 				{
@@ -253,7 +270,6 @@
 					[
 						0,
 						1,
-						8,
 						9,
 						10,
 						11,
@@ -264,11 +280,12 @@
 						16,
 						17,
 						18,
-						52,
+						19,
 						53,
 						54,
 						55,
-						56
+						56,
+						57
 					]
 				},
 				{
@@ -285,13 +302,12 @@
 						4,
 						5,
 						6,
-						21,
 						22,
 						23,
 						24,
 						25,
 						26,
-						31,
+						27,
 						32,
 						33,
 						34,
@@ -306,11 +322,12 @@
 						43,
 						44,
 						45,
-						47,
+						46,
 						48,
 						49,
 						50,
-						51
+						51,
+						52
 					]
 				},
 				{
@@ -318,16 +335,28 @@
 					[
 						6
 					],
+					"name" : "camera_node_pkg",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						7
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
 					"name" : "yolo_node_pkg",
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						58,
 						59,
 						60,
 						61,
 						62,
-						63
+						63,
+						64
 					]
 				}
 			],
@@ -381,6 +410,13 @@
 					"jsonFile" : "target-actionlib_msgs_generate_messages_py-2d079d9aefc8c109958b.json",
 					"name" : "actionlib_msgs_generate_messages_py",
 					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "camera_node::@634713b0a5f632a904ea",
+					"jsonFile" : "target-camera_node-3e2692ee3766e6260c73.json",
+					"name" : "camera_node",
+					"projectIndex" : 6
 				},
 				{
 					"directoryIndex" : 0,
@@ -740,46 +776,46 @@
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 6,
+					"directoryIndex" : 7,
 					"id" : "vision_msgs_generate_messages_cpp::@5ebf5d36c53502891a41",
 					"jsonFile" : "target-vision_msgs_generate_messages_cpp-cabec32ca5166a1c6358.json",
 					"name" : "vision_msgs_generate_messages_cpp",
-					"projectIndex" : 6
+					"projectIndex" : 7
 				},
 				{
-					"directoryIndex" : 6,
+					"directoryIndex" : 7,
 					"id" : "vision_msgs_generate_messages_eus::@5ebf5d36c53502891a41",
 					"jsonFile" : "target-vision_msgs_generate_messages_eus-2633c26faefa19195872.json",
 					"name" : "vision_msgs_generate_messages_eus",
-					"projectIndex" : 6
+					"projectIndex" : 7
 				},
 				{
-					"directoryIndex" : 6,
+					"directoryIndex" : 7,
 					"id" : "vision_msgs_generate_messages_lisp::@5ebf5d36c53502891a41",
 					"jsonFile" : "target-vision_msgs_generate_messages_lisp-61c57ee376902b3ba97d.json",
 					"name" : "vision_msgs_generate_messages_lisp",
-					"projectIndex" : 6
+					"projectIndex" : 7
 				},
 				{
-					"directoryIndex" : 6,
+					"directoryIndex" : 7,
 					"id" : "vision_msgs_generate_messages_nodejs::@5ebf5d36c53502891a41",
 					"jsonFile" : "target-vision_msgs_generate_messages_nodejs-6ea2af14eb706f8299f6.json",
 					"name" : "vision_msgs_generate_messages_nodejs",
-					"projectIndex" : 6
+					"projectIndex" : 7
 				},
 				{
-					"directoryIndex" : 6,
+					"directoryIndex" : 7,
 					"id" : "vision_msgs_generate_messages_py::@5ebf5d36c53502891a41",
 					"jsonFile" : "target-vision_msgs_generate_messages_py-0501327146283162f3b4.json",
 					"name" : "vision_msgs_generate_messages_py",
-					"projectIndex" : 6
+					"projectIndex" : 7
 				},
 				{
-					"directoryIndex" : 6,
+					"directoryIndex" : 7,
 					"id" : "yolo_node::@5ebf5d36c53502891a41",
 					"jsonFile" : "target-yolo_node-7a8a065bb0b43ea4a9aa.json",
 					"name" : "yolo_node",
-					"projectIndex" : 6
+					"projectIndex" : 7
 				}
 			]
 		}

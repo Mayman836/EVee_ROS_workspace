@@ -56,6 +56,7 @@ CMAKE_BINARY_DIR = /home/dodo/ROS/WS/evee_ws/build
 all: gtest/all
 all: custom_msgs/all
 all: ekf_localization_node_pkg/all
+all: camera_node_pkg/all
 all: yolo_node_pkg/all
 
 .PHONY : all
@@ -64,6 +65,7 @@ all: yolo_node_pkg/all
 preinstall: gtest/preinstall
 preinstall: custom_msgs/preinstall
 preinstall: ekf_localization_node_pkg/preinstall
+preinstall: camera_node_pkg/preinstall
 preinstall: yolo_node_pkg/preinstall
 
 .PHONY : preinstall
@@ -77,9 +79,28 @@ clean: CMakeFiles/download_extra_data.dir/clean
 clean: gtest/clean
 clean: custom_msgs/clean
 clean: ekf_localization_node_pkg/clean
+clean: camera_node_pkg/clean
 clean: yolo_node_pkg/clean
 
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory camera_node_pkg
+
+# Recursive "all" directory target.
+camera_node_pkg/all: camera_node_pkg/CMakeFiles/camera_node.dir/all
+
+.PHONY : camera_node_pkg/all
+
+# Recursive "preinstall" directory target.
+camera_node_pkg/preinstall:
+
+.PHONY : camera_node_pkg/preinstall
+
+# Recursive "clean" directory target.
+camera_node_pkg/clean: camera_node_pkg/CMakeFiles/camera_node.dir/clean
+
+.PHONY : camera_node_pkg/clean
 
 #=============================================================================
 # Directory level rules for directory custom_msgs
@@ -387,7 +408,7 @@ gtest/googlemock/CMakeFiles/gmock_main.dir/all: gtest/googlemock/CMakeFiles/gmoc
 gtest/googlemock/CMakeFiles/gmock_main.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=13,14 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=15,16 "Built target gmock_main"
 .PHONY : gtest/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -414,7 +435,7 @@ gtest/googlemock/CMakeFiles/gmock_main.dir/clean:
 gtest/googlemock/CMakeFiles/gmock.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/depend
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=11,12 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=13,14 "Built target gmock"
 .PHONY : gtest/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
@@ -441,7 +462,7 @@ gtest/googlemock/CMakeFiles/gmock.dir/clean:
 gtest/googletest/CMakeFiles/gtest_main.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest_main.dir/build.make gtest/googletest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest_main.dir/build.make gtest/googletest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=17,18 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=19,20 "Built target gtest_main"
 .PHONY : gtest/googletest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -468,7 +489,7 @@ gtest/googletest/CMakeFiles/gtest_main.dir/clean:
 gtest/googletest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=15,16 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=17,18 "Built target gtest"
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -496,7 +517,7 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/all: custom_msgs/CMa
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/all: custom_msgs/CMakeFiles/_custom_msgs_generate_messages_check_deps_Waypoint.dir/all
 	$(MAKE) -f custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/build.make custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/depend
 	$(MAKE) -f custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/build.make custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=6,7,8 "Built target custom_msgs_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=8,9,10 "Built target custom_msgs_generate_messages_py"
 .PHONY : custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
@@ -551,7 +572,7 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_nodejs.dir/all: custom_msgs
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_nodejs.dir/all: custom_msgs/CMakeFiles/_custom_msgs_generate_messages_check_deps_Waypoint.dir/all
 	$(MAKE) -f custom_msgs/CMakeFiles/custom_msgs_generate_messages_nodejs.dir/build.make custom_msgs/CMakeFiles/custom_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) -f custom_msgs/CMakeFiles/custom_msgs_generate_messages_nodejs.dir/build.make custom_msgs/CMakeFiles/custom_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=5 "Built target custom_msgs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=7 "Built target custom_msgs_generate_messages_nodejs"
 .PHONY : custom_msgs/CMakeFiles/custom_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
@@ -633,7 +654,7 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/all: custom_msgs/CM
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/all: custom_msgs/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 	$(MAKE) -f custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/build.make custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) -f custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/build.make custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=1 "Built target custom_msgs_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=3 "Built target custom_msgs_generate_messages_cpp"
 .PHONY : custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -769,7 +790,7 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus.dir/all: custom_msgs/CM
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus.dir/all: custom_msgs/CMakeFiles/_custom_msgs_generate_messages_check_deps_Waypoint.dir/all
 	$(MAKE) -f custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus.dir/build.make custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus.dir/depend
 	$(MAKE) -f custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus.dir/build.make custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=2,3 "Built target custom_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=4,5 "Built target custom_msgs_generate_messages_eus"
 .PHONY : custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
@@ -963,7 +984,7 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/all: custom_msgs/C
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/all: custom_msgs/CMakeFiles/_custom_msgs_generate_messages_check_deps_Waypoint.dir/all
 	$(MAKE) -f custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/build.make custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) -f custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/build.make custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=4 "Built target custom_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=6 "Built target custom_msgs_generate_messages_lisp"
 .PHONY : custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1395,7 +1416,7 @@ ekf_localization_node_pkg/CMakeFiles/roscpp_generate_messages_nodejs.dir/clean:
 ekf_localization_node_pkg/CMakeFiles/ekf_localization_node.dir/all:
 	$(MAKE) -f ekf_localization_node_pkg/CMakeFiles/ekf_localization_node.dir/build.make ekf_localization_node_pkg/CMakeFiles/ekf_localization_node.dir/depend
 	$(MAKE) -f ekf_localization_node_pkg/CMakeFiles/ekf_localization_node.dir/build.make ekf_localization_node_pkg/CMakeFiles/ekf_localization_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=9,10 "Built target ekf_localization_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=11,12 "Built target ekf_localization_node"
 .PHONY : ekf_localization_node_pkg/CMakeFiles/ekf_localization_node.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1821,13 +1842,40 @@ ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
 .PHONY : ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
 
 #=============================================================================
+# Target rules for target camera_node_pkg/CMakeFiles/camera_node.dir
+
+# All Build rule for target.
+camera_node_pkg/CMakeFiles/camera_node.dir/all:
+	$(MAKE) -f camera_node_pkg/CMakeFiles/camera_node.dir/build.make camera_node_pkg/CMakeFiles/camera_node.dir/depend
+	$(MAKE) -f camera_node_pkg/CMakeFiles/camera_node.dir/build.make camera_node_pkg/CMakeFiles/camera_node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=1,2 "Built target camera_node"
+.PHONY : camera_node_pkg/CMakeFiles/camera_node.dir/all
+
+# Build rule for subdir invocation for target.
+camera_node_pkg/CMakeFiles/camera_node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dodo/ROS/WS/evee_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 camera_node_pkg/CMakeFiles/camera_node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dodo/ROS/WS/evee_ws/build/CMakeFiles 0
+.PHONY : camera_node_pkg/CMakeFiles/camera_node.dir/rule
+
+# Convenience name for target.
+camera_node: camera_node_pkg/CMakeFiles/camera_node.dir/rule
+
+.PHONY : camera_node
+
+# clean rule for target.
+camera_node_pkg/CMakeFiles/camera_node.dir/clean:
+	$(MAKE) -f camera_node_pkg/CMakeFiles/camera_node.dir/build.make camera_node_pkg/CMakeFiles/camera_node.dir/clean
+.PHONY : camera_node_pkg/CMakeFiles/camera_node.dir/clean
+
+#=============================================================================
 # Target rules for target yolo_node_pkg/CMakeFiles/yolo_node.dir
 
 # All Build rule for target.
 yolo_node_pkg/CMakeFiles/yolo_node.dir/all:
 	$(MAKE) -f yolo_node_pkg/CMakeFiles/yolo_node.dir/build.make yolo_node_pkg/CMakeFiles/yolo_node.dir/depend
 	$(MAKE) -f yolo_node_pkg/CMakeFiles/yolo_node.dir/build.make yolo_node_pkg/CMakeFiles/yolo_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=19,20 "Built target yolo_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=21,22 "Built target yolo_node"
 .PHONY : yolo_node_pkg/CMakeFiles/yolo_node.dir/all
 
 # Build rule for subdir invocation for target.

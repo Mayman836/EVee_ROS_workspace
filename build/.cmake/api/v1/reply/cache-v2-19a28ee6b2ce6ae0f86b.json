@@ -1183,7 +1183,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "7"
+			"value" : "8"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -2244,6 +2244,30 @@
 			],
 			"type" : "PATH",
 			"value" : "/opt/ros/noetic/share/actionlib_msgs/cmake"
+		},
+		{
+			"name" : "camera_node_pkg_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/dodo/ROS/WS/evee_ws/build/camera_node_pkg"
+		},
+		{
+			"name" : "camera_node_pkg_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/dodo/ROS/WS/evee_ws/src/camera_node_pkg"
 		},
 		{
 			"name" : "catkin_DIR",
