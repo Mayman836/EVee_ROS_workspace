@@ -56,5 +56,6 @@
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
-  "cmake.sourceDirectory": "/home/dodo/ROS/WS/evee_ws/src/yolo_node_pkg"
+  "cmake.sourceDirectory": "/home/dodo/ROS/WS/evee_ws/src/yolo_node_pkg",
+  "ROS2.distro": "noetic"
 }

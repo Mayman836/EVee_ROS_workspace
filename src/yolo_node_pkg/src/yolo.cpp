@@ -1,93 +1,175 @@
 #include <ros/ros.h>
+#include <ros/package.h>
 #include <sensor_msgs/Image.h>
-#include <vision_msgs/Detection2DArray.h>
-#include <opencv2/opencv.hpp>
-#include <opencv2/dnn.hpp>
 #include <cv_bridge/cv_bridge.h>
+#include <opencv2/opencv.hpp>
+#include <onnxruntime_cxx_api.h>
+#include <vector>
+#include <string>
 
-ros::Publisher yolo_pub;
-ros::Subscriber img_sub;
+struct LetterboxInfo {
+    float scale;
+    int pad_x;
+    int pad_y;
+};
 
-cv::dnn::Net yolo_net;
+LetterboxInfo letterbox(const cv::Mat& src, cv::Mat& dst, int target_size = 640) {
+    int w = src.cols;
+    int h = src.rows;
 
-float confThreshold = 0.5;
-float nmsThreshold = 0.4;
+    float scale = std::min(target_size/(float)w, target_size/(float)h);
 
-void yoloCallBack(const sensor_msgs::Image::ConstPtr& img_msg) {
-  cv_bridge::CvImagePtr cv_ptr;
-  cv_ptr = cv_bridge::toCvCopy(img_msg, "bgr8");
-  cv::Mat frame = cv_ptr->image;
+    int new_w = int(w * scale);
+    int new_h = int(h * scale);
 
-  cv::Mat blob = cv::dnn::blobFromImage(frame, 1/255.0, cv::Size(640, 640), cv::Scalar(0, 0, 0), true, false);
+    cv::resize(src, dst, cv::Size(new_w, new_h));
 
-  yolo_net.setInput(blob);
-  std::vector<cv::Mat> outputs;
-  yolo_net.forward(outputs, yolo_net.getUnconnectedOutLayersNames());
+    int pad_x = (target_size - new_w) / 2;
+    int pad_y = (target_size - new_h) / 2;
 
-  vision_msgs::Detection2DArray yolo_msg;
+    cv::copyMakeBorder(dst, dst,
+        pad_y, target_size - new_h - pad_y,
+        pad_x, target_size - new_w - pad_x,
+        cv::BORDER_CONSTANT,
+        cv::Scalar(114, 114, 114));
 
-  yolo_msg.header = img_msg->header;
-
-  cv::Mat out = outputs[0];
-  const int rows = out.size[1];
-
-  std::vector<cv::Rect> boxes;
-  std::vector<float> scores;
-
-  for (int i = 0; i < rows; i++) {
-    float conf = out.at<float>(0, i, 4);
-    if (conf < confThreshold) continue;
-
-    float cx = out.at<float>(0, i, 0) * frame.cols;
-    float cy = out.at<float>(0, i, 1) * frame.rows;
-    float w  = out.at<float>(0, i, 2) * frame.cols;
-    float h  = out.at<float>(0, i, 3) * frame.rows;
-
-    int left = (cx - w/2);
-    int top  = (cy - h/2);
-
-    boxes.emplace_back(left, top, w, h);
-    scores.push_back(conf);
-  }
-
-  std::vector<int> indices;
-  cv::dnn::NMSBoxes(boxes, scores, confThreshold, nmsThreshold, indices);
-
-
-
-  for (int idx : indices) {
-    vision_msgs::Detection2D det;
-    det.header = yolo_msg.header;
-
-    det.bbox.center.x = boxes[idx].x + boxes[idx].width/2;
-    det.bbox.center.y = boxes[idx].y + boxes[idx].height/2;
-    det.bbox.size_x = boxes[idx].width;
-    det.bbox.size_y = boxes[idx].height;
-
-    vision_msgs::ObjectHypothesisWithPose hyp;
-    hyp.score = scores[idx];
-    det.results.push_back(hyp);
-
-    yolo_msg.detections.push_back(det);
-  }
-
-  yolo_pub.publish(yolo_msg);
+    return {scale, pad_x, pad_y};
 }
 
-int main(int argc, char **argv)
+Ort::Env ort_env(ORT_LOGGING_LEVEL_WARNING, "yolo");
+Ort::Session* ort_session = nullptr;
+Ort::SessionOptions ort_session_options;
+
+bool loadModel(const std::string& model_path)
 {
-  ros::init(argc, argv, "yolo_node");
+    try{
+        ort_session_options.SetIntraOpNumThreads(1);
+        ort_session_options.SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_EXTENDED);
+        ort_session = new Ort::Session(ort_env, model_path.c_str(), ort_session_options);
 
-  ros::NodeHandle nh;
+        ROS_INFO("YOLO ONNX model loaded successfully");
+        return true;
+    }
+    catch (const Ort::Exception& e) {
+        ROS_ERROR("Failed to load ONNX model: %s", e.what());
+        return false;
+    }
+}
 
-  yolo_net = cv::dnn::readNet("model.onnx");
-  yolo_net.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
-  yolo_net.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
+ros::Subscriber img_sub;
 
-  yolo_pub = nh.advertise<vision_msgs::Detection2DArray>("/vision/detections", 1);
-  img_sub = nh.subscribe("/camera/image_raw", 1, yoloCallBack);
+void yoloCallback(const sensor_msgs::ImageConstPtr& img_msg)
+{
+    cv::Mat frame = cv_bridge::toCvShare(img_msg, "bgr8")->image;
+    if (frame.empty()) return;
 
-  ros::spin();
+    cv::Mat resized;
+    LetterboxInfo lb = letterbox(frame, resized, 640);
 
-  return 0;
+    cv::cvtColor(resized, resized, cv::COLOR_BGR2RGB);
+
+    resized.convertTo(resized, CV_32F, 1.0 / 255.0);
+
+    std::vector<float> input_tensor(1 * 3 * 640 * 640);
+
+    int idx = 0;
+    for (int c = 0; c < 3; c++)
+        for (int y = 0; y < 640; y++)
+            for (int x = 0; x < 640; x++)
+                input_tensor[idx++] = resized.at<cv::Vec3f>(y, x)[c];
+
+    std::array<int64_t, 4> input_shape{1, 3, 640, 640};
+    Ort::MemoryInfo mem_info =
+        Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
+
+    Ort::Value input_tensor_ort =
+        Ort::Value::CreateTensor<float>(
+            mem_info,
+            input_tensor.data(),
+            input_tensor.size(),
+            input_shape.data(),
+            input_shape.size()
+        );
+
+    Ort::AllocatorWithDefaultOptions allocator;
+
+    auto input_name_alloc = ort_session->GetInputNameAllocated(0, allocator);
+    auto output_name_alloc = ort_session->GetOutputNameAllocated(0, allocator);
+
+    const char* input_name = input_name_alloc.get();
+    const char* output_name = output_name_alloc.get();
+
+    auto outputs = ort_session->Run(
+        Ort::RunOptions{nullptr},
+        &input_name,
+        &input_tensor_ort,
+        1,
+        &output_name,
+        1
+    );
+
+    auto info = outputs[0].GetTensorTypeAndShapeInfo();
+    auto shape = info.GetShape();
+
+    int num_vals = shape[1];
+    int num_preds = shape[2];
+
+    float* output = outputs[0].GetTensorMutableData<float>();
+
+    ROS_INFO_THROTTLE(
+        1.0,
+        "YOLO preds = %d, values = %d",
+        num_preds, num_vals
+    );
+
+    float conf_thresh = 0.25f;
+    int detections = 0;
+
+    for(int i = 0; i < num_preds; i++) {
+
+        float cx = output[0 * num_preds + i];
+        float cy = output[1 * num_preds + i];
+        float w = output[2 * num_preds + i];
+        float h = output[3 * num_preds + i];
+
+        float best_score = 0.f;
+        int best_class = -1;
+
+        for(int c = 0; c < 3; c++) {
+            float score = output[(4 + c) * num_preds + i];
+            if (score > best_score) {
+                best_score = score;
+                best_class = c;
+            }
+        }
+
+        if (best_score > conf_thresh) {
+            ROS_INFO("CONF %.2f | class %d", best_score, best_class);
+        }
+        else {
+            continue;
+        }
+
+        detections++;
+    }
+
+    ROS_INFO_THROTTLE(1.0, "Detections (raw): %d", detections);
+}
+
+int main(int argc, char** argv)
+{
+    ros::init(argc, argv, "yolo_node");
+    ros::NodeHandle nh;
+
+    if(!loadModel("/home/dodo/ROS/WS/evee_ws/src/yolo_node_pkg/models/best.onnx")) {
+        ROS_FATAL("Could not start YOLO node");
+        return -1;
+    }
+
+    img_sub = nh.subscribe("/camera/image_raw", 1, yoloCallback);
+
+    ROS_INFO("YOLO node started (image subscriber OK)");
+
+    ros::spin();
+    return 0;
 }

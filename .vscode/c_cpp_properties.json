@@ -6,7 +6,8 @@
         "${workspaceFolder}/**",
         "${workspaceFolder}/devel/include/**",
         "/opt/ros/noetic/include/**",
-        "/usr/include/opencv4"
+        "/usr/include/opencv4",
+        "/usr/local/onnxruntime/include"
       ],
       "compilerPath": "/usr/bin/gcc",
       "cStandard": "${default}",

@@ -3,16 +3,6 @@
 
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /home/dodo/ROS/WS/evee_ws/src/camera_node_pkg/src/camera.cpp
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/cv_bridge/cv_bridge.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/image_transport/camera_publisher.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/image_transport/camera_subscriber.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/image_transport/exception.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/image_transport/exports.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/image_transport/image_transport.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/image_transport/loader_fwds.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/image_transport/publisher.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/image_transport/single_subscriber_publisher.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/image_transport/subscriber.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/image_transport/transport_hints.h
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/ros/advertise_options.h
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/ros/advertise_service_options.h
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/ros/assert.h
@@ -69,10 +59,8 @@ camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/inc
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/ros/wall_timer.h
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/ros/wall_timer_options.h
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/rosconsole/macros_generated.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/sensor_msgs/CameraInfo.h
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/sensor_msgs/CompressedImage.h
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/sensor_msgs/Image.h
-camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/sensor_msgs/RegionOfInterest.h
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/sensor_msgs/image_encodings.h
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/std_msgs/Header.h
 camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o: /opt/ros/noetic/include/xmlrpcpp/XmlRpcDecl.h
