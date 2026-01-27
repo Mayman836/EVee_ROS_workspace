@@ -1,10 +1,14 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Image.h>
+#include <vision_msgs/Detection2DArray.h>
+#include <vision_msgs/Detection2D.h>
+#include <vision_msgs/ObjectHypothesisWithPose.h>
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/opencv.hpp>
 #include <onnxruntime_cxx_api.h>
 #include <vector>
 #include <string>
+#include <cmath>
 
 struct LetterboxInfo {
     float scale;
@@ -58,8 +62,7 @@ bool loadModel(const std::string& model_path)
         ort_session_options.SetIntraOpNumThreads(1);
         ort_session_options.SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_EXTENDED);
         ort_session = new Ort::Session(ort_env, model_path.c_str(), ort_session_options);
-
-        ROS_INFO("YOLO ONNX model loaded successfully");
+        
         return true;
     }
     catch (const Ort::Exception& e) {
@@ -75,6 +78,7 @@ float IoU(const cv::Rect& a, const cv::Rect& b) {
 }
 
 ros::Subscriber img_sub;
+ros::Publisher yolo_pub;
 
 void yoloCallback(const sensor_msgs::ImageConstPtr& img_msg)
 {
@@ -135,7 +139,7 @@ void yoloCallback(const sensor_msgs::ImageConstPtr& img_msg)
     float* output = outputs[0].GetTensorMutableData<float>();
 
     float conf_thresh = 0.25f;
-    float nms_thresh = 0.45;
+    float nms_thresh = 0.45f;
 
     std::vector<cv::Rect> boxes;
     std::vector<float> scores;
@@ -266,12 +270,35 @@ void yoloCallback(const sensor_msgs::ImageConstPtr& img_msg)
         tracked.end()
     );
 
+    vision_msgs::Detection2DArray yolo_array;
+    yolo_array.header = img_msg->header;
+
+    for (const auto& t : tracked) {
+        vision_msgs::Detection2D det;
+        det.header = yolo_array.header;
+
+        det.bbox.center.x = t.box.x + t.box.width / 2.0;
+        det.bbox.center.y = t.box.y + t.box.height / 2.0;
+        det.bbox.size_x = t.box.width;
+        det.bbox.size_y = t.box.height;
+
+        vision_msgs::ObjectHypothesisWithPose hyp;
+        hyp.id = t.class_id;
+        hyp.score = t.score;
+
+        det.results.push_back(hyp);
+
+        yolo_array.detections.push_back(det);
+    }
+
+    yolo_pub.publish(yolo_array);
+
    for (size_t i = 0; i < tracked.size(); i++) {
         const auto& t = tracked[i];
 
         cv::rectangle(frame, t.box, cv::Scalar(0, 255, 0), 2);
 
-        std::string label = "ID " + std::to_string(i) + " C" + std::to_string(t.class_id);
+        std::string label = std::to_string(t.class_id) + " " + std::to_string(std::round(t.score * 100.0) / 100.0);
 
         cv::putText(
             frame,
@@ -298,9 +325,9 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    img_sub = nh.subscribe("/camera/image_raw", 1, yoloCallback);
+    yolo_pub = nh.advertise<vision_msgs::Detection2DArray>("/vision/detections", 10);
 
-    ROS_INFO("YOLO node started (image subscriber OK)");
+    img_sub = nh.subscribe("/camera/image_raw", 1, yoloCallback);
 
     ros::spin();
     return 0;

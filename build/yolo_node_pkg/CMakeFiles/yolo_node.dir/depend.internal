@@ -8,6 +8,11 @@ yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o
  /home/dodo/onnxruntime-linux-x64-1.16.3/include/onnxruntime_cxx_inline.h
  /home/dodo/onnxruntime-linux-x64-1.16.3/include/onnxruntime_float16.h
  /opt/ros/noetic/include/cv_bridge/cv_bridge.h
+ /opt/ros/noetic/include/geometry_msgs/Point.h
+ /opt/ros/noetic/include/geometry_msgs/Pose.h
+ /opt/ros/noetic/include/geometry_msgs/Pose2D.h
+ /opt/ros/noetic/include/geometry_msgs/PoseWithCovariance.h
+ /opt/ros/noetic/include/geometry_msgs/Quaternion.h
  /opt/ros/noetic/include/ros/advertise_options.h
  /opt/ros/noetic/include/ros/advertise_service_options.h
  /opt/ros/noetic/include/ros/assert.h
@@ -68,6 +73,10 @@ yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o
  /opt/ros/noetic/include/sensor_msgs/Image.h
  /opt/ros/noetic/include/sensor_msgs/image_encodings.h
  /opt/ros/noetic/include/std_msgs/Header.h
+ /opt/ros/noetic/include/vision_msgs/BoundingBox2D.h
+ /opt/ros/noetic/include/vision_msgs/Detection2D.h
+ /opt/ros/noetic/include/vision_msgs/Detection2DArray.h
+ /opt/ros/noetic/include/vision_msgs/ObjectHypothesisWithPose.h
  /opt/ros/noetic/include/xmlrpcpp/XmlRpcDecl.h
  /opt/ros/noetic/include/xmlrpcpp/XmlRpcValue.h
  /usr/include/opencv4/opencv2/calib3d.hpp
