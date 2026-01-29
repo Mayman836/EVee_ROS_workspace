@@ -1,0 +1,20 @@
+device: /dev/ttyUSB0
+baudrate: 9600
+
+uart1:
+  set: false
+
+usb:
+  set: false
+
+publish:
+  nav:
+    pvt: true
+  fix: true
+  velned: true
+
+gnss:
+  gps: true
+  glonass: true
+  beidou: true
+  sbas: true
