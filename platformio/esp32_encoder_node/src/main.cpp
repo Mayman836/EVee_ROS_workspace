@@ -6,7 +6,7 @@
 volatile long encoderCount = 0;
 
 void IRAM_ATTR isrA() {
-  if (digitalRead(ENC_B))
+  if (!digitalRead(ENC_B))
     encoderCount++;
   else
     encoderCount--;
@@ -15,10 +15,10 @@ void IRAM_ATTR isrA() {
 void setup() {
   Serial.begin(115200);
 
-  pinMode(ENC_A, INPUT_PULLUP);
-  pinMode(ENC_B, INPUT_PULLUP);
+  pinMode(ENC_A, INPUT);
+  pinMode(ENC_B, INPUT);
 
-  attachInterrupt(digitalPinToInterrupt(ENC_A), isrA, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ENC_A), isrA, RISING);
 }
 
 void loop() {
