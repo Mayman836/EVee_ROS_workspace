@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/dodo/ROS/WS/evee_ws/build
 include custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/progress.make
 
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp: /home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/Waypoint.lisp
+custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp: /home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/EncoderTicks.lisp
 
 
 /home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/Waypoint.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
@@ -61,8 +62,15 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp: /home/dodo/ROS/WS/eve
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from custom_msgs/Waypoint.msg"
 	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg -Icustom_msgs:/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg
 
+/home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/EncoderTicks.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/EncoderTicks.lisp: /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg
+/home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/EncoderTicks.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Lisp code from custom_msgs/EncoderTicks.msg"
+	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg -Icustom_msgs:/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg
+
 custom_msgs_generate_messages_lisp: custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp
 custom_msgs_generate_messages_lisp: /home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/Waypoint.lisp
+custom_msgs_generate_messages_lisp: /home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/EncoderTicks.lisp
 custom_msgs_generate_messages_lisp: custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/build.make
 
 .PHONY : custom_msgs_generate_messages_lisp

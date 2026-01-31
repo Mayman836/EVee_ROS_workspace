@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
-messages_str = "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg"
+messages_str = "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg;/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg"
 services_str = ""
 pkg_name = "custom_msgs"
 dependencies_str = "std_msgs"

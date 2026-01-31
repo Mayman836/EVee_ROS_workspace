@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/dodo/ROS/WS/evee_ws/build
 include custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/progress.make
 
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp: /home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/Waypoint.h
+custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp: /home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/EncoderTicks.h
 
 
 /home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/Waypoint.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
@@ -62,8 +63,16 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp: /home/dodo/ROS/WS/evee
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from custom_msgs/Waypoint.msg"
 	cd /home/dodo/ROS/WS/evee_ws/src/custom_msgs && /home/dodo/ROS/WS/evee_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg -Icustom_msgs:/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
 
+/home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/EncoderTicks.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/EncoderTicks.h: /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg
+/home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/EncoderTicks.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/EncoderTicks.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from custom_msgs/EncoderTicks.msg"
+	cd /home/dodo/ROS/WS/evee_ws/src/custom_msgs && /home/dodo/ROS/WS/evee_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg -Icustom_msgs:/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
+
 custom_msgs_generate_messages_cpp: custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp
 custom_msgs_generate_messages_cpp: /home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/Waypoint.h
+custom_msgs_generate_messages_cpp: /home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/EncoderTicks.h
 custom_msgs_generate_messages_cpp: custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/build.make
 
 .PHONY : custom_msgs_generate_messages_cpp

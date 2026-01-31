@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/dodo/ROS/WS/evee_ws/build
 include custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/progress.make
 
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py
+custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv/__init__.py
 
@@ -63,18 +64,27 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG custom_msgs/Waypoint"
 	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg -Icustom_msgs:/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg
 
+/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py: /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg
+/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG custom_msgs/EncoderTicks"
+	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg -Icustom_msgs:/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg
+
 /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for custom_msgs"
+/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for custom_msgs"
 	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg --initpy
 
 /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv/__init__.py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python srv __init__.py for custom_msgs"
+/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv/__init__.py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python srv __init__.py for custom_msgs"
 	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv --initpy
 
 custom_msgs_generate_messages_py: custom_msgs/CMakeFiles/custom_msgs_generate_messages_py
 custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py
+custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py
 custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py
 custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv/__init__.py
 custom_msgs_generate_messages_py: custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/build.make

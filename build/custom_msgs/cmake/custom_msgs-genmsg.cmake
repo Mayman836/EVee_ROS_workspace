@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "custom_msgs: 1 messages, 0 services")
+message(STATUS "custom_msgs: 2 messages, 0 services")
 
 set(MSG_I_FLAGS "-Icustom_msgs:/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg")
 
@@ -22,6 +22,11 @@ add_custom_target(_custom_msgs_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "custom_msgs" "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg" ""
 )
 
+get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
+add_custom_target(_custom_msgs_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "custom_msgs" "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" "std_msgs/Header"
+)
+
 #
 #  langs = gencpp;geneus;genlisp;gennodejs;genpy
 #
@@ -32,6 +37,12 @@ _generate_msg_cpp(custom_msgs
   "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg"
   "${MSG_I_FLAGS}"
   ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_cpp(custom_msgs
+  "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/custom_msgs
 )
 
@@ -51,6 +62,8 @@ add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_cpp
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_cpp _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_cpp _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(custom_msgs_gencpp)
@@ -65,6 +78,12 @@ _generate_msg_eus(custom_msgs
   "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg"
   "${MSG_I_FLAGS}"
   ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_eus(custom_msgs
+  "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/custom_msgs
 )
 
@@ -84,6 +103,8 @@ add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_eus
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_eus _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_eus _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(custom_msgs_geneus)
@@ -98,6 +119,12 @@ _generate_msg_lisp(custom_msgs
   "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg"
   "${MSG_I_FLAGS}"
   ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_lisp(custom_msgs
+  "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/custom_msgs
 )
 
@@ -117,6 +144,8 @@ add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_lis
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_lisp _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_lisp _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(custom_msgs_genlisp)
@@ -131,6 +160,12 @@ _generate_msg_nodejs(custom_msgs
   "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg"
   "${MSG_I_FLAGS}"
   ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_nodejs(custom_msgs
+  "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/custom_msgs
 )
 
@@ -150,6 +185,8 @@ add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_nod
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_nodejs _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_nodejs _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(custom_msgs_gennodejs)
@@ -164,6 +201,12 @@ _generate_msg_py(custom_msgs
   "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg"
   "${MSG_I_FLAGS}"
   ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_py(custom_msgs
+  "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/custom_msgs
 )
 
@@ -182,6 +225,8 @@ add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_py)
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_py _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_py _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

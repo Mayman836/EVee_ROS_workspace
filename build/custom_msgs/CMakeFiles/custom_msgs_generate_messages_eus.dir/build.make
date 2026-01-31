@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/dodo/ROS/WS/evee_ws/build
 include custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus.dir/progress.make
 
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus: /home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/Waypoint.l
+custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus: /home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/EncoderTicks.l
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus: /home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/manifest.l
 
 
@@ -62,12 +63,19 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus: /home/dodo/ROS/WS/evee
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from custom_msgs/Waypoint.msg"
 	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/Waypoint.msg -Icustom_msgs:/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/msg
 
+/home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/EncoderTicks.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/EncoderTicks.l: /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg
+/home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/EncoderTicks.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp code from custom_msgs/EncoderTicks.msg"
+	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg -Icustom_msgs:/home/dodo/ROS/WS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/msg
+
 /home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp manifest code for custom_msgs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp manifest code for custom_msgs"
 	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs custom_msgs std_msgs
 
 custom_msgs_generate_messages_eus: custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus
 custom_msgs_generate_messages_eus: /home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/Waypoint.l
+custom_msgs_generate_messages_eus: /home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/EncoderTicks.l
 custom_msgs_generate_messages_eus: /home/dodo/ROS/WS/evee_ws/devel/share/roseus/ros/custom_msgs/manifest.l
 custom_msgs_generate_messages_eus: custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus.dir/build.make
 
