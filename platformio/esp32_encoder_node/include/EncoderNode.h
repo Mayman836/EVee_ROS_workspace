@@ -1,6 +1,8 @@
-#include <driver/pcnt.h>
+#include <Arduino.h>
 #include <ros.h>
 #include <custom_msgs/EncoderTicks.h>
+#include <driver/pcnt.h>
+#include <string>
 
 #ifndef ENCODER_NODE_H
 #define ENCODER_NODE_H
@@ -37,7 +39,8 @@ void handleEncoder(
     ros::Publisher& pub,
     custom_msgs::EncoderTicks& msg,
     unsigned long now,
-    const ros::Time& stamp
+    const ros::Time& stamp,
+    const char* frame_id
 );
 
 #endif

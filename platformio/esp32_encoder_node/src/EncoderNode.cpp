@@ -1,6 +1,4 @@
 #include <EncoderNode.h>
-#include <Arduino.h>
-#include <driver/pcnt.h>
 
 void setupPCNT() {
   pinMode(L_ENC_PIN_A, INPUT_PULLUP);
@@ -107,7 +105,8 @@ void handleEncoder(
     ros::Publisher &pub,
     custom_msgs::EncoderTicks &msg,
     unsigned long now,
-    const ros::Time& stamp
+    const ros::Time& stamp,
+    const char* frame_id
 ) {
     if ((now - last_time) >= PUB_INTERVAL_MS) {
     int16_t delta = 0;
@@ -117,9 +116,11 @@ void handleEncoder(
     
     pcnt_count += delta;
 
-    msg.header.stamp = stamp;
     msg.ticks = pcnt_count;
     msg.delta_ticks = delta;
+
+    msg.header.stamp = stamp;
+    msg.header.frame_id = frame_id;
 
     pub.publish(&msg);
 

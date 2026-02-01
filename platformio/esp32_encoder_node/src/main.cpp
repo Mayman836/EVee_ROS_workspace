@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <ros.h>
 #include <custom_msgs/EncoderTicks.h>
-#include <driver/pcnt.h>
 #include <EncoderNode.h>
 
 ros::NodeHandle nh;
@@ -50,9 +49,9 @@ void loop() {
   unsigned long now = millis();
   ros::Time stamp = nh.now();
 
-  handleEncoder(L_ENC, l_enc_pcnt_count, l_enc_last_time, l_enc_pub, l_enc_msg, now, stamp);
-  handleEncoder(R_ENC, r_enc_pcnt_count, r_enc_last_time, r_enc_pub, r_enc_msg, now, stamp);
-  handleEncoder(S_ENC, s_enc_pcnt_count, s_enc_last_time, s_enc_pub, s_enc_msg, now, stamp);
+  handleEncoder(L_ENC, l_enc_pcnt_count, l_enc_last_time, l_enc_pub, l_enc_msg, now, stamp, "left_wheel_link");
+  handleEncoder(R_ENC, r_enc_pcnt_count, r_enc_last_time, r_enc_pub, r_enc_msg, now, stamp, "right_wheel_link");
+  handleEncoder(S_ENC, s_enc_pcnt_count, s_enc_last_time, s_enc_pub, s_enc_msg, now, stamp, "steering_wheel_link");
 
   nh.spinOnce();
 }
