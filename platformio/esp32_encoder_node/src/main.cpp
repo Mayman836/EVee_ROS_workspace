@@ -1,54 +1,26 @@
 #include <Arduino.h>
 #include <ros.h>
 #include <custom_msgs/EncoderTicks.h>
-#include "driver/pcnt.h"
-
-#define ENCODER_PIN_A 25
-#define ENCODER_PIN_B 26
-
-#define PCNT_UNIT      PCNT_UNIT_0
-#define PCNT_CHANNEL_A PCNT_CHANNEL_0
-#define PCNT_CHANNEL_B PCNT_CHANNEL_1
-
-#define PUB_INTERVAL_MS 10
+#include <driver/pcnt.h>
+#include <EncoderNode.h>
 
 ros::NodeHandle nh;
-custom_msgs::EncoderTicks encoder_msg;
+custom_msgs::EncoderTicks l_enc_msg;
+custom_msgs::EncoderTicks r_enc_msg;
+custom_msgs::EncoderTicks s_enc_msg;
 
-ros::Publisher encoder_pub("/encoder/raw", &encoder_msg);
+ros::Publisher l_enc_pub("/encoder/left/raw", &l_enc_msg);
+ros::Publisher r_enc_pub("/encoder/right/raw", &r_enc_msg);
+ros::Publisher s_enc_pub("/encoder/steering/raw", &s_enc_msg);
 
-int32_t pcnt_count = 0;
-unsigned long last_time = 0;
+int32_t l_enc_pcnt_count = 0;
+unsigned long l_enc_last_time = 0;
 
-void setupPCNT() {
-  pcnt_config_t pcnt_config = {};
+int32_t r_enc_pcnt_count = 0;
+unsigned long r_enc_last_time = 0;
 
-  pcnt_config.pulse_gpio_num = ENCODER_PIN_A;
-  pcnt_config.ctrl_gpio_num  = ENCODER_PIN_B;
-  pcnt_config.unit = PCNT_UNIT;
-  pcnt_config.channel = PCNT_CHANNEL_A;
-  pcnt_config.pos_mode = PCNT_COUNT_INC;
-  pcnt_config.neg_mode = PCNT_COUNT_DEC;
-  pcnt_config.lctrl_mode = PCNT_MODE_REVERSE;
-  pcnt_config.hctrl_mode = PCNT_MODE_KEEP;
-  pcnt_config.counter_h_lim = INT16_MAX;
-  pcnt_config.counter_l_lim = INT16_MIN;
-  pcnt_unit_config(&pcnt_config);
-
-  pcnt_config.pulse_gpio_num = ENCODER_PIN_B;
-  pcnt_config.ctrl_gpio_num  = ENCODER_PIN_A;
-  pcnt_config.channel = PCNT_CHANNEL_B;
-  pcnt_config.pos_mode = PCNT_COUNT_DEC;
-  pcnt_config.neg_mode = PCNT_COUNT_INC;
-  pcnt_unit_config(&pcnt_config);
-
-  pcnt_set_filter_value(PCNT_UNIT, 100);
-  pcnt_filter_enable(PCNT_UNIT);
-
-  pcnt_counter_pause(PCNT_UNIT);
-  pcnt_counter_clear(PCNT_UNIT);
-  pcnt_counter_resume(PCNT_UNIT);
-}
+int32_t s_enc_pcnt_count = 0;
+unsigned long s_enc_last_time = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -57,10 +29,15 @@ void setup() {
   nh.getHardware()->setBaud(115200);
 
   nh.initNode();
-  nh.advertise(encoder_pub);
+  nh.advertise(l_enc_pub);
+  nh.advertise(r_enc_pub);
+  nh.advertise(s_enc_pub);
 
   setupPCNT();
-  last_time = millis();
+
+  l_enc_last_time = millis();
+  r_enc_last_time = millis();
+  s_enc_last_time = millis();
 }
 
 void loop() {
@@ -71,23 +48,11 @@ void loop() {
   }
   
   unsigned long now = millis();
+  ros::Time stamp = nh.now();
 
-  if ((now - last_time) >= PUB_INTERVAL_MS) {
-    int16_t delta = 0;
-
-    pcnt_get_counter_value(PCNT_UNIT, &delta);
-    pcnt_counter_clear(PCNT_UNIT);
-    
-    pcnt_count += delta;
-
-    encoder_msg.header.stamp = nh.now();
-    encoder_msg.ticks = pcnt_count;
-    encoder_msg.delta_ticks = delta;
-
-    encoder_pub.publish(&encoder_msg);
-
-    last_time = now;
-  }
+  handleEncoder(L_ENC, l_enc_pcnt_count, l_enc_last_time, l_enc_pub, l_enc_msg, now, stamp);
+  handleEncoder(R_ENC, r_enc_pcnt_count, r_enc_last_time, r_enc_pub, r_enc_msg, now, stamp);
+  handleEncoder(S_ENC, s_enc_pcnt_count, s_enc_last_time, s_enc_pub, s_enc_msg, now, stamp);
 
   nh.spinOnce();
 }
