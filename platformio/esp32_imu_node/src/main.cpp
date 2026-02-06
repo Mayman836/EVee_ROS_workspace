@@ -5,6 +5,9 @@
 #include <Adafruit_BNO055.h>
 #include <ImuNode.h>
 
+// SDA -> 21
+// SCL -> 22
+
 Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
 
 ros::NodeHandle nh;
@@ -14,7 +17,6 @@ ros::Publisher imu_pub("imu/data", &imu_msg);
 void setup()
 {
   Serial.begin(115200);
-  while (!Serial) delay(10);
 
   Wire.begin();
 
@@ -32,12 +34,8 @@ void setup()
 
 void loop()
 {
-  if (!nh.connected()) {
-    nh.spinOnce();
-    delay(10);
-    return;
-  }
-
+  nh.spinOnce();
+  
   imu::Quaternion quat = bno.getQuat();
   imu::Vector<3> accel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
   imu::Vector<3> gyro  = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
@@ -45,8 +43,6 @@ void loop()
   ros::Time stamp = nh.now();
 
   handleImu(quat, accel, gyro, imu_msg, imu_pub, stamp);
-
-  nh.spinOnce();
 
   delay(10);
 }

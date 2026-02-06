@@ -418,6 +418,9 @@ cpp_common_DIR:PATH=/opt/ros/noetic/share/cpp_common/cmake
 //Value Computed by CMake
 custom_msgs_BINARY_DIR:STATIC=/home/dodo/ROS/WS/evee_ws/build/custom_msgs
 
+//The directory containing a CMake configuration file for custom_msgs.
+custom_msgs_DIR:PATH=/home/dodo/ROS/WS/evee_ws/devel/share/custom_msgs/cmake
+
 //Value Computed by CMake
 custom_msgs_SOURCE_DIR:STATIC=/home/dodo/ROS/WS/evee_ws/src/custom_msgs
 

@@ -64,7 +64,6 @@ void decodeWaypoints() {
   int len = waypointBuffer.size();
 
   for(int i = 0; i < len; i += 8) {
-
     int32_t latE7 = data[i] | (data[i+1] << 8) | (data[i+2] << 16) | (data[i+3] << 24);
 
     int32_t lngE7 = data[i+4] | (data[i+5] << 8) | (data[i+6] << 16) | (data[i+7] << 24);

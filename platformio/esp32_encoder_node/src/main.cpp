@@ -23,7 +23,6 @@ unsigned long s_enc_last_time = 0;
 
 void setup() {
   Serial.begin(115200);
-  while (!Serial) delay(10);
 
   nh.getHardware()->setBaud(115200);
 
@@ -40,18 +39,14 @@ void setup() {
 }
 
 void loop() {
-  if (!nh.connected()) {
-    nh.spinOnce();
-    delay(10);
-    return;
-  }
-  
+  nh.spinOnce();
+
   unsigned long now = millis();
   ros::Time stamp = nh.now();
 
   handleEncoder(L_ENC, l_enc_pcnt_count, l_enc_last_time, l_enc_pub, l_enc_msg, now, stamp, "left_wheel_link");
   handleEncoder(R_ENC, r_enc_pcnt_count, r_enc_last_time, r_enc_pub, r_enc_msg, now, stamp, "right_wheel_link");
   handleEncoder(S_ENC, s_enc_pcnt_count, s_enc_last_time, s_enc_pub, s_enc_msg, now, stamp, "steering_wheel_link");
-
-  nh.spinOnce();
+  
+  delay(5);
 }

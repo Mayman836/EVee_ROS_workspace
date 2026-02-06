@@ -56,7 +56,6 @@ include custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/progress.mak
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py
-custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv/__init__.py
 
 
 /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
@@ -76,17 +75,10 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for custom_msgs"
 	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg --initpy
 
-/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv/__init__.py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py
-/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv/__init__.py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python srv __init__.py for custom_msgs"
-	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv --initpy
-
 custom_msgs_generate_messages_py: custom_msgs/CMakeFiles/custom_msgs_generate_messages_py
 custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py
 custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py
 custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py
-custom_msgs_generate_messages_py: /home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/srv/__init__.py
 custom_msgs_generate_messages_py: custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/build.make
 
 .PHONY : custom_msgs_generate_messages_py

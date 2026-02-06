@@ -6,6 +6,24 @@
 
 #IncludeRegexTransform: 
 
+/home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/EncoderTicks.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+
 /home/dodo/ROS/WS/evee_ws/src/ekf_localization_node_pkg/src/ekf_localization.cpp
 ros/ros.h
 -
@@ -14,6 +32,8 @@ sensor_msgs/Imu.h
 sensor_msgs/NavSatFix.h
 -
 nav_msgs/Odometry.h
+-
+custom_msgs/EncoderTicks.h
 -
 
 /opt/ros/noetic/include/geometry_msgs/Point.h

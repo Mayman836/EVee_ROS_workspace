@@ -29,6 +29,8 @@ void setup() {
 }
 
 void loop() {
+  nh.spinOnce();
+
   if (!waypointBuffer.empty() && waypointBufferIsReady) {
     decodeWaypoints();
     waypointBuffer = "";
@@ -40,6 +42,4 @@ void loop() {
   drive_pub.publish(&drive_msg);
 
   delay(5);
-
-  nh.spinOnce();
 }

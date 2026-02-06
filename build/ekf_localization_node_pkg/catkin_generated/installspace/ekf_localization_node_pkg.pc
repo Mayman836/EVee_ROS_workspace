@@ -5,4 +5,4 @@ Description: Description of ekf_localization_node_pkg
 Version: 0.0.0
 Cflags: 
 Libs: -L${prefix}/lib 
-Requires: 
+Requires: geometry_msgs nav_msgs roscpp sensor_msgs custom_msgs
