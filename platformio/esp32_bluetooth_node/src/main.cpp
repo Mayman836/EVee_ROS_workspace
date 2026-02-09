@@ -17,6 +17,9 @@ ros::Publisher drive_pub("/navigation/drive", &drive_msg);
 void setup() {
   Serial.begin(115200);
 
+  pinMode(25, INPUT_PULLDOWN);
+  pinMode(26, OUTPUT);
+
   setupBLE();
 
   nh.getHardware()->setBaud(115200);
@@ -31,10 +34,18 @@ void setup() {
 void loop() {
   nh.spinOnce();
 
-  if (!waypointBuffer.empty() && waypointBufferIsReady) {
-    decodeWaypoints();
-    waypointBuffer = "";
-    waypointBufferIsReady = false;
+  digitalWrite(26, (bleConnHandle != BLE_HS_CONN_HANDLE_NONE));
+
+  if (digitalRead(25)) {
+    disconnectBLE();
+  }
+
+  if (bleConnHandle != BLE_HS_CONN_HANDLE_NONE) {
+    if (!waypointBuffer.empty() && waypointBufferIsReady) {
+      decodeWaypoints();
+      waypointBuffer = "";
+      waypointBufferIsReady = false;
+    }
   }
 
   drive_msg.data = drive;

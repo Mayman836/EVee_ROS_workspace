@@ -11,13 +11,14 @@
 extern bool drive;
 extern bool waypointBufferIsReady;
 
+extern uint16_t bleConnHandle;
+
 extern NimBLEServer* pServer;
 extern NimBLEService* pService;
 extern NimBLECharacteristic* pWriteChar;
 
 extern std::string waypointBuffer;
 
-void setupBLE();
 class ServerCallbacks : public NimBLEServerCallbacks {
   void onConnect(NimBLEServer* server, NimBLEConnInfo& connInfo) override;
   void onDisconnect(NimBLEServer* server, NimBLEConnInfo& connInfo, int reason) override;
@@ -26,6 +27,10 @@ class ServerCallbacks : public NimBLEServerCallbacks {
 class WriteCallbacks : public NimBLECharacteristicCallbacks {
   void onWrite(NimBLECharacteristic* characteristic, NimBLEConnInfo& connInfo) override;
 };
+
+void setupBLE();
+
+void disconnectBLE();
 
 void decodeWaypoints();
 
