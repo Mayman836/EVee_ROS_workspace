@@ -19,6 +19,7 @@ void setup() {
 
   pinMode(25, INPUT_PULLDOWN);
   pinMode(26, OUTPUT);
+  pinMode(27, OUTPUT);
 
   setupBLE();
 
@@ -35,6 +36,7 @@ void loop() {
   nh.spinOnce();
 
   digitalWrite(26, (bleConnHandle != BLE_HS_CONN_HANDLE_NONE));
+  digitalWrite(27, drive);
 
   if (digitalRead(25)) {
     disconnectBLE();

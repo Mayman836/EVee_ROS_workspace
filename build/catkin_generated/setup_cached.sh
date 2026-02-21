@@ -7,7 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/dodo/ROS/WS/evee_ws/devel:$CMAKE_PREFIX_PATH"
 export PWD='/home/dodo/ROS/WS/evee_ws/build'
-export ROSLISP_PACKAGE_DIRECTORIES='/home/dodo/ROS/WS/evee_ws/devel/share/common-lisp'
-export ROS_PACKAGE_PATH="/home/dodo/ROS/WS/evee_ws/src:$ROS_PACKAGE_PATH"

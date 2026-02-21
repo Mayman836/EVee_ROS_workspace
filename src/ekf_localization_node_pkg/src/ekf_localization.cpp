@@ -25,16 +25,25 @@ ros::Time last_s_enc_time;
 ros::Time last_imu_time;
 ros::Time last_gps_time;
 
-double wheel_radius;
-double wheelbase;
-double max_steer;
+ros::Time last_used_imu_time;
+ros::Time last_used_gps_time;
 
-double x = 0.0;   // position x
-double y = 0.0;   // position y
-double yaw = 0.0; // heading
-double v = 0.0;   // velocity
+double wheel_radius = 0.127;
+double wheelbase = 0.805;
+double max_steer = 45 * M_PI / 180.0;
 
-Eigen::MatrixXd P = Eigen::MatrixXd::Identity(4,4);
+double l_enc_w = 0.0;
+double r_enc_w = 0.0;
+
+double lat0 = 0.0;
+double lng0 = 0.0;
+bool gps_initialized = false;
+double x_meas;
+double y_meas;
+
+Eigen::VectorXd X(5);
+Eigen::MatrixXd P = Eigen::MatrixXd::Identity(5,5);
+Eigen::MatrixXd Q = Eigen::MatrixXd::Zero(5,5);
 
 void ekfPublisher() {
     nav_msgs::Odometry ekf_msg;
@@ -43,16 +52,38 @@ void ekfPublisher() {
     ekf_msg.header.frame_id = "odom";
     ekf_msg.child_frame_id = "base_link";
 
-    ekf_msg.pose.pose.position.x = x;
-    ekf_msg.pose.pose.position.y = y;
+    ekf_msg.pose.pose.position.x = X(0);
+    ekf_msg.pose.pose.position.y = X(1);
 
-    ekf_msg.pose.pose.orientation = tf::createQuaternionMsgFromYaw(yaw);
+    ekf_msg.pose.pose.orientation = tf::createQuaternionMsgFromYaw(X(2));
 
-    ekf_msg.twist.twist.linear.x = v;
+    ekf_msg.twist.twist.linear.x = X(3);
 
-    ekf_msg.pose.covariance[0] = P(0, 0);
-    ekf_msg.pose.covariance[7] = P(1, 1);
-    ekf_msg.pose.covariance[35] = P(2, 2);
+    for(int i = 0; i < 36; i++) {
+        ekf_msg.pose.covariance[i] = 0.0;
+    }
+
+    ekf_msg.pose.covariance[0]  = P(0,0);   // x
+    ekf_msg.pose.covariance[7]  = P(1,1);   // y
+    ekf_msg.pose.covariance[35] = P(2,2);   // yaw
+
+    ekf_msg.pose.covariance[14] = 1e6;  // z
+    ekf_msg.pose.covariance[21] = 1e6;  // roll
+    ekf_msg.pose.covariance[28] = 1e6;  // pitch
+
+    for(int i = 0; i < 36; i++) {
+        ekf_msg.twist.covariance[i] = 0.0;
+    }
+
+    ekf_msg.twist.covariance[0]  = P(3,3); // vx
+    ekf_msg.twist.covariance[35] = P(4,4); // wz
+
+    ekf_msg.twist.covariance[7]  = 1e6; // vy
+    ekf_msg.twist.covariance[14] = 1e6; // vz
+    ekf_msg.twist.covariance[21] = 1e6; // wx
+    ekf_msg.twist.covariance[28] = 1e6; // wy
+
+    ekf_msg.twist.twist.angular.z = X(4);
 
     ekf_pub.publish(ekf_msg);
 }
@@ -64,11 +95,19 @@ void imuCallBack(const sensor_msgs::Imu::ConstPtr& msg) {
 
 void leftEncoderCallBack(const boost::shared_ptr<const custom_msgs::EncoderTicks>& msg) {
     l_enc_msg = *msg;
+    double dt = (msg->header.stamp - last_l_enc_time).toSec();
+    if(dt > 0.0) {
+        l_enc_w = (msg->delta_ticks / 2400.0) * 2*M_PI / dt;
+    }
     last_l_enc_time = msg->header.stamp;
 }
 
 void rightEncoderCallBack(const boost::shared_ptr<const custom_msgs::EncoderTicks>& msg) {
     r_enc_msg = *msg;
+    double dt = (msg->header.stamp - last_r_enc_time).toSec();
+    if(dt > 0.0) {
+        r_enc_w = (msg->delta_ticks / 2400.0) * 2*M_PI / dt;
+    }
     last_r_enc_time = msg->header.stamp;
 }
 
@@ -82,15 +121,106 @@ void gpsCallBack(const sensor_msgs::NavSatFix::ConstPtr& msg) {
     last_gps_time = msg->header.stamp;
 }
 
+void ekfPredict(double dt, double v_meas, double w_kin) {
+    if(dt <= 0.0) return;
+
+    double x   = X(0);
+    double y   = X(1);
+    double yaw = X(2);
+    double v   = v_meas;
+    double w   = w_kin;
+
+    X(0) = x + v * cos(yaw) * dt;
+    X(1) = y + v * sin(yaw) * dt;
+
+    X(2) = yaw + w * dt;
+    X(2) = atan2(sin(X(2)), cos(X(2)));
+    
+    X(3) = v;
+    X(4) = w;
+
+    Eigen::MatrixXd F = Eigen::MatrixXd::Identity(5,5);
+
+    F(0,2) = -v * sin(yaw) * dt;
+    F(0,3) = cos(yaw) * dt;
+
+    F(1,2) = v * cos(yaw) * dt;
+    F(1,3) = sin(yaw) * dt;
+
+    F(2,4) = dt;
+
+    P = F * P * F.transpose() + Q * dt;
+}
+
+void ekfCorrectIMU(double yaw_meas, double w_meas) {
+    Eigen::VectorXd z(2);
+    z << yaw_meas, w_meas;
+
+    Eigen::MatrixXd H(2,5);
+    H.setZero();
+    H(0,2) = 1;
+    H(1,4) = 1;
+
+    Eigen::MatrixXd R = Eigen::MatrixXd::Zero(2,2);
+    R(0,0) = 0.01; // yaw noise
+    R(1,1) = 0.02; // yaw rate noise
+
+    Eigen::VectorXd y = z - H * X;
+    y(0) = atan2(sin(y(0)), cos(y(0)));
+
+    Eigen::MatrixXd S = H * P * H.transpose() + R;
+
+    Eigen::MatrixXd K = P * H.transpose() * S.inverse();
+
+    X = X + K * y;
+    X(2) = atan2(sin(X(2)), cos(X(2)));
+
+    Eigen::MatrixXd I = Eigen::MatrixXd::Identity(5,5);
+    P = (I - K * H) * P * (I - K * H).transpose() + K * R * K.transpose();
+}
+
+void ekfCorrectGPS(double x_meas, double y_meas) {
+    Eigen::VectorXd z(2);
+    z << x_meas, y_meas;
+
+    Eigen::MatrixXd H(2,5);
+    H.setZero();
+    H(0,0) = 1;
+    H(1,1) = 1;
+
+    Eigen::MatrixXd R = Eigen::MatrixXd::Zero(2,2);
+    R(0,0) = 2.0;
+    R(1,1) = 2.0;
+
+    Eigen::VectorXd y = z - H * X;
+
+    Eigen::MatrixXd S = H * P * H.transpose() + R;
+
+    Eigen::MatrixXd K = P * H.transpose() * S.inverse();
+
+    X = X + K * y;
+
+    Eigen::MatrixXd I = Eigen::MatrixXd::Identity(5,5);
+    P = (I - K * H) * P * (I - K * H).transpose() + K * R * K.transpose();
+}
+
 int main(int argc, char **argv) {
     ros::init(argc, argv, "ekf_localization_node");
 
+    X << 0, 0, 0, 0, 0;
+
+    Q(0,0) = 0.01;   // x
+    Q(1,1) = 0.01;   // y
+    Q(2,2) = 0.01;   // yaw
+    Q(3,3) = 0.1;    // v
+    Q(4,4) = 0.1;    // w
+
     ros::Time now = ros::Time::now();
-    ros::Time last_l_enc_time = now;
-    ros::Time last_r_enc_time = now;
-    ros::Time last_s_enc_time = now;
-    ros::Time last_imu_time = now;
-    ros::Time last_gps_time = now;
+    last_l_enc_time = now;
+    last_r_enc_time = now;
+    last_s_enc_time = now;
+    last_imu_time = now;
+    last_gps_time = now;
 
     ros::NodeHandle nh;
 
@@ -102,17 +232,60 @@ int main(int argc, char **argv) {
 
     ekf_pub = nh.advertise<nav_msgs::Odometry>("/localization/ekf_odom", 10);
 
-    nh.getParam("wheel_radius", wheel_radius);
-    nh.getParam("wheelbase", wheelbase);
-    nh.getParam("max_steer", max_steer);
-
     ros::Rate loop_rate(50);
 
     while (ros::ok()) {
         ros::spinOnce();
 
-        //ekfPredict();
-        //ekfCorrect();
+        static ros::Time last_time = ros::Time::now();
+        ros::Time current_time = ros::Time::now();
+        double dt = (current_time -last_time).toSec();
+        last_time = current_time;
+
+        double v_meas = wheel_radius * (l_enc_w + r_enc_w) / 2.0;
+
+        double s_enc_angle = (s_enc_msg.ticks / 2400.0) * 2 * M_PI;
+        if(s_enc_angle > max_steer) {
+            s_enc_angle = max_steer;
+        } else if (s_enc_angle < -max_steer) {
+            s_enc_angle = -max_steer;
+        }
+
+        double w_kin = v_meas / wheelbase * tan(s_enc_angle);
+
+        if(gps_msg.status.status >= sensor_msgs::NavSatStatus::STATUS_FIX) {
+            if(!gps_initialized) {
+                lat0 = gps_msg.latitude * M_PI /180;
+                lng0 = gps_msg.longitude * M_PI /180;
+                gps_initialized = true;
+            }
+
+            double lat = gps_msg.latitude * M_PI /180;
+            double lng = gps_msg.longitude * M_PI /180;
+
+            const double R = 6378137.0;
+
+            x_meas = (lng - lng0) * cos(lat0) * R;
+            y_meas = (lat - lat0) * R;
+        }
+
+        ekfPredict(dt, v_meas, w_kin);
+
+        if(last_imu_time > last_used_imu_time) {
+            tf::Quaternion q;
+            tf::quaternionMsgToTF(imu_msg.orientation, q);
+            double roll, pitch, yaw_meas;
+            tf::Matrix3x3(q).getRPY(roll, pitch, yaw_meas);
+            double w_meas = imu_msg.angular_velocity.z;
+
+            ekfCorrectIMU(yaw_meas, w_meas);
+            last_used_imu_time = last_imu_time;
+        }
+        if(gps_initialized && last_gps_time > last_used_gps_time) {
+            ekfCorrectGPS(x_meas, y_meas);
+            last_used_gps_time = last_gps_time;
+        }
+        
         ekfPublisher();
 
         loop_rate.sleep();
