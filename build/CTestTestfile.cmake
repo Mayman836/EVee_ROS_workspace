@@ -7,5 +7,6 @@
 subdirs("gtest")
 subdirs("custom_msgs")
 subdirs("ekf_localization_node_pkg")
+subdirs("fake_sensors_pkg")
 subdirs("camera_node_pkg")
 subdirs("yolo_node_pkg")

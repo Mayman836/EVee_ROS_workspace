@@ -99,6 +99,14 @@
 /home/dodo/ROS/WS/evee_ws/build/ekf_localization_node_pkg/CMakeFiles/actionlib_msgs_generate_messages_py.dir
 /home/dodo/ROS/WS/evee_ws/build/ekf_localization_node_pkg/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir
 /home/dodo/ROS/WS/evee_ws/build/ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_cpp.dir
+/home/dodo/ROS/WS/evee_ws/build/fake_sensors_pkg/CMakeFiles/install/strip.dir
+/home/dodo/ROS/WS/evee_ws/build/fake_sensors_pkg/CMakeFiles/install/local.dir
+/home/dodo/ROS/WS/evee_ws/build/fake_sensors_pkg/CMakeFiles/install.dir
+/home/dodo/ROS/WS/evee_ws/build/fake_sensors_pkg/CMakeFiles/list_install_components.dir
+/home/dodo/ROS/WS/evee_ws/build/fake_sensors_pkg/CMakeFiles/rebuild_cache.dir
+/home/dodo/ROS/WS/evee_ws/build/fake_sensors_pkg/CMakeFiles/edit_cache.dir
+/home/dodo/ROS/WS/evee_ws/build/fake_sensors_pkg/CMakeFiles/test.dir
+/home/dodo/ROS/WS/evee_ws/build/fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir
 /home/dodo/ROS/WS/evee_ws/build/camera_node_pkg/CMakeFiles/install/strip.dir
 /home/dodo/ROS/WS/evee_ws/build/camera_node_pkg/CMakeFiles/install.dir
 /home/dodo/ROS/WS/evee_ws/build/camera_node_pkg/CMakeFiles/list_install_components.dir

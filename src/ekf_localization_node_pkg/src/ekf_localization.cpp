@@ -6,6 +6,8 @@
 #include <nav_msgs/Odometry.h>
 #include <custom_msgs/EncoderTicks.h>
 
+const double R_earth = 6378137.0;
+
 ros::Publisher ekf_pub;
 ros::Subscriber l_enc_sub;
 ros::Subscriber r_enc_sub;
@@ -18,6 +20,11 @@ custom_msgs::EncoderTicks r_enc_msg;
 custom_msgs::EncoderTicks s_enc_msg;
 sensor_msgs::Imu imu_msg;
 sensor_msgs::NavSatFix gps_msg;
+
+bool steering_received = false;
+bool imu_received = false;
+
+bool ekf_initialized = false;
 
 ros::Time last_l_enc_time;
 ros::Time last_r_enc_time;
@@ -91,6 +98,7 @@ void ekfPublisher() {
 void imuCallBack(const sensor_msgs::Imu::ConstPtr& msg) {
     imu_msg = *msg;
     last_imu_time = msg->header.stamp;
+    imu_received = true;
 }
 
 void leftEncoderCallBack(const boost::shared_ptr<const custom_msgs::EncoderTicks>& msg) {
@@ -114,11 +122,26 @@ void rightEncoderCallBack(const boost::shared_ptr<const custom_msgs::EncoderTick
 void steeringEncoderCallBack(const boost::shared_ptr<const custom_msgs::EncoderTicks>& msg) {
     s_enc_msg = *msg;
     last_s_enc_time = msg->header.stamp;
+    steering_received = true;
 }
 
 void gpsCallBack(const sensor_msgs::NavSatFix::ConstPtr& msg) {
     gps_msg = *msg;
     last_gps_time = msg->header.stamp;
+
+    if(gps_msg.status.status >= sensor_msgs::NavSatStatus::STATUS_FIX) {
+        if(!gps_initialized) {
+            lat0 = gps_msg.latitude * M_PI /180;
+            lng0 = gps_msg.longitude * M_PI /180;
+            gps_initialized = true;
+        }
+
+        double lat = gps_msg.latitude * M_PI /180;
+        double lng = gps_msg.longitude * M_PI /180;
+
+        x_meas = (lng - lng0) * cos(lat0) * R_earth;
+        y_meas = (lat - lat0) * R_earth;
+    }
 }
 
 void ekfPredict(double dt, double v_meas, double w_kin) {
@@ -162,8 +185,8 @@ void ekfCorrectIMU(double yaw_meas, double w_meas) {
     H(1,4) = 1;
 
     Eigen::MatrixXd R = Eigen::MatrixXd::Zero(2,2);
-    R(0,0) = 0.01; // yaw noise
-    R(1,1) = 0.02; // yaw rate noise
+    R(0,0) = imu_msg.orientation_covariance[8]; // yaw noise
+    R(1,1) = imu_msg.angular_velocity_covariance[8]; // yaw rate noise
 
     Eigen::VectorXd y = z - H * X;
     y(0) = atan2(sin(y(0)), cos(y(0)));
@@ -189,8 +212,8 @@ void ekfCorrectGPS(double x_meas, double y_meas) {
     H(1,1) = 1;
 
     Eigen::MatrixXd R = Eigen::MatrixXd::Zero(2,2);
-    R(0,0) = 2.0;
-    R(1,1) = 2.0;
+    R(0,0) = gps_msg.position_covariance[4] * (R_earth * cos(lat0)) * (R_earth * cos(lat0));
+    R(1,1) = gps_msg.position_covariance[0] * (R_earth) * (R_earth);
 
     Eigen::VectorXd y = z - H * X;
 
@@ -206,8 +229,8 @@ void ekfCorrectGPS(double x_meas, double y_meas) {
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "ekf_localization_node");
-
-    X << 0, 0, 0, 0, 0;
+    
+    ros::NodeHandle nh;
 
     Q(0,0) = 0.01;   // x
     Q(1,1) = 0.01;   // y
@@ -222,8 +245,6 @@ int main(int argc, char **argv) {
     last_imu_time = now;
     last_gps_time = now;
 
-    ros::NodeHandle nh;
-
     l_enc_sub = nh.subscribe("/encoder/left/raw", 10, leftEncoderCallBack);
     r_enc_sub = nh.subscribe("/encoder/right/raw", 10, rightEncoderCallBack);
     s_enc_sub = nh.subscribe("/encoder/steering/raw", 10, steeringEncoderCallBack);
@@ -237,41 +258,52 @@ int main(int argc, char **argv) {
     while (ros::ok()) {
         ros::spinOnce();
 
+        if(!ekf_initialized && gps_initialized && imu_received) {
+            tf::Quaternion q;
+            tf::quaternionMsgToTF(imu_msg.orientation, q);
+            double roll, pitch, yaw_meas;
+            tf::Matrix3x3(q).getRPY(roll, pitch, yaw_meas);
+
+            X(0) = x_meas;
+            X(1) = y_meas;
+            X(2) = yaw_meas;
+            X(3) = 0.0;
+            X(4) = 0.0;
+
+            ekf_initialized = true;
+            ROS_WARN("EKF initialized to GPS + IMU origin");
+        }
+
         static ros::Time last_time = ros::Time::now();
         ros::Time current_time = ros::Time::now();
         double dt = (current_time -last_time).toSec();
         last_time = current_time;
 
+        if(dt <= 0.0 || dt > 0.1) {
+            ROS_WARN("Large dt detected: %f", dt);
+            dt = 0.02;
+        }
+
         double v_meas = wheel_radius * (l_enc_w + r_enc_w) / 2.0;
 
-        double s_enc_angle = (s_enc_msg.ticks / 2400.0) * 2 * M_PI;
-        if(s_enc_angle > max_steer) {
-            s_enc_angle = max_steer;
-        } else if (s_enc_angle < -max_steer) {
-            s_enc_angle = -max_steer;
+        double s_enc_angle = 0.0;
+
+        if(steering_received) {
+            s_enc_angle = (s_enc_msg.ticks / 2400.0) * 2 * M_PI;
+            if(s_enc_angle > max_steer) {
+                s_enc_angle = max_steer;
+            } else if (s_enc_angle < -max_steer) {
+                s_enc_angle = -max_steer;
+            }
         }
 
         double w_kin = v_meas / wheelbase * tan(s_enc_angle);
 
-        if(gps_msg.status.status >= sensor_msgs::NavSatStatus::STATUS_FIX) {
-            if(!gps_initialized) {
-                lat0 = gps_msg.latitude * M_PI /180;
-                lng0 = gps_msg.longitude * M_PI /180;
-                gps_initialized = true;
-            }
-
-            double lat = gps_msg.latitude * M_PI /180;
-            double lng = gps_msg.longitude * M_PI /180;
-
-            const double R = 6378137.0;
-
-            x_meas = (lng - lng0) * cos(lat0) * R;
-            y_meas = (lat - lat0) * R;
+        if(ekf_initialized) {
+            ekfPredict(dt, v_meas, w_kin);
         }
 
-        ekfPredict(dt, v_meas, w_kin);
-
-        if(last_imu_time > last_used_imu_time) {
+        if(imu_received && last_imu_time > last_used_imu_time) {
             tf::Quaternion q;
             tf::quaternionMsgToTF(imu_msg.orientation, q);
             double roll, pitch, yaw_meas;

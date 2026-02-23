@@ -935,6 +935,19 @@ sensor_msgs_generate_messages_cpp/fast:
 .PHONY : sensor_msgs_generate_messages_cpp/fast
 
 #=============================================================================
+# Target rules for targets named fake_sensors_node
+
+# Build rule for target.
+fake_sensors_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 fake_sensors_node
+.PHONY : fake_sensors_node
+
+# fast build rule for target.
+fake_sensors_node/fast:
+	$(MAKE) -f fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/build.make fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/build
+.PHONY : fake_sensors_node/fast
+
+#=============================================================================
 # Target rules for targets named camera_node
 
 # Build rule for target.
@@ -1097,6 +1110,7 @@ help:
 	@echo "... actionlib_msgs_generate_messages_py"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_cpp"
+	@echo "... fake_sensors_node"
 	@echo "... camera_node"
 	@echo "... yolo_node"
 	@echo "... vision_msgs_generate_messages_py"

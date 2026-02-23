@@ -56,6 +56,7 @@ CMAKE_BINARY_DIR = /home/dodo/ROS/WS/evee_ws/build
 all: gtest/all
 all: custom_msgs/all
 all: ekf_localization_node_pkg/all
+all: fake_sensors_pkg/all
 all: camera_node_pkg/all
 all: yolo_node_pkg/all
 
@@ -65,6 +66,7 @@ all: yolo_node_pkg/all
 preinstall: gtest/preinstall
 preinstall: custom_msgs/preinstall
 preinstall: ekf_localization_node_pkg/preinstall
+preinstall: fake_sensors_pkg/preinstall
 preinstall: camera_node_pkg/preinstall
 preinstall: yolo_node_pkg/preinstall
 
@@ -79,6 +81,7 @@ clean: CMakeFiles/download_extra_data.dir/clean
 clean: gtest/clean
 clean: custom_msgs/clean
 clean: ekf_localization_node_pkg/clean
+clean: fake_sensors_pkg/clean
 clean: camera_node_pkg/clean
 clean: yolo_node_pkg/clean
 
@@ -185,6 +188,24 @@ ekf_localization_node_pkg/clean: ekf_localization_node_pkg/CMakeFiles/rosgraph_m
 ekf_localization_node_pkg/clean: ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
 
 .PHONY : ekf_localization_node_pkg/clean
+
+#=============================================================================
+# Directory level rules for directory fake_sensors_pkg
+
+# Recursive "all" directory target.
+fake_sensors_pkg/all: fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/all
+
+.PHONY : fake_sensors_pkg/all
+
+# Recursive "preinstall" directory target.
+fake_sensors_pkg/preinstall:
+
+.PHONY : fake_sensors_pkg/preinstall
+
+# Recursive "clean" directory target.
+fake_sensors_pkg/clean: fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/clean
+
+.PHONY : fake_sensors_pkg/clean
 
 #=============================================================================
 # Directory level rules for directory gtest
@@ -409,7 +430,7 @@ gtest/googlemock/CMakeFiles/gmock_main.dir/all: gtest/googlemock/CMakeFiles/gmoc
 gtest/googlemock/CMakeFiles/gmock_main.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=19,20 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=21,22 "Built target gmock_main"
 .PHONY : gtest/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -436,7 +457,7 @@ gtest/googlemock/CMakeFiles/gmock_main.dir/clean:
 gtest/googlemock/CMakeFiles/gmock.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/depend
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=17,18 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=19,20 "Built target gmock"
 .PHONY : gtest/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
@@ -463,7 +484,7 @@ gtest/googlemock/CMakeFiles/gmock.dir/clean:
 gtest/googletest/CMakeFiles/gtest_main.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest_main.dir/build.make gtest/googletest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest_main.dir/build.make gtest/googletest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=23,24 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=25,26 "Built target gtest_main"
 .PHONY : gtest/googletest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -490,7 +511,7 @@ gtest/googletest/CMakeFiles/gtest_main.dir/clean:
 gtest/googletest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=21,22 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=23,24 "Built target gtest"
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1875,6 +1896,33 @@ ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
 .PHONY : ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
 
 #=============================================================================
+# Target rules for target fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir
+
+# All Build rule for target.
+fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/all:
+	$(MAKE) -f fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/build.make fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/depend
+	$(MAKE) -f fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/build.make fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=17,18 "Built target fake_sensors_node"
+.PHONY : fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/all
+
+# Build rule for subdir invocation for target.
+fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dodo/ROS/WS/evee_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dodo/ROS/WS/evee_ws/build/CMakeFiles 0
+.PHONY : fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/rule
+
+# Convenience name for target.
+fake_sensors_node: fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/rule
+
+.PHONY : fake_sensors_node
+
+# clean rule for target.
+fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/clean:
+	$(MAKE) -f fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/build.make fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/clean
+.PHONY : fake_sensors_pkg/CMakeFiles/fake_sensors_node.dir/clean
+
+#=============================================================================
 # Target rules for target camera_node_pkg/CMakeFiles/camera_node.dir
 
 # All Build rule for target.
@@ -1908,7 +1956,7 @@ camera_node_pkg/CMakeFiles/camera_node.dir/clean:
 yolo_node_pkg/CMakeFiles/yolo_node.dir/all:
 	$(MAKE) -f yolo_node_pkg/CMakeFiles/yolo_node.dir/build.make yolo_node_pkg/CMakeFiles/yolo_node.dir/depend
 	$(MAKE) -f yolo_node_pkg/CMakeFiles/yolo_node.dir/build.make yolo_node_pkg/CMakeFiles/yolo_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=25,26 "Built target yolo_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dodo/ROS/WS/evee_ws/build/CMakeFiles --progress-num=27,28 "Built target yolo_node"
 .PHONY : yolo_node_pkg/CMakeFiles/yolo_node.dir/all
 
 # Build rule for subdir invocation for target.

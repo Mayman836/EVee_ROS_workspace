@@ -1,0 +1,8 @@
+prefix=/home/dodo/ROS/WS/evee_ws/devel
+
+Name: fake_sensors_pkg
+Description: Description of fake_sensors_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: custom_msgs nav_msgs roscpp sensor_msgs std_msgs
