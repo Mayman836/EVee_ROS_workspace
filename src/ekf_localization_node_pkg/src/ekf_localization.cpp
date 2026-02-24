@@ -212,8 +212,8 @@ void ekfCorrectGPS(double x_meas, double y_meas) {
     H(1,1) = 1;
 
     Eigen::MatrixXd R = Eigen::MatrixXd::Zero(2,2);
-    R(0,0) = gps_msg.position_covariance[4] * (R_earth * cos(lat0)) * (R_earth * cos(lat0));
-    R(1,1) = gps_msg.position_covariance[0] * (R_earth) * (R_earth);
+    R(0,0) = gps_msg.position_covariance[0];
+    R(1,1) = gps_msg.position_covariance[4];
 
     Eigen::VectorXd y = z - H * X;
 
@@ -232,11 +232,11 @@ int main(int argc, char **argv) {
     
     ros::NodeHandle nh;
 
-    Q(0,0) = 0.01;   // x
-    Q(1,1) = 0.01;   // y
-    Q(2,2) = 0.01;   // yaw
-    Q(3,3) = 0.1;    // v
-    Q(4,4) = 0.1;    // w
+    Q(0,0) = 0.05;   // x
+    Q(1,1) = 0.05;   // y
+    Q(2,2) = 0.02;   // yaw
+    Q(3,3) = 0.5;    // v
+    Q(4,4) = 0.5;    // w
 
     ros::Time now = ros::Time::now();
     last_l_enc_time = now;

@@ -7,6 +7,9 @@ void handleImu(
     sensor_msgs::Imu& imu_msg,
     ros::Publisher& imu_pub,
     const ros::Time& stamp
+    // float var_gx,
+    // float var_gy,
+    // float var_gz
 ) {
     imu_msg.orientation.x = quat.x();
     imu_msg.orientation.y = quat.y();
@@ -21,17 +24,17 @@ void handleImu(
     imu_msg.angular_velocity.y = gyro.y();
     imu_msg.angular_velocity.z = gyro.z();
 
-    imu_msg.orientation_covariance[0] = 0.02;
-    imu_msg.orientation_covariance[4] = 0.02;
-    imu_msg.orientation_covariance[8] = 0.02;
+    imu_msg.orientation_covariance[0] = 0.0;
+    imu_msg.orientation_covariance[4] = 0.0;
+    imu_msg.orientation_covariance[8] = 0.0;
 
     imu_msg.angular_velocity_covariance[0] = 0.01;
-    imu_msg.angular_velocity_covariance[4] = 0.01;
+    imu_msg.angular_velocity_covariance[4] = 0.02;
     imu_msg.angular_velocity_covariance[8] = 0.01;
 
-    imu_msg.linear_acceleration_covariance[0] = 0.04;
-    imu_msg.linear_acceleration_covariance[4] = 0.04;
-    imu_msg.linear_acceleration_covariance[8] = 0.04;
+    imu_msg.linear_acceleration_covariance[0] = 0.0;
+    imu_msg.linear_acceleration_covariance[4] = 0.0;
+    imu_msg.linear_acceleration_covariance[8] = 0.0;
 
     imu_msg.header.stamp = stamp;
     imu_msg.header.frame_id = "imu_link";
