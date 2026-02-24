@@ -7,6 +7,9 @@ void handleImu(
     sensor_msgs::Imu& imu_msg,
     ros::Publisher& imu_pub,
     const ros::Time& stamp
+    // float var_roll,
+    // float var_pitch,
+    // float var_yaw
     // float var_gx,
     // float var_gy,
     // float var_gz
@@ -24,9 +27,9 @@ void handleImu(
     imu_msg.angular_velocity.y = gyro.y();
     imu_msg.angular_velocity.z = gyro.z();
 
-    imu_msg.orientation_covariance[0] = 0.0;
-    imu_msg.orientation_covariance[4] = 0.0;
-    imu_msg.orientation_covariance[8] = 0.0;
+    imu_msg.orientation_covariance[0] = 0.0001;
+    imu_msg.orientation_covariance[4] = 0.0001;
+    imu_msg.orientation_covariance[8] = 0.001;
 
     imu_msg.angular_velocity_covariance[0] = 0.01;
     imu_msg.angular_velocity_covariance[4] = 0.02;
