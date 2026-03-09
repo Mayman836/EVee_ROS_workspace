@@ -57,5 +57,14 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "cmake.sourceDirectory": "/home/dodo/ROS/WS/evee_ws/src/yolo_node_pkg",
-  "ROS2.distro": "noetic"
+  "ROS2.distro": "noetic",
+  "ros.distro": "noetic",
+  "python.autoComplete.extraPaths": [
+    "/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages",
+    "/opt/ros/noetic/lib/python3/dist-packages"
+  ],
+  "python.analysis.extraPaths": [
+    "/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages",
+    "/opt/ros/noetic/lib/python3/dist-packages"
+  ]
 }
