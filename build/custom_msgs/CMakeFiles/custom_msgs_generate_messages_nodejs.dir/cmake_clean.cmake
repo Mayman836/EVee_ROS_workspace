@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/dodo/ROS/WS/evee_ws/devel/share/gennodejs/ros/custom_msgs/msg/EncoderTicks.js"
-  "/home/dodo/ROS/WS/evee_ws/devel/share/gennodejs/ros/custom_msgs/msg/Waypoint.js"
+  "/home/evee/ROS/evee_ws/devel/share/gennodejs/ros/custom_msgs/msg/EncoderTicks.js"
+  "/home/evee/ROS/evee_ws/devel/share/gennodejs/ros/custom_msgs/msg/Waypoint.js"
   "CMakeFiles/custom_msgs_generate_messages_nodejs"
 )
 

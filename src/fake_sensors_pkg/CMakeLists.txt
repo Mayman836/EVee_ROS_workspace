@@ -208,4 +208,7 @@ include_directories(
 # catkin_add_nosetests(test)
 
 add_executable(fake_sensors_node src/fake_sensors.cpp)
+
+add_dependencies(fake_sensors_node ${catkin_EXPORTED_TARGETS})
+
 target_link_libraries(fake_sensors_node ${catkin_LIBRARIES})

@@ -1,4 +1,4 @@
-prefix=/home/dodo/ROS/WS/evee_ws/install
+prefix=/home/evee/ROS/evee_ws/install
 
 Name: custom_msgs
 Description: Description of custom_msgs

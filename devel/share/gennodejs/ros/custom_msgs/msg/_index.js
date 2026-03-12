@@ -1,10 +1,10 @@
 
 "use strict";
 
-let Waypoint = require('./Waypoint.js');
 let EncoderTicks = require('./EncoderTicks.js');
+let Waypoint = require('./Waypoint.js');
 
 module.exports = {
-  Waypoint: Waypoint,
   EncoderTicks: EncoderTicks,
+  Waypoint: Waypoint,
 };

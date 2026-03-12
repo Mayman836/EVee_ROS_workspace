@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/dodo/ROS/WS/evee_ws/src
+CMAKE_SOURCE_DIR = /home/evee/ROS/evee_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/dodo/ROS/WS/evee_ws/build
+CMAKE_BINARY_DIR = /home/evee/ROS/evee_ws/build
 
 # Utility rule file for sensor_msgs_generate_messages_py.
 
@@ -63,10 +63,10 @@ ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_py.dir/build:
 .PHONY : ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
 
 ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean:
-	cd /home/dodo/ROS/WS/evee_ws/build/ekf_localization_node_pkg && $(CMAKE_COMMAND) -P CMakeFiles/sensor_msgs_generate_messages_py.dir/cmake_clean.cmake
+	cd /home/evee/ROS/evee_ws/build/ekf_localization_node_pkg && $(CMAKE_COMMAND) -P CMakeFiles/sensor_msgs_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean
 
 ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_py.dir/depend:
-	cd /home/dodo/ROS/WS/evee_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dodo/ROS/WS/evee_ws/src /home/dodo/ROS/WS/evee_ws/src/ekf_localization_node_pkg /home/dodo/ROS/WS/evee_ws/build /home/dodo/ROS/WS/evee_ws/build/ekf_localization_node_pkg /home/dodo/ROS/WS/evee_ws/build/ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/evee/ROS/evee_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/evee/ROS/evee_ws/src /home/evee/ROS/evee_ws/src/ekf_localization_node_pkg /home/evee/ROS/evee_ws/build /home/evee/ROS/evee_ws/build/ekf_localization_node_pkg /home/evee/ROS/evee_ws/build/ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : ekf_localization_node_pkg/CMakeFiles/sensor_msgs_generate_messages_py.dir/depend
 

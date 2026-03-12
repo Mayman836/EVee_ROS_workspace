@@ -208,4 +208,7 @@ include_directories(
 # catkin_add_nosetests(test)
 
 add_executable(ekf_localization_node src/ekf_localization.cpp)
+
+add_dependencies(ekf_localization_node ${catkin_EXPORTED_TARGETS})
+
 target_link_libraries(ekf_localization_node ${catkin_LIBRARIES})

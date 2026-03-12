@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/dodo/ROS/WS/evee_ws/devel/lib/yolo_node_pkg/yolo_node"
-  "/home/dodo/ROS/WS/evee_ws/devel/lib/yolo_node_pkg/yolo_node.pdb"
+  "/home/evee/ROS/evee_ws/devel/lib/yolo_node_pkg/yolo_node"
+  "/home/evee/ROS/evee_ws/devel/lib/yolo_node_pkg/yolo_node.pdb"
   "CMakeFiles/yolo_node.dir/src/yolo.cpp.o"
 )
 

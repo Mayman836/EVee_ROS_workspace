@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/EncoderTicks.lisp"
-  "/home/dodo/ROS/WS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/Waypoint.lisp"
+  "/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/EncoderTicks.lisp"
+  "/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/Waypoint.lisp"
   "CMakeFiles/custom_msgs_generate_messages_lisp"
 )
 

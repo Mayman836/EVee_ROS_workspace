@@ -1,8 +1,8 @@
-# Install script for directory: /home/dodo/ROS/WS/evee_ws/src/yolo_node_pkg
+# Install script for directory: /home/evee/ROS/evee_ws/src/yolo_node_pkg
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/dodo/ROS/WS/evee_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/evee/ROS/evee_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "")
+    set(CMAKE_INSTALL_CONFIG_NAME "Release")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/dodo/ROS/WS/evee_ws/build/yolo_node_pkg/catkin_generated/installspace/yolo_node_pkg.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/evee/ROS/evee_ws/build/yolo_node_pkg/catkin_generated/installspace/yolo_node_pkg.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yolo_node_pkg/cmake" TYPE FILE FILES
-    "/home/dodo/ROS/WS/evee_ws/build/yolo_node_pkg/catkin_generated/installspace/yolo_node_pkgConfig.cmake"
-    "/home/dodo/ROS/WS/evee_ws/build/yolo_node_pkg/catkin_generated/installspace/yolo_node_pkgConfig-version.cmake"
+    "/home/evee/ROS/evee_ws/build/yolo_node_pkg/catkin_generated/installspace/yolo_node_pkgConfig.cmake"
+    "/home/evee/ROS/evee_ws/build/yolo_node_pkg/catkin_generated/installspace/yolo_node_pkgConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yolo_node_pkg" TYPE FILE FILES "/home/dodo/ROS/WS/evee_ws/src/yolo_node_pkg/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yolo_node_pkg" TYPE FILE FILES "/home/evee/ROS/evee_ws/src/yolo_node_pkg/package.xml")
 endif()
 

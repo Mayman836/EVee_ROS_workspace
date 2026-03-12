@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/dodo/ROS/WS/evee_ws/src/ekf_localization_node_pkg/src/ekf_localization.cpp" "/home/dodo/ROS/WS/evee_ws/build/ekf_localization_node_pkg/CMakeFiles/ekf_localization_node.dir/src/ekf_localization.cpp.o"
+  "/home/evee/ROS/evee_ws/src/ekf_localization_node_pkg/src/ekf_localization.cpp" "/home/evee/ROS/evee_ws/build/ekf_localization_node_pkg/CMakeFiles/ekf_localization_node.dir/src/ekf_localization.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -17,7 +17,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/dodo/ROS/WS/evee_ws/devel/include"
+  "/home/evee/ROS/evee_ws/devel/include"
   "/opt/ros/noetic/include"
   "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   )

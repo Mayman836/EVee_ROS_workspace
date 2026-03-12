@@ -1,8 +1,18 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(yolo_node_pkg)
 
+set(CMAKE_BUILD_TYPE Release)
+
+add_compile_options(
+  -std=c++17
+  -O3
+  -march=native
+  -ffast-math
+  -funroll-loops
+)
+
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++17)
+# add_compile_options(-std=c++17)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -15,9 +25,9 @@ find_package(catkin REQUIRED COMPONENTS
   vision_msgs
 )
 
-find_package(OpenCV REQUIRED)
+find_package(CUDA REQUIRED)
 
-set(ONNXRUNTIME_DIR $ENV{HOME}/onnxruntime-linux-x64-1.16.3)
+find_package(OpenCV REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -125,11 +135,7 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
-  ${ONNXRUNTIME_DIR}/include
-)
-
-link_directories(
-  ${ONNXRUNTIME_DIR}/lib
+  ${CUDA_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -214,4 +220,4 @@ link_directories(
 # catkin_add_nosetests(test)
 
 add_executable(yolo_node src/yolo.cpp)
-target_link_libraries(yolo_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} onnxruntime)
+target_link_libraries(yolo_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${CUDA_LIBRARIES} nvinfer)

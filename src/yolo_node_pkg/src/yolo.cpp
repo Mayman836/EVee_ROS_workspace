@@ -5,18 +5,23 @@
 #include <vision_msgs/ObjectHypothesisWithPose.h>
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/opencv.hpp>
-#include <onnxruntime_cxx_api.h>
+#include <opencv2/dnn.hpp>
+
+#include <NvInfer.h>
+#include <cuda_runtime_api.h>
+
 #include <vector>
 #include <string>
-#include <cmath>
+#include <fstream>
+#include <algorithm>
 
-struct LetterboxInfo {
+struct LetterboxInfo{
     float scale;
     int pad_x;
     int pad_y;
 };
 
-struct TrackedDet {
+struct TrackedDet{
     cv::Rect box;
     int class_id;
     float score;
@@ -24,310 +29,334 @@ struct TrackedDet {
     int missed;
 };
 
-std::vector<TrackedDet> tracked;
+struct Det{
+    cv::Rect box;
+    int class_id;
+    float score;
+};
 
-const float IOU_THRESH = 0.3f;
-const int MAX_MISSES= 5;
+static std::vector<TrackedDet> tracked;
 
-LetterboxInfo letterbox(const cv::Mat& src, cv::Mat& dst, int target_size = 640) {
-    int w = src.cols;
-    int h = src.rows;
+static const float IOU_THRESH = 0.3f;
+static const int MAX_MISSES = 5;
 
-    float scale = std::min(target_size/(float)w, target_size/(float)h);
-
-    int new_w = int(w * scale);
-    int new_h = int(h * scale);
-
-    cv::resize(src, dst, cv::Size(new_w, new_h));
-
-    int pad_x = (target_size - new_w) / 2;
-    int pad_y = (target_size - new_h) / 2;
-
-    cv::copyMakeBorder(dst, dst,
-        pad_y, target_size - new_h - pad_y,
-        pad_x, target_size - new_w - pad_x,
-        cv::BORDER_CONSTANT,
-        cv::Scalar(114, 114, 114));
-
-    return {scale, pad_x, pad_y};
-}
-
-Ort::Env ort_env(ORT_LOGGING_LEVEL_WARNING, "yolo");
-Ort::Session* ort_session = nullptr;
-Ort::SessionOptions ort_session_options;
-
-bool loadModel(const std::string& model_path)
-{
-    try{
-        ort_session_options.SetIntraOpNumThreads(1);
-        ort_session_options.SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_EXTENDED);
-        ort_session = new Ort::Session(ort_env, model_path.c_str(), ort_session_options);
-        
-        return true;
+class Logger : public nvinfer1::ILogger{
+public:
+    void log(Severity severity,const char* msg) noexcept override{
+        if(severity<=Severity::kWARNING) std::cout<<msg<<std::endl;
     }
-    catch (const Ort::Exception& e) {
-        ROS_ERROR("Failed to load ONNX model: %s", e.what());
-        return false;
-    }
-}
+} gLogger;
 
-float IoU(const cv::Rect& a, const cv::Rect& b) {
-    int interArea = (a & b).area();
-    int unionArea = a.area() + b.area() - interArea;
-    return unionArea > 0 ? (float)interArea / unionArea : 0.f;
-}
+nvinfer1::IRuntime* runtime=nullptr;
+nvinfer1::ICudaEngine* engine=nullptr;
+nvinfer1::IExecutionContext* context=nullptr;
+
+void* buffers[2];
+cudaStream_t stream;
+
+int inputIndex;
+int outputIndex;
 
 ros::Subscriber img_sub;
 ros::Publisher yolo_pub;
 
-void yoloCallback(const sensor_msgs::ImageConstPtr& img_msg)
+static float input_tensor[3*640*640];
+static float output_tensor[7*8400];
+
+static std::vector<cv::Rect> boxes;
+static std::vector<float> scores;
+static std::vector<int> class_ids;
+static std::vector<int> keep;
+static std::vector<Det> detections;
+
+LetterboxInfo letterbox(const cv::Mat& src,cv::Mat& dst,int target=640)
 {
-    cv::Mat frame = cv_bridge::toCvShare(img_msg, "bgr8")->image;
-    if (frame.empty()) return;
+    int w=src.cols;
+    int h=src.rows;
 
-    cv::Mat resized;
-    LetterboxInfo lb = letterbox(frame, resized, 640);
+    float scale=std::min(target/(float)w,target/(float)h);
 
-    cv::cvtColor(resized, resized, cv::COLOR_BGR2RGB);
+    int new_w=int(w*scale);
+    int new_h=int(h*scale);
 
-    resized.convertTo(resized, CV_32F, 1.0 / 255.0);
+    cv::resize(src,dst,cv::Size(new_w,new_h));
 
-    std::vector<float> input_tensor(1 * 3 * 640 * 640);
+    int pad_x=(target-new_w)/2;
+    int pad_y=(target-new_h)/2;
 
-    int idx = 0;
-    for (int c = 0; c < 3; c++)
-        for (int y = 0; y < 640; y++)
-            for (int x = 0; x < 640; x++)
-                input_tensor[idx++] = resized.at<cv::Vec3f>(y, x)[c];
-
-    std::array<int64_t, 4> input_shape{1, 3, 640, 640};
-    Ort::MemoryInfo mem_info =
-        Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
-
-    Ort::Value input_tensor_ort =
-        Ort::Value::CreateTensor<float>(
-            mem_info,
-            input_tensor.data(),
-            input_tensor.size(),
-            input_shape.data(),
-            input_shape.size()
-        );
-
-    Ort::AllocatorWithDefaultOptions allocator;
-
-    auto input_name_alloc = ort_session->GetInputNameAllocated(0, allocator);
-    auto output_name_alloc = ort_session->GetOutputNameAllocated(0, allocator);
-
-    const char* input_name = input_name_alloc.get();
-    const char* output_name = output_name_alloc.get();
-
-    auto outputs = ort_session->Run(
-        Ort::RunOptions{nullptr},
-        &input_name,
-        &input_tensor_ort,
-        1,
-        &output_name,
-        1
+    cv::copyMakeBorder(
+        dst,dst,
+        pad_y,target-new_h-pad_y,
+        pad_x,target-new_w-pad_x,
+        cv::BORDER_CONSTANT,
+        cv::Scalar(114,114,114)
     );
 
-    auto info = outputs[0].GetTensorTypeAndShapeInfo();
-    auto shape = info.GetShape();
+    return{scale,pad_x,pad_y};
+}
 
-    int num_vals = shape[1];
-    int num_preds = shape[2];
+float IoU(const cv::Rect&a,const cv::Rect&b)
+{
+    int inter=(a&b).area();
+    int uni=a.area()+b.area()-inter;
+    return uni>0?(float)inter/uni:0.f;
+}
 
-    float* output = outputs[0].GetTensorMutableData<float>();
+bool loadEngine(const std::string& path)
+{
+    std::ifstream file(path,std::ios::binary);
 
-    float conf_thresh = 0.25f;
-    float nms_thresh = 0.45f;
+    if(!file.good()){
+        ROS_ERROR("Engine file not found");
+        return false;
+    }
 
-    std::vector<cv::Rect> boxes;
-    std::vector<float> scores;
-    std::vector<int> class_ids;
+    file.seekg(0,file.end);
+    size_t size=file.tellg();
+    file.seekg(0,file.beg);
 
-    for(int i = 0; i < num_preds; i++) {
+    std::vector<char> buffer(size);
+    file.read(buffer.data(),size);
+    file.close();
 
-        float cx = output[0 * num_preds + i];
-        float cy = output[1 * num_preds + i];
-        float w = output[2 * num_preds + i];
-        float h = output[3 * num_preds + i];
+    runtime=nvinfer1::createInferRuntime(gLogger);
+    engine=runtime->deserializeCudaEngine(buffer.data(),size);
 
-        float best_score = 0.f;
-        int best_class = -1;
+    if(!engine){
+        ROS_ERROR("TensorRT failed to deserialize engine");
+        return false;
+    }
 
-        int num_classes = num_vals - 4;
+    context=engine->createExecutionContext();
 
-        for (int c = 0; c < num_classes; c++) {
-            float score = output[(4 + c) * num_preds + i];
-            if (score > best_score) {
-                best_score = score;
-                best_class = c;
+    inputIndex=engine->getBindingIndex("images");
+    outputIndex=engine->getBindingIndex("output0");
+
+    cudaMalloc(&buffers[inputIndex],3*640*640*sizeof(float));
+    cudaMalloc(&buffers[outputIndex],7*8400*sizeof(float));
+
+    cudaStreamCreate(&stream);
+
+    ROS_INFO("TensorRT engine ready");
+
+    return true;
+}
+
+void yoloCallback(const sensor_msgs::ImageConstPtr& img_msg)
+{
+    ROS_INFO("Image received");
+
+    cv::Mat frame = cv_bridge::toCvCopy(img_msg, "bgr8")->image;
+
+    if(frame.empty()){
+        ROS_WARN("Empty frame received");
+        return;
+    }
+
+    cv::Mat resized;
+    LetterboxInfo lb = letterbox(frame,resized,640);
+
+    cv::cvtColor(resized,resized,cv::COLOR_BGR2RGB);
+
+    cv::Mat blob;
+    cv::dnn::blobFromImage(
+        resized,
+        blob,
+        1.0/255.0,
+        cv::Size(640,640),
+        cv::Scalar(),
+        true,
+        false
+    );
+
+    memcpy(input_tensor, blob.ptr<float>(), 3*640*640*sizeof(float));
+
+    cudaMemcpyAsync(buffers[inputIndex],input_tensor,sizeof(input_tensor),cudaMemcpyHostToDevice,stream);
+
+    if(!context->enqueueV2(buffers,stream,nullptr)){
+        ROS_ERROR("TensorRT enqueue failed");
+        return;
+    }
+
+    cudaMemcpyAsync(output_tensor,buffers[outputIndex],sizeof(output_tensor),cudaMemcpyDeviceToHost,stream);
+
+    cudaStreamSynchronize(stream);
+
+    ROS_INFO("Inference finished");
+
+    boxes.clear();
+    scores.clear();
+    class_ids.clear();
+    detections.clear();
+    keep.clear();
+
+    const int num_preds=8400;
+    const int num_vals=7;
+
+    float conf_thresh=0.25f;
+    float nms_thresh=0.45f;
+
+    float* out=output_tensor;
+
+    for(int i=0;i<num_preds;i++)
+    {
+        float cx=out[0*num_preds+i];
+        float cy=out[1*num_preds+i];
+        float w=out[2*num_preds+i];
+        float h=out[3*num_preds+i];
+
+        float best_score=0.f;
+        int best_class=-1;
+
+        for(int c=0;c<num_vals-4;c++)
+        {
+            float s=out[(4+c)*num_preds+i];
+
+            if(s>best_score){
+                best_score=s;
+                best_class=c;
             }
         }
 
-        if (best_score < conf_thresh) continue;
+        if(best_score<conf_thresh) continue;
 
-        float x1 = cx - w / 2.0f;
-        float y1 = cy - h / 2.0f;
-        float x2 = cx + w / 2.0f;
-        float y2 = cy + h / 2.0f;
+        float x1=(cx-w/2-lb.pad_x)/lb.scale;
+        float y1=(cy-h/2-lb.pad_y)/lb.scale;
+        float x2=(cx+w/2-lb.pad_x)/lb.scale;
+        float y2=(cy+h/2-lb.pad_y)/lb.scale;
 
-        x1 = (x1 - lb.pad_x) / lb.scale;
-        y1 = (y1 - lb.pad_y) / lb.scale;
-        x2 = (x2 - lb.pad_x) / lb.scale;
-        y2 = (y2 - lb.pad_y) / lb.scale;
+        x1=std::max(0.f,std::min(x1,(float)frame.cols));
+        y1=std::max(0.f,std::min(y1,(float)frame.rows));
+        x2=std::max(0.f,std::min(x2,(float)frame.cols));
+        y2=std::max(0.f,std::min(y2,(float)frame.rows));
 
-        x1 = std::max(0.f, std::min(x1, (float)frame.cols));
-        y1 = std::max(0.f, std::min(y1, (float)frame.rows));
-        x2 = std::max(0.f, std::min(x2, (float)frame.cols));
-        y2 = std::max(0.f, std::min(y2, (float)frame.rows));
-
-        boxes.emplace_back(
-            cv::Rect(
-                cv::Point((int)x1, (int)y1),
-                cv::Point((int)x2, (int)y2)
-            )
-        );
+        boxes.emplace_back(cv::Rect(cv::Point((int)x1,(int)y1),cv::Point((int)x2,(int)y2)));
 
         scores.push_back(best_score);
         class_ids.push_back(best_class);
     }
 
-    std::vector<int> keep;
-    cv::dnn::NMSBoxes(
-        boxes,
-        scores,
-        conf_thresh,
-        nms_thresh,
-        keep
-    );
+    ROS_INFO("Boxes before NMS: %lu", boxes.size());
 
-    struct Det {
-        cv::Rect box;
-        int class_id;
-        float score;
-    };
+    cv::dnn::NMSBoxes(boxes,scores,conf_thresh,nms_thresh,keep);
 
-    std::vector<Det> detections;
+    for(int k:keep)
+        detections.push_back({boxes[k],class_ids[k],scores[k]});
 
-    for (int idx : keep) {
-        detections.push_back({
-            boxes[idx],
-            class_ids[idx],
-            scores[idx]
-        });
-    }
+    std::vector<bool> used(detections.size(),false);
 
-    std::vector<bool> det_used(detections.size(), false);
+    for(auto& t:tracked)
+    {
+        float best_iou=0;
+        int best=-1;
 
-    for (auto& t : tracked) {
-        float best_iou = 0.f;
-        int best_idx = -1;
+        for(size_t i=0;i<detections.size();i++)
+        {
+            if(used[i]) continue;
+            if(detections[i].class_id!=t.class_id) continue;
 
-        for (size_t i = 0; i < detections.size(); i++) {
-            if (det_used[i]) continue;
-            if (detections[i].class_id != t.class_id) continue;
+            float iou=IoU(t.box,detections[i].box);
 
-            float iou = IoU(t.box, detections[i].box);
-            if (iou > best_iou) {
-                best_iou = iou;
-                best_idx = i;
+            if(iou>best_iou){
+                best_iou=iou;
+                best=i;
             }
         }
 
-        if (best_iou > IOU_THRESH) {
-            t.box = detections[best_idx].box;
-            t.score = detections[best_idx].score;
+        if(best_iou>IOU_THRESH)
+        {
+            t.box=detections[best].box;
+            t.score=detections[best].score;
             t.age++;
-            t.missed = 0;
-            det_used[best_idx] = true;
+            t.missed=0;
+            used[best]=true;
         }
-        else {
+        else
             t.missed++;
-        }
     }
 
-    for (size_t i = 0; i < detections.size(); i++) {
-        if (det_used[i]) continue;
-
-        tracked.push_back({
-            detections[i].box,
-            detections[i].class_id,
-            detections[i].score,
-            1, //age
-            0  //missed
-        });
-    }
+    for(size_t i=0;i<detections.size();i++)
+        if(!used[i])
+            tracked.push_back({detections[i].box,detections[i].class_id,detections[i].score,1,0});
 
     tracked.erase(
-        std::remove_if(
-            tracked.begin(),
-            tracked.end(),
-            [](const TrackedDet& t) {
-                return t.missed > MAX_MISSES;
-            }
+        std::remove_if(tracked.begin(),tracked.end(),
+            [](const TrackedDet&t){return t.missed>MAX_MISSES;}
         ),
         tracked.end()
     );
 
+    ROS_INFO("Tracked objects: %lu", tracked.size());
+
     vision_msgs::Detection2DArray yolo_array;
     yolo_array.header = img_msg->header;
 
-    for (const auto& t : tracked) {
-        vision_msgs::Detection2D det;
+    yolo_array.detections.resize(tracked.size());
+
+    for(size_t i=0;i<tracked.size();i++)
+    {
+        const auto& t = tracked[i];
+        auto& det = yolo_array.detections[i];
+
         det.header = yolo_array.header;
 
-        det.bbox.center.x = t.box.x + t.box.width / 2.0;
-        det.bbox.center.y = t.box.y + t.box.height / 2.0;
+        det.bbox.center.x = t.box.x + t.box.width * 0.5;
+        det.bbox.center.y = t.box.y + t.box.height * 0.5;
         det.bbox.size_x = t.box.width;
         det.bbox.size_y = t.box.height;
 
-        vision_msgs::ObjectHypothesisWithPose hyp;
-        hyp.id = t.class_id;
-        hyp.score = t.score;
-
-        det.results.push_back(hyp);
-
-        yolo_array.detections.push_back(det);
+        det.results.resize(1);
+        det.results[0].id = t.class_id;
+        det.results[0].score = t.score;
     }
+
+    cv::Mat display = frame.clone();
+
+    for(const auto& t : tracked)
+    {
+        cv::rectangle(display,t.box,cv::Scalar(0,255,0),2);
+
+        std::string label =
+            std::to_string(t.class_id) + " " +
+            std::to_string(t.score).substr(0,4);
+
+        cv::putText(display,label,cv::Point(t.box.x,t.box.y-5),
+                    cv::FONT_HERSHEY_SIMPLEX,0.5,cv::Scalar(0,255,0),2);
+    }
+
+    cv::imshow("YOLO Detection", display);
+    cv::waitKey(1);
+
+    ROS_INFO("Publishing detections");
 
     yolo_pub.publish(yolo_array);
-
-   for (size_t i = 0; i < tracked.size(); i++) {
-        const auto& t = tracked[i];
-
-        cv::rectangle(frame, t.box, cv::Scalar(0, 255, 0), 2);
-
-        std::string label = std::to_string(t.class_id) + " " + std::to_string(std::round(t.score * 100.0) / 100.0);
-
-        cv::putText(
-            frame,
-            label,
-            t.box.tl(),
-            cv::FONT_HERSHEY_SIMPLEX,
-            0.6,
-            cv::Scalar(0, 255, 0),
-            2
-        );
-    }
-
-    cv::imshow("YOLO", frame);
-    cv::waitKey(1);
 }
 
-int main(int argc, char** argv)
+int main(int argc,char** argv)
 {
-    ros::init(argc, argv, "yolo_node");
+    ros::init(argc,argv,"yolo_node");
     ros::NodeHandle nh;
 
-    if(!loadModel("/home/dodo/ROS/WS/evee_ws/src/yolo_node_pkg/models/best.onnx")) {
-        ROS_FATAL("Could not start YOLO node");
+    ROS_INFO("Starting YOLO node");
+
+    cudaSetDevice(0);
+
+    ROS_INFO("Loading TensorRT engine...");
+
+    if(!loadEngine("/home/evee/ROS/models/best.engine")){
+        ROS_ERROR("Engine FAILED to load");
         return -1;
     }
 
-    yolo_pub = nh.advertise<vision_msgs::Detection2DArray>("/vision/detections", 10);
+    ROS_INFO("Engine loaded successfully");
 
-    img_sub = nh.subscribe("/camera/image_raw", 1, yoloCallback);
+    cv::namedWindow("YOLO Detection", cv::WINDOW_NORMAL);
+
+    yolo_pub=nh.advertise<vision_msgs::Detection2DArray>("/vision/detections",10);
+
+    img_sub=nh.subscribe("/camera/image_raw",2,yoloCallback);
+
+    ROS_INFO("YOLO node started and waiting for images");
 
     ros::spin();
     return 0;

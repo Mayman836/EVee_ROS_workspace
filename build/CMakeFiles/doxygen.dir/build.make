@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/dodo/ROS/WS/evee_ws/src
+CMAKE_SOURCE_DIR = /home/evee/ROS/evee_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/dodo/ROS/WS/evee_ws/build
+CMAKE_BINARY_DIR = /home/evee/ROS/evee_ws/build
 
 # Utility rule file for doxygen.
 
@@ -67,6 +67,6 @@ CMakeFiles/doxygen.dir/clean:
 .PHONY : CMakeFiles/doxygen.dir/clean
 
 CMakeFiles/doxygen.dir/depend:
-	cd /home/dodo/ROS/WS/evee_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dodo/ROS/WS/evee_ws/src /home/dodo/ROS/WS/evee_ws/src /home/dodo/ROS/WS/evee_ws/build /home/dodo/ROS/WS/evee_ws/build /home/dodo/ROS/WS/evee_ws/build/CMakeFiles/doxygen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/evee/ROS/evee_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/evee/ROS/evee_ws/src /home/evee/ROS/evee_ws/src /home/evee/ROS/evee_ws/build /home/evee/ROS/evee_ws/build /home/evee/ROS/evee_ws/build/CMakeFiles/doxygen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/doxygen.dir/depend
 

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/dodo/ROS/WS/evee_ws/src/yolo_node_pkg/src/yolo.cpp" "/home/dodo/ROS/WS/evee_ws/build/yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o"
+  "/home/evee/ROS/evee_ws/src/yolo_node_pkg/src/yolo.cpp" "/home/evee/ROS/evee_ws/build/yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -19,7 +19,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/opt/ros/noetic/include"
   "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
-  "/home/dodo/onnxruntime-linux-x64-1.16.3/include"
+  "/usr/local/cuda/include"
   "/usr/include/opencv4"
   )
 

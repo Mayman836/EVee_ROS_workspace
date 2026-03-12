@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/dodo/ROS/WS/evee_ws/devel/lib/camera_node_pkg/camera_node"
-  "/home/dodo/ROS/WS/evee_ws/devel/lib/camera_node_pkg/camera_node.pdb"
+  "/home/evee/ROS/evee_ws/devel/lib/camera_node_pkg/camera_node"
+  "/home/evee/ROS/evee_ws/devel/lib/camera_node_pkg/camera_node.pdb"
   "CMakeFiles/camera_node.dir/src/camera.cpp.o"
 )
 

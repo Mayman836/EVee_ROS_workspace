@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/dodo/ROS/WS/evee_ws/src
+CMAKE_SOURCE_DIR = /home/evee/ROS/evee_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/dodo/ROS/WS/evee_ws/build
+CMAKE_BINARY_DIR = /home/evee/ROS/evee_ws/build
 
 # Utility rule file for custom_msgs_geneus.
 
@@ -63,10 +63,10 @@ custom_msgs/CMakeFiles/custom_msgs_geneus.dir/build: custom_msgs_geneus
 .PHONY : custom_msgs/CMakeFiles/custom_msgs_geneus.dir/build
 
 custom_msgs/CMakeFiles/custom_msgs_geneus.dir/clean:
-	cd /home/dodo/ROS/WS/evee_ws/build/custom_msgs && $(CMAKE_COMMAND) -P CMakeFiles/custom_msgs_geneus.dir/cmake_clean.cmake
+	cd /home/evee/ROS/evee_ws/build/custom_msgs && $(CMAKE_COMMAND) -P CMakeFiles/custom_msgs_geneus.dir/cmake_clean.cmake
 .PHONY : custom_msgs/CMakeFiles/custom_msgs_geneus.dir/clean
 
 custom_msgs/CMakeFiles/custom_msgs_geneus.dir/depend:
-	cd /home/dodo/ROS/WS/evee_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dodo/ROS/WS/evee_ws/src /home/dodo/ROS/WS/evee_ws/src/custom_msgs /home/dodo/ROS/WS/evee_ws/build /home/dodo/ROS/WS/evee_ws/build/custom_msgs /home/dodo/ROS/WS/evee_ws/build/custom_msgs/CMakeFiles/custom_msgs_geneus.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/evee/ROS/evee_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/evee/ROS/evee_ws/src /home/evee/ROS/evee_ws/src/custom_msgs /home/evee/ROS/evee_ws/build /home/evee/ROS/evee_ws/build/custom_msgs /home/evee/ROS/evee_ws/build/custom_msgs/CMakeFiles/custom_msgs_geneus.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : custom_msgs/CMakeFiles/custom_msgs_geneus.dir/depend
 

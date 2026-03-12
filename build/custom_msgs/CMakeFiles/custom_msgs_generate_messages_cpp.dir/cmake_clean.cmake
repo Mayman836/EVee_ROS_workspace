@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/EncoderTicks.h"
-  "/home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/Waypoint.h"
+  "/home/evee/ROS/evee_ws/devel/include/custom_msgs/EncoderTicks.h"
+  "/home/evee/ROS/evee_ws/devel/include/custom_msgs/Waypoint.h"
   "CMakeFiles/custom_msgs_generate_messages_cpp"
 )
 

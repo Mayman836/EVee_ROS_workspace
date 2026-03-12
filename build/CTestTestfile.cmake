@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: /home/dodo/ROS/WS/evee_ws/src
-# Build directory: /home/dodo/ROS/WS/evee_ws/build
+# Source directory: /home/evee/ROS/evee_ws/src
+# Build directory: /home/evee/ROS/evee_ws/build
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

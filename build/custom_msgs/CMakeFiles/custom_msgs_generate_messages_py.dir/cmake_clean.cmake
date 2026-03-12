@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
-  "/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py"
-  "/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py"
-  "/home/dodo/ROS/WS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py"
+  "/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py"
+  "/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py"
+  "/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py"
   "CMakeFiles/custom_msgs_generate_messages_py"
 )
 

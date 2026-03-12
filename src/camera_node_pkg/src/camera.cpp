@@ -13,8 +13,10 @@ int main(int argc, char **argv)
 
   img_pub = nh.advertise<sensor_msgs::Image>("/camera/image_raw", 1);
 
-  cv::VideoCapture cap(0);
-
+  // cv::VideoCapture cap(0);
+  cv::VideoCapture cap("rtsp://localhost:8554/phone", cv::CAP_FFMPEG);
+  cap.set(cv::CAP_PROP_BUFFERSIZE, 1);
+  
   if(!cap.isOpened()) {
     ROS_ERROR("Error: Could not open video device /dev/video0");
     return -1;

@@ -67,14 +67,14 @@ set(ekf_localization_node_pkg_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(ekf_localization_node_pkg_SOURCE_PREFIX /home/dodo/ROS/WS/evee_ws/src/ekf_localization_node_pkg)
-  set(ekf_localization_node_pkg_DEVEL_PREFIX /home/dodo/ROS/WS/evee_ws/devel)
+  set(ekf_localization_node_pkg_SOURCE_PREFIX /home/evee/ROS/evee_ws/src/ekf_localization_node_pkg)
+  set(ekf_localization_node_pkg_DEVEL_PREFIX /home/evee/ROS/evee_ws/devel)
   set(ekf_localization_node_pkg_INSTALL_PREFIX "")
   set(ekf_localization_node_pkg_PREFIX ${ekf_localization_node_pkg_DEVEL_PREFIX})
 else()
   set(ekf_localization_node_pkg_SOURCE_PREFIX "")
   set(ekf_localization_node_pkg_DEVEL_PREFIX "")
-  set(ekf_localization_node_pkg_INSTALL_PREFIX /home/dodo/ROS/WS/evee_ws/install)
+  set(ekf_localization_node_pkg_INSTALL_PREFIX /home/evee/ROS/evee_ws/install)
   set(ekf_localization_node_pkg_PREFIX ${ekf_localization_node_pkg_INSTALL_PREFIX})
 endif()
 
@@ -156,7 +156,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/dodo/ROS/WS/evee_ws/install/lib;/home/dodo/ROS/WS/evee_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/evee/ROS/evee_ws/install/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

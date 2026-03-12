@@ -6,25 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/dodo/ROS/WS/evee_ws/devel/include/custom_msgs/EncoderTicks.h
-string
--
-vector
--
-memory
--
-ros/types.h
--
-ros/serialization.h
--
-ros/builtin_message_traits.h
--
-ros/message_operations.h
--
-std_msgs/Header.h
--
-
-/home/dodo/ROS/WS/evee_ws/src/fake_sensors_pkg/src/fake_sensors.cpp
+/home/evee/ROS/evee_ws/src/fake_sensors_pkg/src/fake_sensors.cpp
 ros/ros.h
 -
 eigen3/Eigen/Dense

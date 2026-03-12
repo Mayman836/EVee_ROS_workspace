@@ -1,8 +1,8 @@
-# Install script for directory: /home/dodo/ROS/WS/evee_ws/src/camera_node_pkg
+# Install script for directory: /home/evee/ROS/evee_ws/src/camera_node_pkg
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/dodo/ROS/WS/evee_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/evee/ROS/evee_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/dodo/ROS/WS/evee_ws/build/camera_node_pkg/catkin_generated/installspace/camera_node_pkg.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/evee/ROS/evee_ws/build/camera_node_pkg/catkin_generated/installspace/camera_node_pkg.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/camera_node_pkg/cmake" TYPE FILE FILES
-    "/home/dodo/ROS/WS/evee_ws/build/camera_node_pkg/catkin_generated/installspace/camera_node_pkgConfig.cmake"
-    "/home/dodo/ROS/WS/evee_ws/build/camera_node_pkg/catkin_generated/installspace/camera_node_pkgConfig-version.cmake"
+    "/home/evee/ROS/evee_ws/build/camera_node_pkg/catkin_generated/installspace/camera_node_pkgConfig.cmake"
+    "/home/evee/ROS/evee_ws/build/camera_node_pkg/catkin_generated/installspace/camera_node_pkgConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/camera_node_pkg" TYPE FILE FILES "/home/dodo/ROS/WS/evee_ws/src/camera_node_pkg/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/camera_node_pkg" TYPE FILE FILES "/home/evee/ROS/evee_ws/src/camera_node_pkg/package.xml")
 endif()
 

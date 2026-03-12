@@ -1,8 +1,8 @@
-# Install script for directory: /home/dodo/ROS/WS/evee_ws/src
+# Install script for directory: /home/evee/ROS/evee_ws/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/dodo/ROS/WS/evee_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/evee/ROS/evee_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -49,108 +49,108 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/dodo/ROS/WS/evee_ws/install/_setup_util.py")
+   "/home/evee/ROS/evee_ws/install/_setup_util.py")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/dodo/ROS/WS/evee_ws/install" TYPE PROGRAM FILES "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/_setup_util.py")
+file(INSTALL DESTINATION "/home/evee/ROS/evee_ws/install" TYPE PROGRAM FILES "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/_setup_util.py")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/dodo/ROS/WS/evee_ws/install/env.sh")
+   "/home/evee/ROS/evee_ws/install/env.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/dodo/ROS/WS/evee_ws/install" TYPE PROGRAM FILES "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/env.sh")
+file(INSTALL DESTINATION "/home/evee/ROS/evee_ws/install" TYPE PROGRAM FILES "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/env.sh")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/dodo/ROS/WS/evee_ws/install/setup.bash;/home/dodo/ROS/WS/evee_ws/install/local_setup.bash")
+   "/home/evee/ROS/evee_ws/install/setup.bash;/home/evee/ROS/evee_ws/install/local_setup.bash")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/dodo/ROS/WS/evee_ws/install" TYPE FILE FILES
-    "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/setup.bash"
-    "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/local_setup.bash"
+file(INSTALL DESTINATION "/home/evee/ROS/evee_ws/install" TYPE FILE FILES
+    "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/setup.bash"
+    "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/local_setup.bash"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/dodo/ROS/WS/evee_ws/install/setup.sh;/home/dodo/ROS/WS/evee_ws/install/local_setup.sh")
+   "/home/evee/ROS/evee_ws/install/setup.sh;/home/evee/ROS/evee_ws/install/local_setup.sh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/dodo/ROS/WS/evee_ws/install" TYPE FILE FILES
-    "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/setup.sh"
-    "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/local_setup.sh"
+file(INSTALL DESTINATION "/home/evee/ROS/evee_ws/install" TYPE FILE FILES
+    "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/setup.sh"
+    "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/local_setup.sh"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/dodo/ROS/WS/evee_ws/install/setup.zsh;/home/dodo/ROS/WS/evee_ws/install/local_setup.zsh")
+   "/home/evee/ROS/evee_ws/install/setup.zsh;/home/evee/ROS/evee_ws/install/local_setup.zsh")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/dodo/ROS/WS/evee_ws/install" TYPE FILE FILES
-    "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/setup.zsh"
-    "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/local_setup.zsh"
+file(INSTALL DESTINATION "/home/evee/ROS/evee_ws/install" TYPE FILE FILES
+    "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/setup.zsh"
+    "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/local_setup.zsh"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/dodo/ROS/WS/evee_ws/install/setup.fish;/home/dodo/ROS/WS/evee_ws/install/local_setup.fish")
+   "/home/evee/ROS/evee_ws/install/setup.fish;/home/evee/ROS/evee_ws/install/local_setup.fish")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/dodo/ROS/WS/evee_ws/install" TYPE FILE FILES
-    "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/setup.fish"
-    "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/local_setup.fish"
+file(INSTALL DESTINATION "/home/evee/ROS/evee_ws/install" TYPE FILE FILES
+    "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/setup.fish"
+    "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/local_setup.fish"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/dodo/ROS/WS/evee_ws/install/.rosinstall")
+   "/home/evee/ROS/evee_ws/install/.rosinstall")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/dodo/ROS/WS/evee_ws/install" TYPE FILE FILES "/home/dodo/ROS/WS/evee_ws/build/catkin_generated/installspace/.rosinstall")
+file(INSTALL DESTINATION "/home/evee/ROS/evee_ws/install" TYPE FILE FILES "/home/evee/ROS/evee_ws/build/catkin_generated/installspace/.rosinstall")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/dodo/ROS/WS/evee_ws/build/gtest/cmake_install.cmake")
-  include("/home/dodo/ROS/WS/evee_ws/build/custom_msgs/cmake_install.cmake")
-  include("/home/dodo/ROS/WS/evee_ws/build/ekf_localization_node_pkg/cmake_install.cmake")
-  include("/home/dodo/ROS/WS/evee_ws/build/fake_sensors_pkg/cmake_install.cmake")
-  include("/home/dodo/ROS/WS/evee_ws/build/camera_node_pkg/cmake_install.cmake")
-  include("/home/dodo/ROS/WS/evee_ws/build/yolo_node_pkg/cmake_install.cmake")
+  include("/home/evee/ROS/evee_ws/build/gtest/cmake_install.cmake")
+  include("/home/evee/ROS/evee_ws/build/custom_msgs/cmake_install.cmake")
+  include("/home/evee/ROS/evee_ws/build/ekf_localization_node_pkg/cmake_install.cmake")
+  include("/home/evee/ROS/evee_ws/build/fake_sensors_pkg/cmake_install.cmake")
+  include("/home/evee/ROS/evee_ws/build/camera_node_pkg/cmake_install.cmake")
+  include("/home/evee/ROS/evee_ws/build/yolo_node_pkg/cmake_install.cmake")
 
 endif()
 
@@ -162,5 +162,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/dodo/ROS/WS/evee_ws/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/evee/ROS/evee_ws/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
