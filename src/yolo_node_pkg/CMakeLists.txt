@@ -136,6 +136,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
   ${CUDA_INCLUDE_DIRS}
+  /usr/include/aarch64-linux-gnu
 )
 
 ## Declare a C++ library

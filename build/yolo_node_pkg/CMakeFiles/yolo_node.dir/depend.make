@@ -3,11 +3,6 @@
 
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /home/evee/ROS/evee_ws/src/yolo_node_pkg/src/yolo.cpp
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/cv_bridge/cv_bridge.h
-yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/geometry_msgs/Point.h
-yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/geometry_msgs/Pose.h
-yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/geometry_msgs/Pose2D.h
-yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/geometry_msgs/PoseWithCovariance.h
-yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/geometry_msgs/Quaternion.h
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/ros/advertise_options.h
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/ros/advertise_service_options.h
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/ros/assert.h
@@ -68,10 +63,6 @@ yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/s
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/sensor_msgs/Image.h
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/sensor_msgs/image_encodings.h
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/std_msgs/Header.h
-yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/vision_msgs/BoundingBox2D.h
-yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/vision_msgs/Detection2D.h
-yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/vision_msgs/Detection2DArray.h
-yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/vision_msgs/ObjectHypothesisWithPose.h
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/xmlrpcpp/XmlRpcDecl.h
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /opt/ros/noetic/include/xmlrpcpp/XmlRpcValue.h
 yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.o: /usr/include/opencv4/opencv2/calib3d.hpp
