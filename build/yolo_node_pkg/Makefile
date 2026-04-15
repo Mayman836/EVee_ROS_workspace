@@ -56,6 +56,18 @@ CMAKE_BINARY_DIR = /home/evee/ROS/evee_ws/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -123,18 +135,6 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
 # The main all target
 all: cmake_check_build_system
 	cd /home/evee/ROS/evee_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/evee/ROS/evee_ws/build/CMakeFiles /home/evee/ROS/evee_ws/build/yolo_node_pkg/CMakeFiles/progress.marks
@@ -182,81 +182,6 @@ yolo_node/fast:
 	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/yolo_node.dir/build.make yolo_node_pkg/CMakeFiles/yolo_node.dir/build
 .PHONY : yolo_node/fast
 
-# Convenience name for target.
-yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_py.dir/rule:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f CMakeFiles/Makefile2 yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_py.dir/rule
-.PHONY : yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-vision_msgs_generate_messages_py: yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_py.dir/rule
-
-.PHONY : vision_msgs_generate_messages_py
-
-# fast build rule for target.
-vision_msgs_generate_messages_py/fast:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_py.dir/build.make yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_py.dir/build
-.PHONY : vision_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f CMakeFiles/Makefile2 yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_nodejs.dir/rule
-.PHONY : yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-vision_msgs_generate_messages_nodejs: yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : vision_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-vision_msgs_generate_messages_nodejs/fast:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_nodejs.dir/build.make yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_nodejs.dir/build
-.PHONY : vision_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_lisp.dir/rule:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f CMakeFiles/Makefile2 yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_lisp.dir/rule
-.PHONY : yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-vision_msgs_generate_messages_lisp: yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : vision_msgs_generate_messages_lisp
-
-# fast build rule for target.
-vision_msgs_generate_messages_lisp/fast:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_lisp.dir/build.make yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_lisp.dir/build
-.PHONY : vision_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_eus.dir/rule:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f CMakeFiles/Makefile2 yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_eus.dir/rule
-.PHONY : yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-vision_msgs_generate_messages_eus: yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_eus.dir/rule
-
-.PHONY : vision_msgs_generate_messages_eus
-
-# fast build rule for target.
-vision_msgs_generate_messages_eus/fast:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_eus.dir/build.make yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_eus.dir/build
-.PHONY : vision_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_cpp.dir/rule:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f CMakeFiles/Makefile2 yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_cpp.dir/rule
-.PHONY : yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-vision_msgs_generate_messages_cpp: yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : vision_msgs_generate_messages_cpp
-
-# fast build rule for target.
-vision_msgs_generate_messages_cpp/fast:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_cpp.dir/build.make yolo_node_pkg/CMakeFiles/vision_msgs_generate_messages_cpp.dir/build
-.PHONY : vision_msgs_generate_messages_cpp/fast
-
 src/yolo.o: src/yolo.cpp.o
 
 .PHONY : src/yolo.o
@@ -290,6 +215,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... install/strip"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
@@ -297,12 +223,6 @@ help:
 	@echo "... test"
 	@echo "... install/local"
 	@echo "... yolo_node"
-	@echo "... vision_msgs_generate_messages_py"
-	@echo "... vision_msgs_generate_messages_nodejs"
-	@echo "... vision_msgs_generate_messages_lisp"
-	@echo "... install/strip"
-	@echo "... vision_msgs_generate_messages_eus"
-	@echo "... vision_msgs_generate_messages_cpp"
 	@echo "... src/yolo.o"
 	@echo "... src/yolo.i"
 	@echo "... src/yolo.s"

@@ -1,21 +1,32 @@
 {
   "configurations": [
     {
-      "name": "linux-gcc-x64",
+      "name": "Jetson-Orin-Nano",
       "includePath": [
         "${workspaceFolder}/**",
         "${workspaceFolder}/devel/include/**",
         "/opt/ros/noetic/include/**",
+        "/usr/include/pcl-1.10",
+        "/usr/include/eigen3",
         "/usr/include/opencv4",
-        "/usr/local/cuda/include"
+        "/usr/include/gstreamer-1.0",
+        "/usr/local/cuda/include",
+        "/usr/include"
       ],
       "compilerPath": "/usr/bin/gcc",
-      "cStandard": "${default}",
-      "cppStandard": "${default}",
-      "intelliSenseMode": "linux-gcc-x64",
-      "compilerArgs": [
-        ""
-      ]
+      "cStandard": "gnu11",
+      "cppStandard": "gnu++14",
+      "intelliSenseMode": "linux-gcc-arm64",
+      "browse": {
+        "path": [
+          "${workspaceFolder}",
+          "/opt/ros/noetic/include",
+          "/usr/include/pcl-1.10",
+          "/usr/include/eigen3",
+          "/usr/include"
+        ],
+        "limitSymbolsToIncludedHeaders": true
+      }
     }
   ],
   "version": 4

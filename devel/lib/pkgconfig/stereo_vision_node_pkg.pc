@@ -1,0 +1,8 @@
+prefix=/home/evee/ROS/evee_ws/devel
+
+Name: stereo_vision_node_pkg
+Description: Description of stereo_vision_node_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: cv_bridge message_filters pcl_conversions pcl_ros roscpp sensor_msgs std_msgs

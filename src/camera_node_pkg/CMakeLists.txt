@@ -210,5 +210,8 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(camera_node src/camera.cpp)
-target_link_libraries(camera_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+add_executable(camera0_node src/camera0.cpp)
+target_link_libraries(camera0_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
+add_executable(camera1_node src/camera1.cpp)
+target_link_libraries(camera1_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})

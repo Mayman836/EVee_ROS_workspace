@@ -1,0 +1,8 @@
+prefix=/home/evee/ROS/evee_ws/install
+
+Name: detection_fusion_node_pkg
+Description: Description of detection_fusion_node_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: message_filters pcl_conversions pcl_ros roscpp sensor_msgs std_msgs vision_msgs

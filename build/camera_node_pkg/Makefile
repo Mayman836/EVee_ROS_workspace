@@ -68,6 +68,18 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -123,18 +135,6 @@ test/fast: test
 
 .PHONY : test/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # The main all target
 all: cmake_check_build_system
 	cd /home/evee/ROS/evee_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/evee/ROS/evee_ws/build/CMakeFiles /home/evee/ROS/evee_ws/build/camera_node_pkg/CMakeFiles/progress.marks
@@ -168,46 +168,88 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-camera_node_pkg/CMakeFiles/camera_node.dir/rule:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera_node_pkg/CMakeFiles/camera_node.dir/rule
-.PHONY : camera_node_pkg/CMakeFiles/camera_node.dir/rule
+camera_node_pkg/CMakeFiles/camera1_node.dir/rule:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera_node_pkg/CMakeFiles/camera1_node.dir/rule
+.PHONY : camera_node_pkg/CMakeFiles/camera1_node.dir/rule
 
 # Convenience name for target.
-camera_node: camera_node_pkg/CMakeFiles/camera_node.dir/rule
+camera1_node: camera_node_pkg/CMakeFiles/camera1_node.dir/rule
 
-.PHONY : camera_node
+.PHONY : camera1_node
 
 # fast build rule for target.
-camera_node/fast:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera_node.dir/build.make camera_node_pkg/CMakeFiles/camera_node.dir/build
-.PHONY : camera_node/fast
+camera1_node/fast:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera1_node.dir/build.make camera_node_pkg/CMakeFiles/camera1_node.dir/build
+.PHONY : camera1_node/fast
 
-src/camera.o: src/camera.cpp.o
+# Convenience name for target.
+camera_node_pkg/CMakeFiles/camera0_node.dir/rule:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera_node_pkg/CMakeFiles/camera0_node.dir/rule
+.PHONY : camera_node_pkg/CMakeFiles/camera0_node.dir/rule
 
-.PHONY : src/camera.o
+# Convenience name for target.
+camera0_node: camera_node_pkg/CMakeFiles/camera0_node.dir/rule
+
+.PHONY : camera0_node
+
+# fast build rule for target.
+camera0_node/fast:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera0_node.dir/build.make camera_node_pkg/CMakeFiles/camera0_node.dir/build
+.PHONY : camera0_node/fast
+
+src/camera0.o: src/camera0.cpp.o
+
+.PHONY : src/camera0.o
 
 # target to build an object file
-src/camera.cpp.o:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera_node.dir/build.make camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.o
-.PHONY : src/camera.cpp.o
+src/camera0.cpp.o:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera0_node.dir/build.make camera_node_pkg/CMakeFiles/camera0_node.dir/src/camera0.cpp.o
+.PHONY : src/camera0.cpp.o
 
-src/camera.i: src/camera.cpp.i
+src/camera0.i: src/camera0.cpp.i
 
-.PHONY : src/camera.i
+.PHONY : src/camera0.i
 
 # target to preprocess a source file
-src/camera.cpp.i:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera_node.dir/build.make camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.i
-.PHONY : src/camera.cpp.i
+src/camera0.cpp.i:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera0_node.dir/build.make camera_node_pkg/CMakeFiles/camera0_node.dir/src/camera0.cpp.i
+.PHONY : src/camera0.cpp.i
 
-src/camera.s: src/camera.cpp.s
+src/camera0.s: src/camera0.cpp.s
 
-.PHONY : src/camera.s
+.PHONY : src/camera0.s
 
 # target to generate assembly for a file
-src/camera.cpp.s:
-	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera_node.dir/build.make camera_node_pkg/CMakeFiles/camera_node.dir/src/camera.cpp.s
-.PHONY : src/camera.cpp.s
+src/camera0.cpp.s:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera0_node.dir/build.make camera_node_pkg/CMakeFiles/camera0_node.dir/src/camera0.cpp.s
+.PHONY : src/camera0.cpp.s
+
+src/camera1.o: src/camera1.cpp.o
+
+.PHONY : src/camera1.o
+
+# target to build an object file
+src/camera1.cpp.o:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera1_node.dir/build.make camera_node_pkg/CMakeFiles/camera1_node.dir/src/camera1.cpp.o
+.PHONY : src/camera1.cpp.o
+
+src/camera1.i: src/camera1.cpp.i
+
+.PHONY : src/camera1.i
+
+# target to preprocess a source file
+src/camera1.cpp.i:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera1_node.dir/build.make camera_node_pkg/CMakeFiles/camera1_node.dir/src/camera1.cpp.i
+.PHONY : src/camera1.cpp.i
+
+src/camera1.s: src/camera1.cpp.s
+
+.PHONY : src/camera1.s
+
+# target to generate assembly for a file
+src/camera1.cpp.s:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f camera_node_pkg/CMakeFiles/camera1_node.dir/build.make camera_node_pkg/CMakeFiles/camera1_node.dir/src/camera1.cpp.s
+.PHONY : src/camera1.cpp.s
 
 # Help Target
 help:
@@ -216,16 +258,20 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
+	@echo "... install/local"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test"
-	@echo "... install/local"
-	@echo "... camera_node"
-	@echo "... src/camera.o"
-	@echo "... src/camera.i"
-	@echo "... src/camera.s"
+	@echo "... camera1_node"
+	@echo "... camera0_node"
+	@echo "... src/camera0.o"
+	@echo "... src/camera0.i"
+	@echo "... src/camera0.s"
+	@echo "... src/camera1.o"
+	@echo "... src/camera1.i"
+	@echo "... src/camera1.s"
 .PHONY : help
 
 
