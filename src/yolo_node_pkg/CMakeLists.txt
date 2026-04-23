@@ -222,3 +222,6 @@ include_directories(
 
 add_executable(yolo_node src/yolo.cpp)
 target_link_libraries(yolo_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${CUDA_LIBRARIES} nvinfer)
+
+add_executable(yolo_visualizer_node src/yolo_viz.cpp)
+target_link_libraries(yolo_visualizer_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})

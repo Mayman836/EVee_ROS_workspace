@@ -55,6 +55,8 @@ include custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/progress.m
 
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp: /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/Waypoint.lisp
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp: /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/EncoderTicks.lisp
+custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp: /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistance.lisp
+custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp: /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistanceArray.lisp
 
 
 /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/Waypoint.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
@@ -68,9 +70,23 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp: /home/evee/ROS/evee_w
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Lisp code from custom_msgs/EncoderTicks.msg"
 	cd /home/evee/ROS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/evee/ROS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg -Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg
 
+/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistance.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistance.lisp: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Lisp code from custom_msgs/DetectionDistance.msg"
+	cd /home/evee/ROS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg -Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg
+
+/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistanceArray.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistanceArray.lisp: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg
+/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistanceArray.lisp: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg
+/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistanceArray.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Lisp code from custom_msgs/DetectionDistanceArray.msg"
+	cd /home/evee/ROS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg -Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg
+
 custom_msgs_generate_messages_lisp: custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp
 custom_msgs_generate_messages_lisp: /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/Waypoint.lisp
 custom_msgs_generate_messages_lisp: /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/EncoderTicks.lisp
+custom_msgs_generate_messages_lisp: /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistance.lisp
+custom_msgs_generate_messages_lisp: /home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistanceArray.lisp
 custom_msgs_generate_messages_lisp: custom_msgs/CMakeFiles/custom_msgs_generate_messages_lisp.dir/build.make
 
 .PHONY : custom_msgs_generate_messages_lisp

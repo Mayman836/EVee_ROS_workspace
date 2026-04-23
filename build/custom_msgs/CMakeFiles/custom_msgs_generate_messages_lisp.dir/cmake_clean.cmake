@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistance.lisp"
+  "/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/DetectionDistanceArray.lisp"
   "/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/EncoderTicks.lisp"
   "/home/evee/ROS/evee_ws/devel/share/common-lisp/ros/custom_msgs/msg/Waypoint.lisp"
   "CMakeFiles/custom_msgs_generate_messages_lisp"

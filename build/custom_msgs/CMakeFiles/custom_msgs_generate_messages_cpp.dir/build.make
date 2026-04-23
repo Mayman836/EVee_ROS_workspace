@@ -55,6 +55,8 @@ include custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/progress.ma
 
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp: /home/evee/ROS/evee_ws/devel/include/custom_msgs/Waypoint.h
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp: /home/evee/ROS/evee_ws/devel/include/custom_msgs/EncoderTicks.h
+custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp: /home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistance.h
+custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp: /home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistanceArray.h
 
 
 /home/evee/ROS/evee_ws/devel/include/custom_msgs/Waypoint.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
@@ -70,9 +72,25 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp: /home/evee/ROS/evee_ws
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from custom_msgs/EncoderTicks.msg"
 	cd /home/evee/ROS/evee_ws/src/custom_msgs && /home/evee/ROS/evee_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/evee/ROS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg -Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/evee/ROS/evee_ws/devel/include/custom_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
 
+/home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistance.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistance.h: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg
+/home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistance.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from custom_msgs/DetectionDistance.msg"
+	cd /home/evee/ROS/evee_ws/src/custom_msgs && /home/evee/ROS/evee_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg -Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/evee/ROS/evee_ws/devel/include/custom_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
+
+/home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistanceArray.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistanceArray.h: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg
+/home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistanceArray.h: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg
+/home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistanceArray.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistanceArray.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from custom_msgs/DetectionDistanceArray.msg"
+	cd /home/evee/ROS/evee_ws/src/custom_msgs && /home/evee/ROS/evee_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg -Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/evee/ROS/evee_ws/devel/include/custom_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
+
 custom_msgs_generate_messages_cpp: custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp
 custom_msgs_generate_messages_cpp: /home/evee/ROS/evee_ws/devel/include/custom_msgs/Waypoint.h
 custom_msgs_generate_messages_cpp: /home/evee/ROS/evee_ws/devel/include/custom_msgs/EncoderTicks.h
+custom_msgs_generate_messages_cpp: /home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistance.h
+custom_msgs_generate_messages_cpp: /home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistanceArray.h
 custom_msgs_generate_messages_cpp: custom_msgs/CMakeFiles/custom_msgs_generate_messages_cpp.dir/build.make
 
 .PHONY : custom_msgs_generate_messages_cpp

@@ -50,6 +50,8 @@ add_message_files(
   FILES
   Waypoint.msg
   EncoderTicks.msg
+  DetectionDistance.msg
+  DetectionDistanceArray.msg
 )
 
 ## Generate services in the 'srv' folder

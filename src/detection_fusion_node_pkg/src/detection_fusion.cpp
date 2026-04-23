@@ -9,6 +9,8 @@
 #include <pcl_conversions/pcl_conversions.h>
 #include <vector>
 #include <algorithm>
+#include <custom_msgs/DetectionDistance.h>
+#include <custom_msgs/DetectionDistanceArray.h>
 
 using namespace sensor_msgs;
 using namespace vision_msgs;
@@ -17,9 +19,7 @@ using namespace message_filters;
 typedef pcl::PointXYZ PointT; 
 typedef sync_policies::ApproximateTime<Detection2DArray, PointCloud2> SyncPolicy;
 
-std::vector<std::string> class_names = {
-    "human", "speed_bump", "vehicle"
-};
+ros::Publisher obstacles_pub;
 
 void detectionFusionCallback(const Detection2DArrayConstPtr& yolo_msg, const PointCloud2ConstPtr& stereo_vision_msg)
 {
@@ -28,11 +28,14 @@ void detectionFusionCallback(const Detection2DArrayConstPtr& yolo_msg, const Poi
 
     if (cloud->empty()) return;
 
+    // Initialize the array message
+    custom_msgs::DetectionDistanceArray out_array;
+    out_array.header = yolo_msg->header;
+
     for (size_t i = 0; i < yolo_msg->detections.size(); i++) {
         const auto& det = yolo_msg->detections[i];
         
         int class_id = det.results[0].id;
-        std::string obj_name = (class_id >= 0 && class_id < class_names.size()) ? class_names[class_id] : "unknown";
 
         float center_x = det.bbox.center.x;
         float center_y = det.bbox.center.y;
@@ -70,12 +73,17 @@ void detectionFusionCallback(const Detection2DArrayConstPtr& yolo_msg, const Poi
         if (!z_distances.empty()) {
             std::sort(z_distances.begin(), z_distances.end());
             float final_distance = z_distances[z_distances.size() / 2];
-            ROS_INFO("%s %.2f meters", obj_name.c_str(), final_distance);
-        } else {
-            ROS_INFO("%s distance unknown", obj_name.c_str());
+            
+            // Populate individual detection and add to array
+            custom_msgs::DetectionDistance dist_msg;
+            dist_msg.class_id = class_id;
+            dist_msg.distance = final_distance;
+            out_array.detections.push_back(dist_msg);
         }
     }
-    ROS_INFO("-------------------------");
+    
+    // Publish the collected detections
+    obstacles_pub.publish(out_array);
 }
 
 int main(int argc, char** argv)
@@ -83,13 +91,17 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "detection_fusion_node");
     ros::NodeHandle nh;
 
-    message_filters::Subscriber<Detection2DArray> yolo_sub(nh, "/vision/detections", 10);
-    message_filters::Subscriber<PointCloud2> stereo_vision_sub(nh, "/stereo_vision/points", 10);
+    // Publisher for the fused data
+    obstacles_pub = nh.advertise<custom_msgs::DetectionDistanceArray>("/perception/obstacles", 1);
+
+    // Subscribers with queue size 1
+    message_filters::Subscriber<Detection2DArray> yolo_sub(nh, "/vision/detections", 1);
+    message_filters::Subscriber<PointCloud2> stereo_vision_sub(nh, "/stereo_vision/points", 1);
 
     Synchronizer<SyncPolicy> sync(SyncPolicy(10), yolo_sub, stereo_vision_sub);
     sync.registerCallback(boost::bind(&detectionFusionCallback, _1, _2));
 
-    ROS_INFO("Fusion Node Started. Waiting for data...");
+    ROS_INFO("Fusion Node Started. Publishing to /perception/obstacles");
 
     ros::spin();
     return 0;

@@ -86,7 +86,7 @@ CMAKE_AR:FILEPATH=/usr/bin/ar
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_BUILD_TYPE:STRING=
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
@@ -878,12 +878,6 @@ ekf_localization_node_pkg_BINARY_DIR:STATIC=/home/evee/ROS/evee_ws/build/ekf_loc
 //Value Computed by CMake
 ekf_localization_node_pkg_SOURCE_DIR:STATIC=/home/evee/ROS/evee_ws/src/ekf_localization_node_pkg
 
-//Value Computed by CMake
-fake_sensors_pkg_BINARY_DIR:STATIC=/home/evee/ROS/evee_ws/build/fake_sensors_pkg
-
-//Value Computed by CMake
-fake_sensors_pkg_SOURCE_DIR:STATIC=/home/evee/ROS/evee_ws/src/fake_sensors_pkg
-
 //The directory containing a CMake configuration file for flann.
 flann_DIR:PATH=flann_DIR-NOTFOUND
 
@@ -957,9 +951,6 @@ gtest_main_LIB_DEPENDS:STATIC=general;gtest;
 //The directory containing a CMake configuration file for image_transport.
 image_transport_DIR:PATH=/opt/ros/noetic/share/image_transport/cmake
 
-//The directory containing a CMake configuration file for jetson-utils.
-jetson-utils_DIR:PATH=jetson-utils_DIR-NOTFOUND
-
 //Path to a library.
 lib:FILEPATH=/opt/ros/noetic/lib/librospack.so
 
@@ -1010,12 +1001,6 @@ pkgcfg_lib_PC_USB_10_usb-1.0:FILEPATH=/usr/lib/aarch64-linux-gnu/libusb-1.0.so
 
 //The directory containing a CMake configuration file for pluginlib.
 pluginlib_DIR:PATH=/opt/ros/noetic/share/pluginlib/cmake
-
-//Value Computed by CMake
-ros_deep_learning_BINARY_DIR:STATIC=/home/evee/ROS/evee_ws/build/ros_deep_learning
-
-//Value Computed by CMake
-ros_deep_learning_SOURCE_DIR:STATIC=/home/evee/ROS/evee_ws/src/ros_deep_learning
 
 //The directory containing a CMake configuration file for rosbag.
 rosbag_DIR:PATH=/opt/ros/noetic/share/rosbag/cmake

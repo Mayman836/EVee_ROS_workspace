@@ -6,6 +6,42 @@
 
 #IncludeRegexTransform: 
 
+/home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistance.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/home/evee/ROS/evee_ws/devel/include/custom_msgs/DetectionDistanceArray.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+custom_msgs/DetectionDistance.h
+-
+
 /home/evee/ROS/evee_ws/src/detection_fusion_node_pkg/src/detection_fusion.cpp
 ros/ros.h
 -
@@ -28,6 +64,10 @@ pcl_conversions/pcl_conversions.h
 vector
 -
 algorithm
+-
+custom_msgs/DetectionDistance.h
+-
+custom_msgs/DetectionDistanceArray.h
 -
 
 /opt/ros/noetic/include/geometry_msgs/Point.h

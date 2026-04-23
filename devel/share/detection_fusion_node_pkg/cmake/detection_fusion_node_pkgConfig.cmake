@@ -187,7 +187,7 @@ foreach(t ${detection_fusion_node_pkg_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "message_filters;pcl_conversions;pcl_ros;roscpp;sensor_msgs;std_msgs;vision_msgs")
+set(depends "message_filters;pcl_conversions;pcl_ros;roscpp;sensor_msgs;std_msgs;vision_msgs;custom_msgs")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

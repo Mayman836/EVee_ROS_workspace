@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistance.py"
+  "/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistanceArray.py"
   "/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py"
   "/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py"
   "/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py"

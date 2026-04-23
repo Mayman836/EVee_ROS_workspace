@@ -1,6 +1,10 @@
 (cl:defpackage custom_msgs-msg
   (:use )
   (:export
+   "<DETECTIONDISTANCE>"
+   "DETECTIONDISTANCE"
+   "<DETECTIONDISTANCEARRAY>"
+   "DETECTIONDISTANCEARRAY"
    "<ENCODERTICKS>"
    "ENCODERTICKS"
    "<WAYPOINT>"

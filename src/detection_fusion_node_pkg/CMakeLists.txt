@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   vision_msgs
+  custom_msgs
 )
 
 find_package(PCL REQUIRED)
@@ -111,7 +112,7 @@ find_package(PCL REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES detection_fusion_node_pkg
- CATKIN_DEPENDS message_filters pcl_conversions pcl_ros roscpp sensor_msgs std_msgs vision_msgs
+ CATKIN_DEPENDS message_filters pcl_conversions pcl_ros roscpp sensor_msgs std_msgs vision_msgs custom_msgs
 #  DEPENDS system_lib
 )
 
@@ -214,4 +215,7 @@ add_definitions(${PCL_DEFINITIONS})
 # catkin_add_nosetests(test)
 
 add_executable(detection_fusion_node src/detection_fusion.cpp)
+
+add_dependencies(detection_fusion_node ${catkin_EXPORTED_TARGETS})
+
 target_link_libraries(detection_fusion_node ${catkin_LIBRARIES} ${PCL_LIBRARIES})

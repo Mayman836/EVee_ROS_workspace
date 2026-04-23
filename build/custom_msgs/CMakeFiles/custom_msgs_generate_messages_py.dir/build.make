@@ -55,6 +55,8 @@ include custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/progress.mak
 
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py
+custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistance.py
+custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistanceArray.py
 custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py
 
 
@@ -69,15 +71,31 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG custom_msgs/EncoderTicks"
 	cd /home/evee/ROS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/evee/ROS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg -Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg
 
+/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistance.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistance.py: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python from MSG custom_msgs/DetectionDistance"
+	cd /home/evee/ROS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg -Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg
+
+/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistanceArray.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistanceArray.py: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg
+/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistanceArray.py: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg
+/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistanceArray.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python from MSG custom_msgs/DetectionDistanceArray"
+	cd /home/evee/ROS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg -Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg
+
 /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py
 /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for custom_msgs"
+/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistance.py
+/home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistanceArray.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python msg __init__.py for custom_msgs"
 	cd /home/evee/ROS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg --initpy
 
 custom_msgs_generate_messages_py: custom_msgs/CMakeFiles/custom_msgs_generate_messages_py
 custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_Waypoint.py
 custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_EncoderTicks.py
+custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistance.py
+custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/_DetectionDistanceArray.py
 custom_msgs_generate_messages_py: /home/evee/ROS/evee_ws/devel/lib/python3/dist-packages/custom_msgs/msg/__init__.py
 custom_msgs_generate_messages_py: custom_msgs/CMakeFiles/custom_msgs_generate_messages_py.dir/build.make
 

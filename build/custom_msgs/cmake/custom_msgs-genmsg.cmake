@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "custom_msgs: 2 messages, 0 services")
+message(STATUS "custom_msgs: 4 messages, 0 services")
 
 set(MSG_I_FLAGS "-Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg")
 
@@ -27,6 +27,16 @@ add_custom_target(_custom_msgs_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "custom_msgs" "/home/evee/ROS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" "std_msgs/Header"
 )
 
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg" NAME_WE)
+add_custom_target(_custom_msgs_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "custom_msgs" "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg" ""
+)
+
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg" NAME_WE)
+add_custom_target(_custom_msgs_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "custom_msgs" "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg" "custom_msgs/DetectionDistance:std_msgs/Header"
+)
+
 #
 #  langs = gencpp;geneus;genlisp;gennodejs;genpy
 #
@@ -43,6 +53,18 @@ _generate_msg_cpp(custom_msgs
   "/home/evee/ROS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_cpp(custom_msgs
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_cpp(custom_msgs
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg"
+  "${MSG_I_FLAGS}"
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/custom_msgs
 )
 
@@ -63,6 +85,10 @@ add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_cpp
 get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/Waypoint.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_cpp _custom_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_cpp _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_cpp _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_cpp _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -86,6 +112,18 @@ _generate_msg_eus(custom_msgs
   "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/custom_msgs
 )
+_generate_msg_eus(custom_msgs
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_eus(custom_msgs
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg"
+  "${MSG_I_FLAGS}"
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/custom_msgs
+)
 
 ### Generating Services
 
@@ -104,6 +142,10 @@ add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_eus
 get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/Waypoint.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_eus _custom_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_eus _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_eus _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_eus _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -127,6 +169,18 @@ _generate_msg_lisp(custom_msgs
   "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/custom_msgs
 )
+_generate_msg_lisp(custom_msgs
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_lisp(custom_msgs
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg"
+  "${MSG_I_FLAGS}"
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/custom_msgs
+)
 
 ### Generating Services
 
@@ -145,6 +199,10 @@ add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_lis
 get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/Waypoint.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_lisp _custom_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_lisp _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_lisp _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_lisp _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -168,6 +226,18 @@ _generate_msg_nodejs(custom_msgs
   "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/custom_msgs
 )
+_generate_msg_nodejs(custom_msgs
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_nodejs(custom_msgs
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg"
+  "${MSG_I_FLAGS}"
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/custom_msgs
+)
 
 ### Generating Services
 
@@ -186,6 +256,10 @@ add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_nod
 get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/Waypoint.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_nodejs _custom_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_nodejs _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_nodejs _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_nodejs _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -209,6 +283,18 @@ _generate_msg_py(custom_msgs
   "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/custom_msgs
 )
+_generate_msg_py(custom_msgs
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/custom_msgs
+)
+_generate_msg_py(custom_msgs
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg"
+  "${MSG_I_FLAGS}"
+  "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/custom_msgs
+)
 
 ### Generating Services
 
@@ -227,6 +313,10 @@ add_dependencies(custom_msgs_generate_messages custom_msgs_generate_messages_py)
 get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/Waypoint.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_py _custom_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/EncoderTicks.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_py _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg" NAME_WE)
+add_dependencies(custom_msgs_generate_messages_py _custom_msgs_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg" NAME_WE)
 add_dependencies(custom_msgs_generate_messages_py _custom_msgs_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

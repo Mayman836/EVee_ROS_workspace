@@ -168,6 +168,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/rule:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f CMakeFiles/Makefile2 yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/rule
+.PHONY : yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/rule
+
+# Convenience name for target.
+yolo_visualizer_node: yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/rule
+
+.PHONY : yolo_visualizer_node
+
+# fast build rule for target.
+yolo_visualizer_node/fast:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/build.make yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/build
+.PHONY : yolo_visualizer_node/fast
+
+# Convenience name for target.
 yolo_node_pkg/CMakeFiles/yolo_node.dir/rule:
 	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f CMakeFiles/Makefile2 yolo_node_pkg/CMakeFiles/yolo_node.dir/rule
 .PHONY : yolo_node_pkg/CMakeFiles/yolo_node.dir/rule
@@ -209,6 +224,33 @@ src/yolo.cpp.s:
 	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/yolo_node.dir/build.make yolo_node_pkg/CMakeFiles/yolo_node.dir/src/yolo.cpp.s
 .PHONY : src/yolo.cpp.s
 
+src/yolo_viz.o: src/yolo_viz.cpp.o
+
+.PHONY : src/yolo_viz.o
+
+# target to build an object file
+src/yolo_viz.cpp.o:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/build.make yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/src/yolo_viz.cpp.o
+.PHONY : src/yolo_viz.cpp.o
+
+src/yolo_viz.i: src/yolo_viz.cpp.i
+
+.PHONY : src/yolo_viz.i
+
+# target to preprocess a source file
+src/yolo_viz.cpp.i:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/build.make yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/src/yolo_viz.cpp.i
+.PHONY : src/yolo_viz.cpp.i
+
+src/yolo_viz.s: src/yolo_viz.cpp.s
+
+.PHONY : src/yolo_viz.s
+
+# target to generate assembly for a file
+src/yolo_viz.cpp.s:
+	cd /home/evee/ROS/evee_ws/build && $(MAKE) -f yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/build.make yolo_node_pkg/CMakeFiles/yolo_visualizer_node.dir/src/yolo_viz.cpp.s
+.PHONY : src/yolo_viz.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -221,11 +263,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test"
+	@echo "... yolo_visualizer_node"
 	@echo "... install/local"
 	@echo "... yolo_node"
 	@echo "... src/yolo.o"
 	@echo "... src/yolo.i"
 	@echo "... src/yolo.s"
+	@echo "... src/yolo_viz.o"
+	@echo "... src/yolo_viz.i"
+	@echo "... src/yolo_viz.s"
 .PHONY : help
 
 

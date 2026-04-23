@@ -32,8 +32,8 @@ private:
 
 public:
     StereoToPointCloud() : 
-        cam0_sub(nh, "/camera/cam0/image_raw", 10),
-        cam1_sub(nh, "/camera/cam1/image_raw", 10),
+        cam0_sub(nh, "/camera/cam0/image_raw", 1),
+        cam1_sub(nh, "/camera/cam1/image_raw", 1),
         sync(SyncPolicy(10), cam1_sub, cam0_sub)
     {
         // ROS Callback binds: _1 is cam1 (Left), _2 is cam0 (Right)
