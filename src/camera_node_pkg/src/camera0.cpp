@@ -1,5 +1,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Image.h>
+#include <sensor_msgs/CameraInfo.h>
+#include <camera_info_manager/camera_info_manager.h>
 #include <opencv2/opencv.hpp>
 #include <cv_bridge/cv_bridge.h>
 
@@ -15,7 +17,18 @@ std::string get_pipeline() {
 int main(int argc, char **argv) {
     ros::init(argc, argv, "camera0_node");
     ros::NodeHandle nh;
+    
     ros::Publisher img_pub = nh.advertise<sensor_msgs::Image>("/camera/cam0/image_raw", 1);
+    ros::Publisher info_pub = nh.advertise<sensor_msgs::CameraInfo>("/camera/cam0/camera_info", 1);
+
+    // Initialize manager and load calibration
+    camera_info_manager::CameraInfoManager cinfo(nh, "cam0");
+    std::string yaml_url = "file:///home/evee/ROS/calibration/right.yaml";
+    if (cinfo.validateURL(yaml_url)) {
+        cinfo.loadCameraInfo(yaml_url);
+    } else {
+        ROS_WARN("Failed to validate calibration URL for cam0");
+    }
 
     cv::VideoCapture cap(get_pipeline(), cv::CAP_GSTREAMER);
     if(!cap.isOpened()) return -1;
@@ -24,10 +37,19 @@ int main(int argc, char **argv) {
     while(ros::ok()) {
         cv::Mat frame;
         if(cap.read(frame)) {
+            ros::Time current_time = ros::Time::now();
+
+            // Prepare and publish image
             sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", frame).toImageMsg();
-            msg->header.stamp = ros::Time::now();
+            msg->header.stamp = current_time;
             msg->header.frame_id = "camera0_link";
             img_pub.publish(msg);
+
+            // Prepare and publish calibration info with identical timestamp
+            sensor_msgs::CameraInfo info_msg = cinfo.getCameraInfo();
+            info_msg.header.stamp = current_time;
+            info_msg.header.frame_id = "camera0_link";
+            info_pub.publish(info_msg);
         }
         ros::spinOnce();
         loop_rate.sleep();

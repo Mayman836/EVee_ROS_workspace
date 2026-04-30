@@ -13,6 +13,8 @@ sensor_msgs/Image.h
 -
 sensor_msgs/PointCloud2.h
 -
+sensor_msgs/image_encodings.h
+-
 cv_bridge/cv_bridge.h
 -
 opencv2/opencv.hpp

@@ -138,6 +138,8 @@ camera1_node_EXTERNAL_OBJECTS =
 /home/evee/ROS/evee_ws/devel/lib/camera_node_pkg/camera1_node: /usr/lib/aarch64-linux-gnu/libpython3.8.so
 /home/evee/ROS/evee_ws/devel/lib/camera_node_pkg/camera1_node: /usr/lib/aarch64-linux-gnu/libboost_program_options.so.1.71.0
 /home/evee/ROS/evee_ws/devel/lib/camera_node_pkg/camera1_node: /usr/lib/aarch64-linux-gnu/libtinyxml2.so
+/home/evee/ROS/evee_ws/devel/lib/camera_node_pkg/camera1_node: /opt/ros/noetic/lib/libcamera_info_manager.so
+/home/evee/ROS/evee_ws/devel/lib/camera_node_pkg/camera1_node: /opt/ros/noetic/lib/libcamera_calibration_parsers.so
 /home/evee/ROS/evee_ws/devel/lib/camera_node_pkg/camera1_node: /opt/ros/noetic/lib/libroscpp.so
 /home/evee/ROS/evee_ws/devel/lib/camera_node_pkg/camera1_node: /usr/lib/aarch64-linux-gnu/libpthread.so
 /home/evee/ROS/evee_ws/devel/lib/camera_node_pkg/camera1_node: /usr/lib/aarch64-linux-gnu/libboost_chrono.so.1.71.0

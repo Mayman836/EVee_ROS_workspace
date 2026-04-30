@@ -25,7 +25,7 @@ private:
 public:
     ImmortalVisualizer() {
         sub_img = nh.subscribe("/camera/cam1/image_raw", 1, &ImmortalVisualizer::imgCb, this);
-        sub_det = nh.subscribe("/yolo/detections", 1, &ImmortalVisualizer::detCb, this);
+        sub_det = nh.subscribe("/vision/detections", 1, &ImmortalVisualizer::detCb, this);
         pub_viz = nh.advertise<sensor_msgs::Image>("/yolo/viz", 1);
     }
 

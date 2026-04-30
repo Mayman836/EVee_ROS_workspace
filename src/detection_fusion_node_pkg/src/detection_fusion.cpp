@@ -47,9 +47,9 @@ void detectionFusionCallback(const Detection2DArrayConstPtr& yolo_msg, const Poi
         int yolo_min_y = std::max(0, (int)(center_y - size_y / 2));
         int yolo_max_y = (int)(center_y + size_y / 2);
 
-        int cloud_min_x = yolo_min_x / 2;
+        int cloud_min_x = std::max(0, yolo_min_x / 2); //changed
         int cloud_max_x = yolo_max_x / 2;
-        int cloud_min_y = yolo_min_y / 2;
+        int cloud_min_y = std::max(0, yolo_min_y / 2); //changed
         int cloud_max_y = yolo_max_y / 2;
 
         cloud_max_x = std::min(cloud_max_x, (int)cloud->width - 1);
