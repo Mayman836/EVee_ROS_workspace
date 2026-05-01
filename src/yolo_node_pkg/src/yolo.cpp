@@ -188,7 +188,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
     if (!initTRT("/home/evee/ROS/evee_ws/src/yolo_node_pkg/models/best.engine")) return -1;
     pub_det = nh.advertise<vision_msgs::Detection2DArray>("/vision/detections", 1);
-    ros::Subscriber sub = nh.subscribe("/camera/cam1/image_rect", 1, yoloCallback); //changed
+    ros::Subscriber sub = nh.subscribe("/camera/left/image_rect_color", 1, yoloCallback); //changed
     ROS_INFO("YOLO Node Active");
     ros::spin();
     return 0;
