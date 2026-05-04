@@ -7,19 +7,19 @@
 #ifndef ENCODER_NODE_H
 #define ENCODER_NODE_H
 
-#define L_ENC_PIN_A 25
-#define L_ENC_PIN_B 26
+// #define L_ENC_PIN_A 25
+// #define L_ENC_PIN_B 26
 
-#define L_ENC           PCNT_UNIT_0
-#define L_ENC_CHANNEL_A PCNT_CHANNEL_0
-#define L_ENC_CHANNEL_B PCNT_CHANNEL_1
+// #define L_ENC           PCNT_UNIT_0
+// #define L_ENC_CHANNEL_A PCNT_CHANNEL_0
+// #define L_ENC_CHANNEL_B PCNT_CHANNEL_1
 
-#define R_ENC_PIN_A 32
-#define R_ENC_PIN_B 33
+// #define R_ENC_PIN_A 32
+// #define R_ENC_PIN_B 33
 
-#define R_ENC           PCNT_UNIT_1
-#define R_ENC_CHANNEL_A PCNT_CHANNEL_0
-#define R_ENC_CHANNEL_B PCNT_CHANNEL_1
+// #define R_ENC           PCNT_UNIT_1
+// #define R_ENC_CHANNEL_A PCNT_CHANNEL_0
+// #define R_ENC_CHANNEL_B PCNT_CHANNEL_1
 
 #define S_ENC_PIN_A 27
 #define S_ENC_PIN_B 17
