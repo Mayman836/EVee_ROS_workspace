@@ -4,16 +4,15 @@
 #include <camera_info_manager/camera_info_manager.h>
 #include <opencv2/opencv.hpp>
 #include <cv_bridge/cv_bridge.h>
-
+//expousre change
 std::string get_pipeline() {
-    return "nvarguscamerasrc sensor-id=0 ! "
+    return "nvarguscamerasrc sensor-id=0 exposuretimerange=\"100000 30000000\" gainrange=\"1 16\" ispdigitalgainrange=\"1 4\" ! "
            "video/x-raw(memory:NVMM), width=1280, height=720, format=NV12, framerate=30/1 ! "
            "nvvidconv flip-method=2 ! "
            "video/x-raw, width=1280, height=720, format=BGRx ! "
            "videoconvert ! "
            "video/x-raw, format=BGR ! appsink";
 }
-
 int main(int argc, char **argv) {
     ros::init(argc, argv, "camera0_node");
     ros::NodeHandle nh;

@@ -16,9 +16,12 @@ public:
     void update(ros::NodeHandle& nh);
 
 private:
+    float applyCorrection(int index, float raw_cm);
+
     // Pins and ROS frames
     const int trigPins[NUM_SENSORS] = {13, 14, 25, 26, 27, 33};
     const int echoPins[NUM_SENSORS] = {34, 35, 36, 39, 32, 5};
+    
     const char* frame_ids[NUM_SENSORS] = {
         "sonar_front", "sonar_rear", 
         "sonar_left_0", "sonar_left_1", 
