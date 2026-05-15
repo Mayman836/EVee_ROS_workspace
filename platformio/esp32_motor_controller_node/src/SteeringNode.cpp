@@ -1,162 +1,188 @@
 #include "SteeringNode.h"
 
-SteeringNode::SteeringNode(uint8_t step_pin, uint8_t dir_pin, uint8_t limit_pin)
-    : _step_pin(step_pin), _dir_pin(dir_pin), _limit_pin(limit_pin),
-      _stepper(AccelStepper::DRIVER, step_pin, dir_pin),
-      _s_enc_pub("/encoder/steering/raw", &_s_enc_msg),
-      _pub_target("/steering/plot_target", &_msg_target),
-      _pub_current("/steering/current_angle", &_msg_current) 
+const int NUM_DATA_POINTS = 28;
+
+const float LUT_TICKS[NUM_DATA_POINTS] = {
+    -9600, -9000, -8400, -7800, -7200, -6600, -6000, -5400, -4800, -4200, -3600, -3000, -2400, -1800, -1200, -600, 0, 600, 1200, 1800, 2400, 3000, 3600, 4200, 4800, 5400, 6000, 6300
+};
+
+const float LUT_ANGLES[NUM_DATA_POINTS] = {
+    -23.0, -20.3, -18.9, -17.5, -17.2, -14.9, -13.9, -11.5, -10.0, -9.5, -8.0, -7.5, -6.0, -4.4, -2.0, -1.0, 0.0, 2.0, 3.0, 4.0, 5.5, 6.9, 8.2, 10.3, 11.3, 12.7, 14.4, 14.4
+};
+
+
+SteeringNode::SteeringNode(uint8_t pin_step, uint8_t pin_dir, uint8_t pin_limit)
+    : step_pin(pin_step), dir_pin(pin_dir), limit_pin(pin_limit),
+      stepper(AccelStepper::DRIVER, pin_step, pin_dir),
+      s_enc_pub("/encoder/steering/raw", &s_enc_msg),
+      pub_target("/steering/plot_target", &msg_target),
+      pub_current("/steering/current_angle", &msg_current) 
 {
-    _Kp = 1.0; _Ki = 0.0; _Kd = 0.0;
-    _integral = 0.0; _prev_error = 0.0;
-    _prev_time = 0; _last_publish_time = 0;
-    _enc_count = 0; _enc_last_time = 0;
-    _target_angle = 0.0;
-    _limit_triggered = false;
+    prev_time = 0; 
+    last_publish_time = 0;
+    enc_count = 0; 
+    target_angle = 0.0;
+    limit_triggered = false;
 }
 
-void SteeringNode::init(ros::NodeHandle* nh) {
-    _nh = nh;
-    pinMode(_limit_pin, INPUT_PULLDOWN);
+void SteeringNode::init(ros::NodeHandle* node_handle) {
+    nh = node_handle;
+    pinMode(limit_pin, INPUT_PULLDOWN);
     
-    _stepper.setPinsInverted(true, true, false); 
-    _stepper.setMaxSpeed(MAX_STEP_SPEED);
+    stepper.setPinsInverted(true, true, false); 
+    stepper.setMaxSpeed(MAX_STEP_SPEED);
     setupPCNT(); 
     
-    _nh->advertise(_s_enc_pub);
-    _nh->advertise(_pub_target);
-    _nh->advertise(_pub_current);
+    nh->advertise(s_enc_pub);
+    nh->advertise(pub_target);
+    nh->advertise(pub_current);
 }
 
 void SteeringNode::triggerLimit() {
-    _limit_triggered = true;
+    limit_triggered = true;
 }
 
 void SteeringNode::setTargetAngle(float angle) {
-    _target_angle = constrain(angle, MAX_LEFT_LIMIT_DEG, MAX_RIGHT_LIMIT_DEG);
+    target_angle = constrain(angle, MAX_LEFT_LIMIT_DEG, MAX_RIGHT_LIMIT_DEG);
+}
+
+// --- Linear Interpolation: Angle to Ticks ---
+float SteeringNode::angleToTicks(float angle) {
+    if (angle <= LUT_ANGLES[0]) return LUT_TICKS[0];
+    if (angle >= LUT_ANGLES[NUM_DATA_POINTS - 1]) return LUT_TICKS[NUM_DATA_POINTS - 1];
+
+    for (int i = 0; i < NUM_DATA_POINTS - 1; i++) {
+        if (angle >= LUT_ANGLES[i] && angle <= LUT_ANGLES[i + 1]) {
+            float t = (angle - LUT_ANGLES[i]) / (LUT_ANGLES[i + 1] - LUT_ANGLES[i]);
+            return LUT_TICKS[i] + t * (LUT_TICKS[i + 1] - LUT_TICKS[i]);
+        }
+    }
+    return 0.0; 
+}
+
+// --- Linear Interpolation: Ticks to Angle ---
+float SteeringNode::ticksToAngle(int32_t ticks) {
+    if (ticks <= LUT_TICKS[0]) return LUT_ANGLES[0];
+    if (ticks >= LUT_TICKS[NUM_DATA_POINTS - 1]) return LUT_ANGLES[NUM_DATA_POINTS - 1];
+
+    for (int i = 0; i < NUM_DATA_POINTS - 1; i++) {
+        if (ticks >= LUT_TICKS[i] && ticks <= LUT_TICKS[i + 1]) {
+            float t = (float)(ticks - LUT_TICKS[i]) / (float)(LUT_TICKS[i + 1] - LUT_TICKS[i]);
+            return LUT_ANGLES[i] + t * (LUT_ANGLES[i + 1] - LUT_ANGLES[i]);
+        }
+    }
+    return 0.0; 
 }
 
 void SteeringNode::home() {
-    _nh->loginfo("[HOMING] Phase 1: Seeking Switch (Anti-Clockwise)...");
-    _limit_triggered = false; 
-    _stepper.setSpeed(HOMING_SPEED);
+    nh->loginfo("[HOMING] Phase 1: Seeking Switch (Anti-Clockwise)...");
+    limit_triggered = false; 
+    stepper.setSpeed(HOMING_SPEED);
     
     unsigned long last_spin_time = millis();
 
     while (true) {
-        _stepper.runSpeed();
+        stepper.runSpeed();
         
-        if (_limit_triggered) {
-            _stepper.setSpeed(0);
-            _stepper.runSpeed();
+        // --- BULLETPROOF EMI DEBOUNCE ---
+        if (limit_triggered) {
+            stepper.setSpeed(0);
+            stepper.runSpeed();
             delay(5); 
             
-            if (digitalRead(_limit_pin) == HIGH) {
-                _nh->loginfo("[HOMING] Switch physically pressed! Moving to Phase 2.");
+            if (digitalRead(limit_pin) == HIGH) {
+                nh->loginfo("[HOMING] Switch physically pressed! Moving to Phase 2.");
                 break; 
             } else {
-                _nh->loginfo("[HOMING] Warning: EMI noise spike detected and rejected. Resuming Phase 1.");
-                _limit_triggered = false; 
-                _stepper.setSpeed(HOMING_SPEED); 
+                nh->loginfo("[HOMING] Warning: EMI noise spike detected and rejected. Resuming Phase 1.");
+                limit_triggered = false; 
+                stepper.setSpeed(HOMING_SPEED); 
             }
         }
 
         if (millis() - last_spin_time > 50) {
-            _nh->spinOnce();
+            nh->spinOnce();
             last_spin_time = millis();
         }
         yield();
     }
     
-    _stepper.setSpeed(0);
-    _stepper.runSpeed();
+    stepper.setSpeed(0);
+    stepper.runSpeed();
 
-    resetEncoderCount(S_ENC, _enc_count);
-    _enc_count = 0;
+    resetEncoderCount(S_ENC, enc_count);
+    enc_count = 0;
     delay(200);
 
-    _nh->loginfo("[HOMING] Phase 2: Moving to Absolute Center (Clockwise)...");
+    nh->loginfo("[HOMING] Phase 2: Moving to Absolute Center (Clockwise)...");
     float offset_speed = abs(HOMING_SPEED); 
-    _stepper.setSpeed(offset_speed);
+    stepper.setSpeed(offset_speed);
 
-    unsigned long homing_enc_last_time = millis();
     last_spin_time = millis(); 
     
-    while (abs(_enc_count) < HOME_OFFSET_TICKS) {
-        _stepper.runSpeed();
+    while (abs(enc_count) < HOME_OFFSET_TICKS) {
         
-        unsigned long now = millis();
-        ros::Time stamp = _nh->now();
-        handleEncoder(S_ENC, _enc_count, homing_enc_last_time, _s_enc_pub, _s_enc_msg, now, stamp, "steering_wheel_link");
+        // --- FAST LOOP (Motor & Math) ---
+        stepper.runSpeed();
+        readEncoder(S_ENC, enc_count); 
         
+        // --- SLOW LOOP (ROS Publishing) ---
         if (millis() - last_spin_time > 50) {
-            _nh->spinOnce();
+            ros::Time stamp = nh->now();
+            publishEncoder(enc_count, s_enc_pub, s_enc_msg, stamp, "steering_wheel_link");
+            nh->spinOnce();
             last_spin_time = millis();
         }
         yield();
     }
 
-    _stepper.setSpeed(0);
-    _stepper.runSpeed();
+    stepper.setSpeed(0);
+    stepper.runSpeed();
 
-    resetEncoderCount(S_ENC, _enc_count);
-    _enc_count = 0;
+    resetEncoderCount(S_ENC, enc_count);
+    enc_count = 0;
 
-    _integral = 0.0;
-    _prev_error = 0.0;
+    prev_time = millis();
     
-    _enc_last_time = millis();
-    _prev_time = millis();
-    _nh->loginfo("[HOMING] Calibration Complete! Ready for steering commands.");
+    nh->loginfo("[HOMING] Calibration Complete! Ready for steering commands.");
 }
 
 void SteeringNode::update() {
     unsigned long now = millis();
-    ros::Time stamp = _nh->now();
+    
+    readEncoder(S_ENC, enc_count);
 
-    handleEncoder(S_ENC, _enc_count, _enc_last_time, _s_enc_pub, _s_enc_msg, now, stamp, "steering_wheel_link");
-
-    float target_ticks;
-    if (_target_angle < 0) {
-        target_ticks = (_target_angle / MAX_LEFT_LIMIT_DEG) * (float)TICK_LIMIT_LEFT;
-    } else {
-        target_ticks = (_target_angle / MAX_RIGHT_LIMIT_DEG) * (float)TICK_LIMIT_RIGHT;
-    }
+    float target_ticks = angleToTicks(target_angle);
     target_ticks = constrain(target_ticks, (float)TICK_LIMIT_LEFT + SOFT_LIMIT_MARGIN, (float)TICK_LIMIT_RIGHT - SOFT_LIMIT_MARGIN);
 
-    float dt = (now - _prev_time) / 1000.0; 
+    float dt = (now - prev_time) / 1000.0; 
     if (dt > 0) {
-        float error = target_ticks - (float)_enc_count;
+        float error = target_ticks - (float)enc_count;
         
         if (abs(error) > DEADBAND_TICKS) {
-            _integral += error * dt;
-            _integral = constrain(_integral, -400.0, 400.0); 
-            float derivative = (error - _prev_error) / dt;
-            
-            float speed = (_Kp * error) + (_Ki * _integral) + (_Kd * derivative);
+            float speed = error; // Directly mapping error to speed
             speed = constrain(speed, -MAX_STEP_SPEED, MAX_STEP_SPEED);
-
-            _stepper.setSpeed(speed);
+            stepper.setSpeed(speed);
         } else {
-            _stepper.setSpeed(0);
-            _integral = 0.0; 
+            stepper.setSpeed(0);
         }
         
-        _prev_error = error;
-        _prev_time = now;
+        prev_time = now;
     }
 
-    _stepper.runSpeed(); 
+    stepper.runSpeed(); 
 
-    if (now - _last_publish_time >= 50) {
-        _msg_target.data = _target_angle;
-        if (_enc_count < 0) {
-            _msg_current.data = ((float)_enc_count / (float)TICK_LIMIT_LEFT) * MAX_LEFT_LIMIT_DEG;
-        } else {
-            _msg_current.data = ((float)_enc_count / (float)TICK_LIMIT_RIGHT) * MAX_RIGHT_LIMIT_DEG;
-        }
-        _pub_target.publish(&_msg_target);
-        _pub_current.publish(&_msg_current);
-        _last_publish_time = now;
+    if (now - last_publish_time >= 50) {
+        ros::Time stamp = nh->now();
+        
+        publishEncoder(enc_count, s_enc_pub, s_enc_msg, stamp, "steering_wheel_link");
+        
+        msg_target.data = target_angle;
+        msg_current.data = ticksToAngle(enc_count); 
+        
+        pub_target.publish(&msg_target);
+        pub_current.publish(&msg_current);
+        
+        last_publish_time = now;
     }
 }

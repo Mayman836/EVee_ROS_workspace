@@ -13,17 +13,14 @@
 #define S_ENC_CHANNEL_A PCNT_CHANNEL_0
 #define S_ENC_CHANNEL_B PCNT_CHANNEL_1
 
-#define PUB_INTERVAL_MS 10
-
 void setupPCNT();
 
-void handleEncoder(
-    pcnt_unit_t unit,
-    int32_t& pcnt_count,
-    unsigned long& last_time,
+void readEncoder(pcnt_unit_t unit, int32_t& pcnt_count);
+
+void publishEncoder(
+    int32_t pcnt_count,
     ros::Publisher& pub,
     custom_msgs::EncoderTicks& msg,
-    unsigned long now,
     const ros::Time& stamp,
     const char* frame_id
 );
