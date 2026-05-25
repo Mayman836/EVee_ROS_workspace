@@ -47,7 +47,7 @@ void publishEncoder(
     const char* frame_id
 ) {
     msg.ticks = pcnt_count;
-    msg.delta_ticks = 0;
+    msg.delta_ticks = 0; // Remove
     
     msg.header.stamp = stamp;
     msg.header.frame_id = frame_id;

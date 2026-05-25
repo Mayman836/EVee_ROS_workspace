@@ -38,8 +38,8 @@
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [
-    "/home/evee/ROS/evee_ws/platformio/esp32_encoder_node/include",
-    "/home/evee/ROS/evee_ws/platformio/esp32_encoder_node/src",
+    "/home/evee/ROS/evee_ws/platformio/prop_motor_control/include",
+    "/home/evee/ROS/evee_ws/platformio/prop_motor_control/src",
     "/home/evee/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
     "/home/evee/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include",
     "/home/evee/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/esp_additions/freertos",
