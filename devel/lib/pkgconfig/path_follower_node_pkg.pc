@@ -1,0 +1,8 @@
+prefix=/home/evee/ROS/evee_ws/devel
+
+Name: path_follower_node_pkg
+Description: Description of path_follower_node_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -2,4 +2,4 @@
 source_root_dir = '/home/evee/ROS/evee_ws/src'
 whitelisted_packages = ''.split(';') if '' != '' else []
 blacklisted_packages = ''.split(';') if '' != '' else []
-underlay_workspaces = '/home/evee/ROS/evee_ws/devel;/opt/ros/noetic'.split(';') if '/home/evee/ROS/evee_ws/devel;/opt/ros/noetic' != '' else []
+underlay_workspaces = '/opt/ros/noetic'.split(';') if '/opt/ros/noetic' != '' else []

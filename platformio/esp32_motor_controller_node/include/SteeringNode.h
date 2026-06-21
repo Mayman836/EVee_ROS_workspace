@@ -43,17 +43,17 @@ private:
     unsigned long last_publish_time;
 
     // Ackermann Calibration
-    static const int32_t TICK_LIMIT_RIGHT = 6300;
-    static const int32_t TICK_LIMIT_LEFT = -9600;
-    static const int32_t HOME_OFFSET_TICKS = 9600; 
-    constexpr static const float MAX_RIGHT_LIMIT_DEG = 14.4;
-    constexpr static const float MAX_LEFT_LIMIT_DEG = -23.0;
+    static const int32_t TICK_LIMIT_RIGHT = 12000;
+    static const int32_t TICK_LIMIT_LEFT = -12500;
+    static const int32_t HOME_OFFSET_TICKS = 12500; 
+    constexpr static const float MAX_RIGHT_LIMIT_DEG = 22.6;
+    constexpr static const float MAX_LEFT_LIMIT_DEG = -25.7;
     static const int32_t SOFT_LIMIT_MARGIN = 25;
     constexpr static const float DEADBAND_TICKS = 5.0;   
 
     // Motor Kinematics
-    constexpr static const float MAX_STEP_SPEED = 1500.0;
-    constexpr static const float HOMING_SPEED = -1500.0; 
+    constexpr static const float MAX_STEP_SPEED = 500.0;
+    constexpr static const float HOMING_SPEED = -500.0; 
 
     // Kinematic LUT Helper Functions
     float angleToTicks(float angle);

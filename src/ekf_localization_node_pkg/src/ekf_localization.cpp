@@ -5,33 +5,29 @@
 #include <sensor_msgs/NavSatFix.h>
 #include <nav_msgs/Odometry.h>
 #include <custom_msgs/EncoderTicks.h>
+#include <std_msgs/Float64.h>
 
 const double R_earth = 6378137.0;
 
 ros::Publisher ekf_pub;
-ros::Subscriber l_enc_sub;
-ros::Subscriber r_enc_sub;
+ros::Subscriber l_hall_sub;
+ros::Subscriber r_hall_sub;
 ros::Subscriber s_enc_sub;
 ros::Subscriber imu_sub;
 ros::Subscriber gps_sub;
 
-custom_msgs::EncoderTicks l_enc_msg;
-custom_msgs::EncoderTicks r_enc_msg;
-custom_msgs::EncoderTicks s_enc_msg;
 sensor_msgs::Imu imu_msg;
 sensor_msgs::NavSatFix gps_msg;
 
 bool steering_received = false;
 bool imu_received = false;
-
 bool ekf_initialized = false;
+bool gps_initialized = false;
 
-ros::Time last_l_enc_time;
-ros::Time last_r_enc_time;
-ros::Time last_s_enc_time;
+ros::Time last_l_hall_time;
+ros::Time last_r_hall_time;
 ros::Time last_imu_time;
 ros::Time last_gps_time;
-
 ros::Time last_used_imu_time;
 ros::Time last_used_gps_time;
 
@@ -39,12 +35,20 @@ double wheel_radius = 0.127;
 double wheelbase = 0.805;
 double max_steer = 45 * M_PI / 180.0;
 
-double l_enc_w = 0.0;
-double r_enc_w = 0.0;
+// Hall sensor tracking variables
+double l_hall_w = 0.0;
+double r_hall_w = 0.0;
+int32_t last_l_hall_ticks = 0;
+int32_t last_r_hall_ticks = 0;
+bool first_l_hall = true;
+bool first_r_hall = true;
 
+// Steering tracking
+double s_enc_angle = 0.0;
+
+// GPS tracking
 double lat0 = 0.0;
 double lng0 = 0.0;
-bool gps_initialized = false;
 double x_meas;
 double y_meas;
 
@@ -61,13 +65,12 @@ void ekfPublisher() {
 
     ekf_msg.pose.pose.position.x = X(0);
     ekf_msg.pose.pose.position.y = X(1);
-
     ekf_msg.pose.pose.orientation = tf::createQuaternionMsgFromYaw(X(2));
-
     ekf_msg.twist.twist.linear.x = X(3);
 
     for(int i = 0; i < 36; i++) {
         ekf_msg.pose.covariance[i] = 0.0;
+        ekf_msg.twist.covariance[i] = 0.0;
     }
 
     ekf_msg.pose.covariance[0]  = P(0,0);   // x
@@ -77,10 +80,6 @@ void ekfPublisher() {
     ekf_msg.pose.covariance[14] = 1e6;  // z
     ekf_msg.pose.covariance[21] = 1e6;  // roll
     ekf_msg.pose.covariance[28] = 1e6;  // pitch
-
-    for(int i = 0; i < 36; i++) {
-        ekf_msg.twist.covariance[i] = 0.0;
-    }
 
     ekf_msg.twist.covariance[0]  = P(3,3); // vx
     ekf_msg.twist.covariance[35] = P(4,4); // wz
@@ -101,27 +100,38 @@ void imuCallBack(const sensor_msgs::Imu::ConstPtr& msg) {
     imu_received = true;
 }
 
-void leftEncoderCallBack(const boost::shared_ptr<const custom_msgs::EncoderTicks>& msg) {
-    l_enc_msg = *msg;
-    double dt = (msg->header.stamp - last_l_enc_time).toSec();
-    if(dt > 0.0) {
-        l_enc_w = (msg->delta_ticks / 2400.0) * 2*M_PI / dt;
+void leftHallCallBack(const boost::shared_ptr<const custom_msgs::EncoderTicks>& msg) {
+    double dt = (msg->header.stamp - last_l_hall_time).toSec();
+    if (!first_l_hall && dt > 0.0) {
+        int32_t delta = msg->ticks - last_l_hall_ticks;
+        // Adjusted to 60.0 PPR based on HallEncoderNode config
+        l_hall_w = (delta / 60.0) * 2 * M_PI / dt; 
     }
-    last_l_enc_time = msg->header.stamp;
+    last_l_hall_ticks = msg->ticks;
+    last_l_hall_time = msg->header.stamp;
+    first_l_hall = false;
 }
 
-void rightEncoderCallBack(const boost::shared_ptr<const custom_msgs::EncoderTicks>& msg) {
-    r_enc_msg = *msg;
-    double dt = (msg->header.stamp - last_r_enc_time).toSec();
-    if(dt > 0.0) {
-        r_enc_w = (msg->delta_ticks / 2400.0) * 2*M_PI / dt;
+void rightHallCallBack(const boost::shared_ptr<const custom_msgs::EncoderTicks>& msg) {
+    double dt = (msg->header.stamp - last_r_hall_time).toSec();
+    if (!first_r_hall && dt > 0.0) {
+        int32_t delta = msg->ticks - last_r_hall_ticks;
+        // Adjusted to 60.0 PPR based on HallEncoderNode config
+        r_hall_w = (delta / 60.0) * 2 * M_PI / dt; 
     }
-    last_r_enc_time = msg->header.stamp;
+    last_r_hall_ticks = msg->ticks;
+    last_r_hall_time = msg->header.stamp;
+    first_r_hall = false;
 }
 
-void steeringEncoderCallBack(const boost::shared_ptr<const custom_msgs::EncoderTicks>& msg) {
-    s_enc_msg = *msg;
-    last_s_enc_time = msg->header.stamp;
+void steeringCallBack(const std_msgs::Float64::ConstPtr& msg) {
+    // Arduino SteeringNode publishes in degrees, convert to radians
+    s_enc_angle = msg->data * M_PI / 180.0; 
+    
+    // Clamp to hardware kinematic limits
+    if(s_enc_angle > max_steer) s_enc_angle = max_steer;
+    if(s_enc_angle < -max_steer) s_enc_angle = -max_steer;
+    
     steering_received = true;
 }
 
@@ -131,13 +141,13 @@ void gpsCallBack(const sensor_msgs::NavSatFix::ConstPtr& msg) {
 
     if(gps_msg.status.status >= sensor_msgs::NavSatStatus::STATUS_FIX) {
         if(!gps_initialized) {
-            lat0 = gps_msg.latitude * M_PI /180;
-            lng0 = gps_msg.longitude * M_PI /180;
+            lat0 = gps_msg.latitude * M_PI / 180.0;
+            lng0 = gps_msg.longitude * M_PI / 180.0;
             gps_initialized = true;
         }
 
-        double lat = gps_msg.latitude * M_PI /180;
-        double lng = gps_msg.longitude * M_PI /180;
+        double lat = gps_msg.latitude * M_PI / 180.0;
+        double lng = gps_msg.longitude * M_PI / 180.0;
 
         x_meas = (lng - lng0) * cos(lat0) * R_earth;
         y_meas = (lat - lat0) * R_earth;
@@ -185,14 +195,13 @@ void ekfCorrectIMU(double yaw_meas, double w_meas) {
     H(1,4) = 1;
 
     Eigen::MatrixXd R = Eigen::MatrixXd::Zero(2,2);
-    R(0,0) = imu_msg.orientation_covariance[8]; // yaw noise
-    R(1,1) = imu_msg.angular_velocity_covariance[8]; // yaw rate noise
+    R(0,0) = imu_msg.orientation_covariance[8]; 
+    R(1,1) = imu_msg.angular_velocity_covariance[8]; 
 
     Eigen::VectorXd y = z - H * X;
     y(0) = atan2(sin(y(0)), cos(y(0)));
 
     Eigen::MatrixXd S = H * P * H.transpose() + R;
-
     Eigen::MatrixXd K = P * H.transpose() * S.inverse();
 
     X = X + K * y;
@@ -216,9 +225,7 @@ void ekfCorrectGPS(double x_meas, double y_meas) {
     R(1,1) = gps_msg.position_covariance[4];
 
     Eigen::VectorXd y = z - H * X;
-
     Eigen::MatrixXd S = H * P * H.transpose() + R;
-
     Eigen::MatrixXd K = P * H.transpose() * S.inverse();
 
     X = X + K * y;
@@ -229,7 +236,6 @@ void ekfCorrectGPS(double x_meas, double y_meas) {
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "ekf_localization_node");
-    
     ros::NodeHandle nh;
 
     Q(0,0) = 0.05;   // x
@@ -239,15 +245,18 @@ int main(int argc, char **argv) {
     Q(4,4) = 0.5;    // w
 
     ros::Time now = ros::Time::now();
-    last_l_enc_time = now;
-    last_r_enc_time = now;
-    last_s_enc_time = now;
+    last_l_hall_time = now;
+    last_r_hall_time = now;
     last_imu_time = now;
     last_gps_time = now;
 
-    l_enc_sub = nh.subscribe("/encoder/left/raw", 10, leftEncoderCallBack);
-    r_enc_sub = nh.subscribe("/encoder/right/raw", 10, rightEncoderCallBack);
-    s_enc_sub = nh.subscribe("/encoder/steering/raw", 10, steeringEncoderCallBack);
+    // Check these topics against your actual ROS graph
+    l_hall_sub = nh.subscribe("/hall/left/raw", 10, leftHallCallBack);
+    r_hall_sub = nh.subscribe("/hall/right/raw", 10, rightHallCallBack);
+    
+    // Steering subscribes to processed angle
+    s_enc_sub = nh.subscribe("/steering/current_angle", 10, steeringCallBack); 
+    
     imu_sub = nh.subscribe("/imu/data", 10, imuCallBack);
     gps_sub = nh.subscribe("/ublox/fix", 10, gpsCallBack);
 
@@ -276,7 +285,7 @@ int main(int argc, char **argv) {
 
         static ros::Time last_time = ros::Time::now();
         ros::Time current_time = ros::Time::now();
-        double dt = (current_time -last_time).toSec();
+        double dt = (current_time - last_time).toSec();
         last_time = current_time;
 
         if(dt <= 0.0 || dt > 0.1) {
@@ -284,20 +293,13 @@ int main(int argc, char **argv) {
             dt = 0.02;
         }
 
-        double v_meas = wheel_radius * (l_enc_w + r_enc_w) / 2.0;
+        double v_meas = wheel_radius * (l_hall_w + r_hall_w) / 2.0;
 
-        double s_enc_angle = 0.0;
-
-        if(steering_received) {
-            s_enc_angle = (s_enc_msg.ticks / 2400.0) * 2 * M_PI;
-            if(s_enc_angle > max_steer) {
-                s_enc_angle = max_steer;
-            } else if (s_enc_angle < -max_steer) {
-                s_enc_angle = -max_steer;
-            }
+        // Kinematic w calculation uses processed s_enc_angle
+        double w_kin = 0.0;
+        if (steering_received) {
+            w_kin = v_meas / wheelbase * tan(s_enc_angle);
         }
-
-        double w_kin = v_meas / wheelbase * tan(s_enc_angle);
 
         if(ekf_initialized) {
             ekfPredict(dt, v_meas, w_kin);
@@ -313,13 +315,13 @@ int main(int argc, char **argv) {
             ekfCorrectIMU(yaw_meas, w_meas);
             last_used_imu_time = last_imu_time;
         }
+        
         if(gps_initialized && last_gps_time > last_used_gps_time) {
             ekfCorrectGPS(x_meas, y_meas);
             last_used_gps_time = last_gps_time;
         }
         
         ekfPublisher();
-
         loop_rate.sleep();
     }
 

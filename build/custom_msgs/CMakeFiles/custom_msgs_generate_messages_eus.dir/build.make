@@ -78,8 +78,8 @@ custom_msgs/CMakeFiles/custom_msgs_generate_messages_eus: /home/evee/ROS/evee_ws
 
 /home/evee/ROS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/DetectionDistanceArray.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 /home/evee/ROS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/DetectionDistanceArray.l: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg
-/home/evee/ROS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/DetectionDistanceArray.l: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg
 /home/evee/ROS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/DetectionDistanceArray.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/evee/ROS/evee_ws/devel/share/roseus/ros/custom_msgs/msg/DetectionDistanceArray.l: /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistance.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/evee/ROS/evee_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from custom_msgs/DetectionDistanceArray.msg"
 	cd /home/evee/ROS/evee_ws/build/custom_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/evee/ROS/evee_ws/src/custom_msgs/msg/DetectionDistanceArray.msg -Icustom_msgs:/home/evee/ROS/evee_ws/src/custom_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p custom_msgs -o /home/evee/ROS/evee_ws/devel/share/roseus/ros/custom_msgs/msg
 

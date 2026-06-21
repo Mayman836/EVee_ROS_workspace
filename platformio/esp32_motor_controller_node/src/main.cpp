@@ -4,7 +4,7 @@
 #include "SteeringNode.h"
 
 #define DIR_PIN 27
-#define STEP_PIN 26
+#define STEP_PIN 23
 #define LIMIT_SWITCH_PIN 16
 
 ros::NodeHandle nh;

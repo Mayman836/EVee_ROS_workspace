@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/evee/ROS/evee_ws/devel/setup.sh
