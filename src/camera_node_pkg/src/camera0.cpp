@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 
     // Initialize manager and load calibration
     camera_info_manager::CameraInfoManager cinfo(nh, "cam0");
-    std::string yaml_url = "file:///home/evee/ROS/calibration/right.yaml";
+    std::string yaml_url = "file:///home/evee/ROS/evee_ws/calibration/right.yaml";
     if (cinfo.validateURL(yaml_url)) {
         cinfo.loadCameraInfo(yaml_url);
     } else {
