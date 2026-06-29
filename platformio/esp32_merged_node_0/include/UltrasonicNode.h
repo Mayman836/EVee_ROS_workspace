@@ -19,8 +19,8 @@ private:
     float applyCorrection(int index, float raw_cm);
 
     // Pins and ROS frames
-    const int trigPins[NUM_SENSORS] = {13, 14, 25, 26, 27, 33};
-    const int echoPins[NUM_SENSORS] = {34, 35, 36, 39, 32, 5};
+    const int trigPins[NUM_SENSORS] = {32, 26, 21, 18, 14, 23};
+    const int echoPins[NUM_SENSORS] = {33, 27, 19, 4, 13, 22};
     
     const char* frame_ids[NUM_SENSORS] = {
         "sonar_front", "sonar_rear", 
@@ -29,9 +29,9 @@ private:
     };
     
     const char* topic_names[NUM_SENSORS] = {
-        "ultrasonic/front", "ultrasonic/rear",
-        "ultrasonic/left0", "ultrasonic/left1",
-        "ultrasonic/right0", "ultrasonic/right1"
+        "/ultrasonic/front", "/ultrasonic/rear",
+        "/ultrasonic/left0", "/ultrasonic/left1",
+        "/ultrasonic/right0", "/ultrasonic/right1"
     };
 
     NewPing* sonar[NUM_SENSORS];

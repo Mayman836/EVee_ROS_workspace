@@ -5,8 +5,7 @@
 // STEP_PIN (main.cpp) is genuinely 23, leaving 26 free -- if you find GPIO26
 // is still physically wired to the stepper, move STEP to a different free
 // GPIO instead (it only needs to toggle digitally) and keep this file as is.
-const int THROTTLE_PIN_LEFT = 25;
-const int THROTTLE_PIN_RIGHT = 26;
+const int THROTTLE_PIN = 25;
 const float MAX_SPEED_MPS = 12.9;
 
 int mapVelocityToDAC(float target_velocity) {
@@ -18,12 +17,10 @@ int mapVelocityToDAC(float target_velocity) {
 }
 
 void setupMotors() {
-  dacWrite(THROTTLE_PIN_LEFT, 0);
-  dacWrite(THROTTLE_PIN_RIGHT, 0);
+  dacWrite(THROTTLE_PIN, 0);
 }
 
 void setDriveThrottle(float linear_x_mps) {
   int throttle_val = mapVelocityToDAC(linear_x_mps);
-  dacWrite(THROTTLE_PIN_LEFT, throttle_val);
-  dacWrite(THROTTLE_PIN_RIGHT, throttle_val);
+  dacWrite(THROTTLE_PIN, throttle_val);
 }

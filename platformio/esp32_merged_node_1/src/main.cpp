@@ -11,12 +11,8 @@
 
 #include "MotorControlNode.h"
 #include "HallEncoderNode.h" 
-#include "SteeringNode.h"
+#include "EncoderNode.h"
 #include "ImuNode.h"
-
-#define DIR_PIN 27
-#define STEP_PIN 23
-#define LIMIT_SWITCH_PIN 16
 
 ros::NodeHandle nh;
 
@@ -32,16 +28,15 @@ ros::Subscriber<geometry_msgs::Twist> sub_cmd_vel("/cmd_vel", &onCmdVel);
 custom_msgs::EncoderTicks enc_msg_1;
 ros::Publisher pub_enc_1("hall_encoder_ticks_1", &enc_msg_1);
 
-custom_msgs::EncoderTicks enc_msg_2;
-ros::Publisher pub_enc_2("hall_encoder_ticks_2", &enc_msg_2);
+custom_msgs::EncoderTicks hall_msg;
+ros::Publisher hall_pub("/encoder/hall/raw", &hall_msg);
 
 std_msgs::Float32 vel_msg;
-ros::Publisher pub_vel("motor_velocity", &vel_msg);
+ros::Publisher vel_pub("/prop_motor/velocity", &vel_msg);
 
 sensor_msgs::Imu imu_msg;
-ros::Publisher imu_pub("imu/data", &imu_msg);
+ros::Publisher imu_pub("/imu/data", &imu_msg);
 
-SteeringNode steering(STEP_PIN, DIR_PIN, LIMIT_SWITCH_PIN);
 Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
 
 const int TICKS_PER_REV = 60;
@@ -56,14 +51,8 @@ int32_t previous_ticks_2 = 0;
 
 const unsigned long IMU_INTERVAL_MS = 50; // 20Hz -- now just the imuTask's own delay, not a loop() gate
 
-// Single subscriber for /cmd_vel -- do not add a second ros::Subscriber on
-// this topic. rosserial's host-side subscriber table is keyed by topic
-// name, so a duplicate registration on the same name is silently ignored
-// and its callback never fires. Both drive and steering are fanned out
-// from here instead.
 void onCmdVel(const geometry_msgs::Twist& msg) {
     setDriveThrottle(msg.linear.x);
-    steering.setTargetAngle(msg.angular.z);
 }
 
 // Runs entirely on core 0, off the stepper's critical path. The slow I2C
@@ -108,17 +97,14 @@ void setup() {
     nh.subscribe(sub_cmd_vel);
     
     nh.advertise(pub_enc_1);
-    nh.advertise(pub_enc_2);
-    nh.advertise(pub_vel);
+    nh.advertise(hall_pub);
+    nh.advertise(vel_pub);
     nh.advertise(imu_pub);
-
-    steering.init(&nh);
 
     while(!nh.connected()) { 
         nh.spinOnce(); 
         delay(10);
     }
-    steering.home();
 
     // IMU runs entirely off the main loop now -- pinned to core 0, opposite
     // the loop()/steering core (1), so its I2C reads can never stall runSpeed().
@@ -134,14 +120,10 @@ void setup() {
 }
 
 void loop() {
-    // 1. Motor Physics (runs freely at max CPU speed, zero blocking)
-    steering.updateMotor();
-
-    // 2. ROS Communication (POLLS the mutex with 0 wait time)
-    // If the IMU is talking, the loop instantly skips this block and goes back to stepping.
+    // ROS Communication (POLLS the mutex with 0 wait time)
+    // If the IMU is talking, the loop instantly skips this block.
     if (xSemaphoreTake(nh_mutex, 0) == pdTRUE) {
         nh.spinOnce();
-        steering.publishROS(); 
         xSemaphoreGive(nh_mutex);
     }
 
@@ -166,11 +148,11 @@ void loop() {
                 float current_velocity_mps = delta_distance_m / dt_seconds;
                 
                 vel_msg.data = current_velocity_mps * 3.6;
-                pub_vel.publish(&vel_msg);
+                vel_pub.publish(&vel_msg);
 
                 ros::Time stamp = nh.now();
                 publishEncoder(current_ticks_1, pub_enc_1, enc_msg_1, stamp, "motor_link_1");
-                publishEncoder(current_ticks_2, pub_enc_2, enc_msg_2, stamp, "motor_link_2");
+                publishEncoder(current_ticks_2, hall_pub, hall_msg, stamp, "motor_link_2");
             }
             xSemaphoreGive(nh_mutex);
             
